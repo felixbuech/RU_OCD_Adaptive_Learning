@@ -130,6 +130,10 @@ classdef al_taskDataMain
         % Online saccade detection
         sacc
 
+        % Add this to store confidence rating
+        confidence 
+
+
     end
 
     % Methods of the taskDataMain object
@@ -246,6 +250,9 @@ classdef al_taskDataMain
 
             % Online saccade detection
             self.sacc = nan(trials, 1);
+
+            % Initialize confidence field
+            self.confidence = nan(trials, 1); 
 
         end
 
