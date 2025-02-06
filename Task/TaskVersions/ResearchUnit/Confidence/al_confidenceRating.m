@@ -49,11 +49,11 @@ markerX = leftEnd + ((confidenceRating - minScale) / (maxScale - minScale)) * sc
 Screen('DrawDots', taskParam.display.window.onScreen, [markerX; scaleYPos], 15, taskParam.colors.blue, [], 2);
 
 % Display current confidence rating above marker
-DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRating), markerX - 10, scaleYPos - 50, taskParam.colors.white);
+DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRating), markerX - 10, scaleYPos - 50, taskParam.colors.gray);
 
    
     % Draw question
-    DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Ihre Vorhersage eintrifft?', 'center', screensize(4) * 0.75, taskParam.colors.white);
+    DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Ihre Vorhersage eintrifft?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
     
     % Flip screen
     Screen('Flip', taskParam.display.window.onScreen);

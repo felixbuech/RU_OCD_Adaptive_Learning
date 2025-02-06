@@ -1,4 +1,4 @@
-classdef al_commonConfidenceInstructionsDefaultText
+classdef al_commonConfettiInstructionsDefaultText
     %AL_COMMONCONFETTIINSTRUCTIONSDEFAULTTEXT This class-definition file
     % specifiec the properties of the instruction text.
     %

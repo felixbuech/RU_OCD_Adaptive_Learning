@@ -1,7 +1,7 @@
 
 function allTaskData = RunConfidenceVersion(config, unitTest, cBal)
-%RUNCOMMONCONFETTIVERSION This function runs the common confetti version
-%  of the cannon task
+%RUNCONFIDENCEVERSION This function runs the common confetti version
+%  of the cannon task BUT with confidence ratings. These ratings are presented in specific blocks. The rest of the design equals the COMMONCONFETTIVERSION
 %
 %   Input
 %       config: Structure with local configuration parameters
@@ -16,14 +16,14 @@ function allTaskData = RunConfidenceVersion(config, unitTest, cBal)
 %       To run the unit tests, run "al_unittets" in "DataScripts"
 %
 %   Last updated
-%       11/24
+%       02/25 FB
 
 % Todo: write integration test for fMRI version.
 % First ensure version is good to go and then keep in mind that output
 % arguments have to updated to include the three runs (this has to be
 % compatible with two files in no-scanner version)
 
-addpath(genpath('C:\Users\fb74loha\Desktop\CommonConfettiTask_ConfidenceRating'));
+addpath(genpath('C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning'));
 
 KbName('UnifyKeyNames')
 
@@ -63,7 +63,7 @@ if ~exist('config', 'var') || isempty(config)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\CommonConfettiTask_ConfidenceRating\AdaptiveLearning-master\test_data';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
@@ -655,7 +655,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 if scanner == false
 
     % When experiment does not take place in scanner
-    [allTaskData, totWin] = al_commonConfettiConditions(taskParam);
+    [allTaskData, totWin] = al_commonConfidenceConditions(taskParam);
 
 elseif scanner == true
 

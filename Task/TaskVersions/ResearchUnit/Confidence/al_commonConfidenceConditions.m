@@ -1,6 +1,6 @@
 function [allTaskData, totWin] = al_commonConfidenceConditions(taskParam)
-%AL_COMMONCONFETTICONDITIONS This function runs the change-point condition of the cannon
-%task tailored to the common task shared across projects
+%AL_COMMONCONFIDENCECONDITIONS This function runs the change-point condition of the cannon
+%task tailored to the confidence task shared across projects
 %
 %   Input
 %       taskParam: Task-parameter-object instance
@@ -32,7 +32,7 @@ passiveViewingCondition = taskParam.gParam.passiveViewing;
 
 if runIntro && passiveViewingCondition == false
 
-    al_commonConfettiInstructions(taskParam)
+    al_commonConfidenceInstructions(taskParam)
 
 elseif runIntro && passiveViewingCondition
 
@@ -59,7 +59,7 @@ elseif runIntro && passiveViewingCondition
         'Versuchen Sie nur zu blinzeln, wenn der weiße Punkt erscheint. Während dieser Übung '...
         'wird der Versuchsleiter Sie darauf hinweisen.'];
     al_bigScreen(taskParam, 'Übung', txt, true);
-    al_confettiLoop(taskParam, 'main', taskDataPassiveViewingPract, taskParam.gParam.passiveViewingPractTrials, '_p0');
+    al_confidenceLoop(taskParam, 'main', taskDataPassiveViewingPract, taskParam.gParam.passiveViewingPractTrials, '_p0');
 
 end
 
@@ -210,7 +210,7 @@ end
     end
 
     % **Run task with or without confidence**
-    data = al_confettiLoop(taskParam, 'main', taskData, trial, file_name_suffix);
+    data = al_confidenceLoop(taskParam, 'main', taskData, trial, file_name_suffix);
 
     % Store block data
     data = saveobj(data);
