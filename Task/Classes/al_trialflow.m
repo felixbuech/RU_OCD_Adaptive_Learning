@@ -136,6 +136,11 @@ classdef al_trialflow
         saveEtData % eye-tracking
             % true
             % false
+
+        % Whether or not confidence rating is included in the block
+        includeConfidence
+            % true: confidence rating is included
+            % false: confidence rating is NOT included
     end
     
     methods
@@ -170,6 +175,7 @@ classdef al_trialflow
             self.colors = 'colorful';
             self.saveData = 'true';
             self.saveEtData = 'true';
+            self.includeConfidence = false; % Default: Confidence rating OFF
         end
     end
     
