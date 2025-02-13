@@ -161,11 +161,19 @@ for i = 1:trial
     SetMouse(taskParam.display.screensize(3)/2, taskParam.display.screensize(4)/2, taskParam.display.window.onScreen)
 
     % Participant indicates prediction
-    if taskParam.gParam.passiveViewing == false
-        [taskData, taskParam] = al_mouseLoop(taskParam, taskData, condition, i, initRT_Timestamp);
-    else
-        taskData = al_passiveViewingSpot(taskParam, taskData, i, initRT_Timestamp);
+       
+if taskParam.gParam.passiveViewing == false
+    [taskData, taskParam] = al_mouseLoop(taskParam, taskData, condition, i, initRT_Timestamp);
+    
+    % Pass the user's prediction to the confidence rating function
+    if taskParam.trialflow.includeConfidence
+        taskData.confidence(i) = al_confidenceRating(taskParam, taskData.pred(i));
     end
+
+
+else
+    taskData = al_passiveViewingSpot(taskParam, taskData, i, initRT_Timestamp);
+end
 
     % Timestamp prediction
     taskData.timestampPrediction(i) = GetSecs() - taskParam.timingParam.ref;

@@ -147,62 +147,61 @@ function [totWin, allTaskData] = blockLoop(taskParam, cBal, passiveViewingCondit
 %
 
 
-% Extract some variables from task-parameters object
 trial = taskParam.gParam.trials;
 concentration = taskParam.gParam.concentration;
 haz = taskParam.gParam.haz;
-
-% Total number of hits across blocks
 totWin = 0;
-
-% Create data structure combining all blocks for integration test
 allTaskData = struct();
 
-% Loop over blocks
 for b = taskParam.subject.startsWithBlock:taskParam.gParam.nBlocks
 
-    % Select noise condition
+    % Select noise condition:
     % ----------------------
-    % 1) odd & cbal 1 = low
-    % 2) even & cbal 2 = low
-    % 3) odd & cbal 2 = high
-    % 4) even & cbal 1 = high
-
+    % 1) odd & cBal 1 = low
+    % 2) even & cBal 2 = low_withConfidence
+    % 3) odd & cBal 2 = high
+    % 4) even & cBal 1 = high_withConfidence
+   
     if (mod(b,2) == 1 && cBal == 1) || (mod(b,2) == 0 && cBal == 2)
-        noiseCondition = 1;
-    elseif (mod(b,2) == 1 && cBal == 2) || (mod(b,2) == 0 && cBal == 1)
-        noiseCondition = 2;
+    noiseCondition = 1; % High Noise
+elseif (mod(b,2) == 1 && cBal == 2) || (mod(b,2) == 0 && cBal == 1)
+    noiseCondition = 2; % Low Noise
+end
+
+% **Enable confidence rating ONLY for Blocks 3 & 4**
+if b >= 3
+    taskParam.trialflow.includeConfidence = true;
+else
+    taskParam.trialflow.includeConfidence = false;
+end
+
+
+    % **Assign confidence rating condition:**
+    % Blocks 1 & 2 → No Confidence
+    % Blocks 3 & 4 → With Confidence
+    if b <= 2
+        taskParam.trialflow.includeConfidence = false; % First two blocks → No Confidence
+    else
+        taskParam.trialflow.includeConfidence = true;  % Last two blocks → With Confidence
     end
 
     % Task data
     if ~taskParam.unitTest.run
-
-        % Task-data-object instance
         taskData = al_taskDataMain(trial, taskParam.gParam.taskType);
-
-        % Generate outcomes using cannon-data function
         taskData = taskData.al_cannonData(taskParam, haz, concentration(noiseCondition), taskParam.gParam.safe);
-
-        % Generate outcomes using confetti-data function
         taskData = taskData.al_confettiData(taskParam);
-
-        % Update block number
         taskData.block(:) = b;
         file_name_suffix = sprintf('_b%i', b);
-
     else
         if noiseCondition == 1
             taskData = taskParam.unitTest.taskDataIntegrationTest_HamburgLowNoise;
         elseif noiseCondition == 2
             taskData = taskParam.unitTest.taskDataIntegrationTest_HamburgHighNoise;
         end
-
-        % Since we don't save the data, just use empty string
         file_name_suffix = '';
-
     end
 
-    % Indicate condition
+    % Indicate noise condition for each block
     if noiseCondition == 1
         al_indicateNoise(taskParam, 'lowNoise', true, passiveViewingCondition)
         fieldName = sprintf('lowNoiseBlock%d', b);
@@ -211,16 +210,14 @@ for b = taskParam.subject.startsWithBlock:taskParam.gParam.nBlocks
         fieldName = sprintf('highNoiseBlock%d', b);
     end
 
-    % Run task
-    data = al_helicopterLoop(taskParam, 'main', taskData, trial, file_name_suffix);
+    % **Run task with or without confidence**
+    data = al_confidenceLoop(taskParam, 'main', taskData, trial, file_name_suffix);
 
-    % Transform to structure for integration test
+    % Store block data
     data = saveobj(data);
-
-    % Add the substructure to the master structure
     allTaskData.(fieldName) = data;
 
-    % Update hit counter after each block
+    % Update hit counter
     totWin = totWin + sum(data.hit);
 
     % Short break before next block
