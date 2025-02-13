@@ -1,6 +1,6 @@
-function allTaskData = RunCommonConfettiVersion(config, unitTest, cBal)
-%RUNCOMMONCONFETTIVERSION This function runs the common confetti version
-%  of the cannon task
+function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
+%RUNHELICOPTERVERSION This function runs the Leipzig specific Version of
+%the task
 %
 %   Input
 %       config: Structure with local configuration parameters
@@ -15,7 +15,7 @@ function allTaskData = RunCommonConfettiVersion(config, unitTest, cBal)
 %       To run the unit tests, run "al_unittets" in "DataScripts"
 %
 %   Last updated
-%       11/24
+%       02/25
 
 % Todo: write integration test for fMRI version.
 % First ensure version is good to go and then keep in mind that output
@@ -57,16 +57,12 @@ if ~exist('config', 'var') || isempty(config)
     config.s = 83;
     config.five = 53;
     config.enter = 13;
-    config.defaultParticles = false;
+    config.defaultParticles = false; 
     config.debug = false;
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-<<<<<<< HEAD
     config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data';
-=======
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data_confetti';
->>>>>>> helicopter
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
@@ -82,7 +78,7 @@ if ~exist('config', 'var') || isempty(config)
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 2.5;
     config.customInstructions = true;
-    config.instructionText = al_commonConfettiInstructionsDefaultText();
+    config.instructionText = al_HelicopterInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
     
@@ -264,7 +260,7 @@ end
 
 % Initialize general task parameters
 gParam = al_gparam();
-gParam.taskType = 'Hamburg';
+gParam.taskType = 'HelicopterNEW';
 gParam.trials = trials;
 gParam.nBlocks = nBlocks;
 gParam.practTrialsVis = practTrialsVis;
@@ -299,7 +295,7 @@ gParam.joy = joy;
 gParam.screenNumber = screenNumber;
 gParam.customInstructions = customInstructions;
 gParam.language = language;
-gParam.commitHash = al_getGitCommitHash();
+% gParam.commitHash = al_getGitCommitHash();
 
 % Save directory
 cd(gParam.dataDirectory);
@@ -314,12 +310,12 @@ trialflow.cannonball_start = 'center';
 trialflow.cannon = 'hide cannon';
 trialflow.background = 'noPicture';
 trialflow.currentTickmarks = 'show';
-trialflow.cannonType = 'confetti';
+trialflow.cannonType = 'HelicopterNEW';
 trialflow.reward = 'standard';
 trialflow.shield = 'variableWithSD';
 trialflow.shieldType = 'constant';
 trialflow.input = 'mouse';
-trialflow.colors = 'colorful';
+trialflow.colors = 'redWhite';
 
 % ---------------------------------------------
 % Create object instance with cannon parameters
@@ -517,7 +513,21 @@ display.distance2screen = distance2screen;
 display.screenWidthInMM = screenWidthInMM;
 display.useDegreesVisualAngle = useDegreesVisualAngle;
 
-% Cannon image
+
+%Cannon Image % Script updated to include Hunschrauber.png instead of
+%cannon 
+
+% Load the new cannon image to get its aspect ratio
+[imgHeight, imgWidth, ~] = size(imread('Hubschrauber.png'));
+
+% Define cannon size in degrees of visual angle
+cannonHeightDeg = 2.5; % Adjust as needed
+cannonWidthDeg = (cannonHeightDeg / imgHeight) * imgWidth; % Maintain aspect ratio
+
+% Update imageRectDeg
+imageRectDeg = [0 0 cannonWidthDeg cannonHeightDeg];
+
+% Convert degrees to pixels
 if display.useDegreesVisualAngle
     display.imageRect(3) = display.deg2pix(imageRectDeg(3));
     display.imageRect(4) = display.deg2pix(imageRectDeg(4));
@@ -632,6 +642,7 @@ taskParam.triggers = triggers;
 taskParam.eyeTracker = eyeTracker;
 taskParam.instructionText = instructionText;
 
+
 % Check and update background rgb:
 % It turns out that depending on screen resolution, the exactly ideal
 % background values are slightly different. But for research unit it is
@@ -658,7 +669,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 if scanner == false
 
     % When experiment does not take place in scanner
-    [allTaskData, totWin] = al_commonConfettiConditions(taskParam);
+    [allTaskData, totWin] = al_HelicopterConditions(taskParam);
 
 elseif scanner == true
 

@@ -59,7 +59,7 @@ classdef al_trialflow
         cannonType 
             % standard: eLife style cannon
             % confetti: confetti-cannon style
-            % helicopter: for Leipzig version
+            % HelicopterNEW: for Leipzig version
             % duck: for infant version
 
         % How rewards are delivered (e.g., standard, asymmetric)
@@ -130,6 +130,7 @@ classdef al_trialflow
             % colorful: standard
             % isoluminant: pupillometry
             % blackwhite: alternative version for pupillometry
+            % redwhite: alternative for Leipzig Practice
 
         % Save data
         saveData % behavioral

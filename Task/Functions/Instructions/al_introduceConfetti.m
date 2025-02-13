@@ -18,7 +18,9 @@ if strcmp(taskParam.gParam.taskType, 'Sleep')
 
     [taskData, taskParam] = al_keyboardLoop(taskParam, taskData, trial, initRT_Timestamp, txt);
 
-elseif strcmp(taskParam.gParam.taskType, 'Hamburg') || strcmp(taskParam.gParam.taskType, 'asymReward') || strcmp(taskParam.gParam.taskType, 'CommonConfidence') || strcmp(taskParam.gParam.taskType, 'HamburgEEG') 
+
+elseif strcmp(taskParam.gParam.taskType, 'Hamburg') || strcmp(taskParam.gParam.taskType, 'asymReward') || strcmp(taskParam.gParam.taskType, 'HelicopterNEW') || strcmp(taskParam.gParam.taskType, 'HamburgEEG') || strcmp(taskParam.gParam.taskType, 'CommonConfidence')
+
     
     % Participant indicates prediction
     condition = 'main';
