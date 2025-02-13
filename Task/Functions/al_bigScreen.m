@@ -1,16 +1,15 @@
 function al_bigScreen(taskParam, header, txt, feedback, endOfTask)
-%AL_BIGSCREEN This function draws the background during the instructions
+% AL_BIGSCREEN displays feedback, optionally with an image.
 %
-%   Input
-%       taskParam: Task-parameter-object instance
-%       header: Header that is displayed
-%       txt: Main text that is displayed
-%       feedback: Indicates if task feedback or instructions are presented
-%       endOfTask: Optional input argument for different breakKey
+%   Inputs:
+%       taskParam - Task parameters including display settings
+%       header - Header text
+%       txt - Main feedback text
+%       feedback - Boolean, whether feedback is being displayed
+%       endOfTask - Optional argument for different breakKey behavior
 %
-%   Output
+%   Output:
 %       None
-
 
 % Manage optional breakKey input: if not provided, use SPACE as default
 if ~exist('endOfTask', 'var') || isempty(endOfTask)
@@ -19,25 +18,49 @@ end
 
 % Display text until keypress
 while 1
-    % Draw desired lines and background on the screen
+    % Draw Background
     Screen('FillRect', taskParam.display.window.onScreen, taskParam.colors.background);
     Screen('DrawLine', taskParam.display.window.onScreen, [0 0 0], 0, taskParam.display.screensize(4)*0.16,...
         taskParam.display.screensize(3), taskParam.display.screensize(4)*0.16, 5);
     Screen('DrawLine', taskParam.display.window.onScreen, [0 0 0], 0, taskParam.display.screensize(4)*0.8,...
         taskParam.display.screensize(3), taskParam.display.screensize(4)*0.8, 5);
-    Screen('FillRect', taskParam.display.window.onScreen, [0, 25, 51], [0, (taskParam.display.screensize(4)*0.16),...  % +3
-        taskParam.display.screensize(3), (taskParam.display.screensize(4)*0.8)]);
+    Screen('FillRect', taskParam.display.window.onScreen, [0, 25, 51], ...
+        [0, (taskParam.display.screensize(4)*0.16), taskParam.display.screensize(3), (taskParam.display.screensize(4)*0.8)]);
     
-    % Print header
+    % Print Header
     Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.headerSize);
     DrawFormattedText(taskParam.display.window.onScreen, header, 'center', taskParam.display.screensize(4)*0.1, [255 255 255]);
     Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.textSize);
-    
-    % Extract length of text
+
+    % Extract Length of Text
     sentenceLength = taskParam.strings.sentenceLength;
     
-    % Print main text
-    if feedback == true
+  %% --- Draw Feedback Image if Available for Leipzig Version ---
+if feedback == true && contains(txt, 'lebensrettende Medikamente')
+    
+    % Define position for the image (above text)
+    [screenX, screenY] = RectCenter(Screen('Rect', taskParam.display.window.onScreen));
+    
+    % Define image size and position (centered above text)
+    imgWidth = 600;  
+    imgHeight = 1600; 
+    imgSize = [screenX - imgWidth/2, screenY - 350, screenX + imgWidth/2, screenY - 50];
+
+    % Set feedback image 
+    feedbackImg = taskParam.display.feedbackTxt; % Always use one image
+
+    % Draw the image (if available)
+    if ~isempty(feedbackImg)
+        Screen('DrawTexture', taskParam.display.window.onScreen, feedbackImg, [], imgSize);
+    end
+end
+
+% --- Draw Feedback Message ---
+if feedback == true && contains(txt, 'lebensrettende Medikamente')
+    % Display text lower on the screen (e.g., 60% down)
+    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.6, ...
+        [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
+elseif feedback == true
         % When feedback is presented, print in screen center...
         DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', 'center', [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
     else
@@ -45,39 +68,39 @@ while 1
         DrawFormattedText(taskParam.display.window.onScreen, txt, taskParam.display.screensize(4)*0.2, taskParam.display.screensize(4)*0.2,...
             [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
     end
+
     
-    % Print "Press Enter" to indicate how to continue with instructions
+    % Print "Press Enter" to Continue
     if ~endOfTask
-        DrawFormattedText(taskParam.display.window.onScreen,  taskParam.strings.txtPressEnter, 'center', taskParam.display.screensize(4)*0.9);
+        DrawFormattedText(taskParam.display.window.onScreen, taskParam.strings.txtPressEnter, 'center', taskParam.display.screensize(4)*0.9);
     else
-        DrawFormattedText(taskParam.display.window.onScreen,  'Bitte auf Versuchtsleiter:in warten...', 'center', taskParam.display.screensize(4)*0.9);
+        DrawFormattedText(taskParam.display.window.onScreen, 'Bitte auf Versuchtsleiter:in warten...', 'center', taskParam.display.screensize(4)*0.9);
     end
-    
-    % All text strings are presented
+
+    % Finalize Drawing
     Screen('DrawingFinished', taskParam.display.window.onScreen);
-    
-    % Flip screen to present changes
+
+    % Flip Screen to Present Changes
     time = GetSecs;
     Screen('Flip', taskParam.display.window.onScreen, time + 0.1);
     
-    % Check for response of participant to continue to next screen
-    [ ~, ~, keyCode] = KbCheck( taskParam.keys.kbDev );
+    % Wait for User Input to Continue
+    [~, ~, keyCode] = KbCheck(taskParam.keys.kbDev);
     if keyCode(taskParam.keys.enter) && ~taskParam.unitTest.run && ~endOfTask
-        break
+        break;
     elseif keyCode(taskParam.keys.s) && ~taskParam.unitTest.run && endOfTask
-        break
+        break;
     elseif taskParam.unitTest.run
         WaitSecs(1);
-        break
+        break;
     elseif keyCode(taskParam.keys.esc)
         ListenChar();
         ShowCursor;
         Screen('CloseAll');
-        error('User pressed Escape to finish task')
+        error('User pressed Escape to finish task');
     end
 end
 
-% Wait for keyboard release
+% Wait for Keyboard Release
 KbReleaseWait();
-
-
+end

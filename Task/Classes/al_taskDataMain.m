@@ -501,6 +501,10 @@ classdef al_taskDataMain
                         self.dotCol(i).rgb = taskParam.colors.colorsDark;
                     elseif isequal(taskParam.trialflow.colors, 'blackWhite')
                         self.dotCol(i).rgb = taskParam.colors.colorsBlackWhite;
+                    
+                    elseif isequal(taskParam.trialflow.colors, 'redWhite')
+                                 self.dotCol(i).rgb = taskParam.colors.colorsRedWhite;
+
                     else
                         error('Color input not defined')
                     end

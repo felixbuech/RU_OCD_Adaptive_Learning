@@ -30,6 +30,7 @@ classdef al_colors
         circleCol
         colorsDark
         colorsBlackWhite
+        colorsRedWhite
 
     end
 
@@ -64,7 +65,7 @@ classdef al_colors
 
             % Check if particle info is given
             if exist('nParticles', 'var')
-                [self.colorsDark, self.colorsBlackWhite] = self.getConfettiColors(nParticles);
+                [self.colorsDark, self.colorsBlackWhite, self.colorsRedWhite] = self.getConfettiColors(nParticles); %% Leipzig RedWhite added here
 
             end
         end
@@ -204,7 +205,7 @@ classdef al_colors
 
         end
 
-        function [colorsDark, colorsBlackWhite] = getConfettiColors(nParticles)
+        function [colorsDark, colorsBlackWhite, colorsRedWhite] = getConfettiColors(nParticles)
             %GETCONFETTICOLOR This function loads the reproducible confetti
             %particle colors for pupillometry
             %
@@ -242,6 +243,17 @@ classdef al_colors
             else
                 error('Number of particles and particle colors do not match. Number of particles and specified colors have to be divisible without remainder.')
             end
+
+            % Red and White colors for Leipzig Version
+colorVecRedWhite = [255 0 0; 255 255 255]';  % Red and White
+
+nColorsRedWhite = size(colorVecRedWhite, 2);
+if mod(nParticles/nColorsRedWhite, 2) == 0
+    colorsRedWhite = uint8(repmat(colorVecRedWhite, 1, nParticles/nColorsRedWhite));
+else
+    colorsRedWhite = nan;
+end
+
         end
     end
 end

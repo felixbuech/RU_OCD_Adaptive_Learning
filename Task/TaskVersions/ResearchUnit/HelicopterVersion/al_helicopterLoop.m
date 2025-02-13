@@ -459,21 +459,15 @@ totalTrials = sum(~isnan(taskData.hit));
 hitRatio = nansum(taskData.hit) / totalTrials; 
 
 
-% Modify feedback text based on performance
+% Define feedback message based on language (without performance calculation)
 if isequal(taskParam.gParam.language, 'German')
-    if hitRatio > 0.5
-        txt = sprintf(['Großartig! Sie haben %.0f Einheiten lebensrettende Medikamente gesichert!\n\n ' ...
-            'Es konnte vielen kranken Menschen geholfen werden'], currPoints);
-    else
-        txt = sprintf(['Sie haben %.0f Einheiten lebensrettende Medikamente gesichert.\n\n' ...
-            ' Versuchen Sie besser zu werden, oder mehr Menschen werden sterben!'], currPoints);
-    end
+    txt = sprintf(['Sie haben %.0f Einheiten lebensrettende Medikamente gesichert.\n\n' ...
+        'Nur wenn Sie genug Medikamente sichern, kann den Menschen geholfen werden. Jede Ihrer Entscheidungen zählt!'], currPoints);
+    
 elseif isequal(taskParam.gParam.language, 'English')
-    if hitRatio > 0.5
-        txt = sprintf('Great job! You caught %.0f life-saving medicine units!', currPoints);
-    else
-        txt = sprintf('You caught %.0f life-saving medicine units. Try to catch even more!', currPoints);
-    end
+    txt = sprintf(['You caught %.0f life-saving medicine units.\n\n' ...
+        'Many sick people have been helped!'], currPoints);
+    
 else
     error('Language parameter unknown');
 end

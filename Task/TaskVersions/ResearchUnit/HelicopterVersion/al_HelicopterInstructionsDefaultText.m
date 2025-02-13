@@ -1,4 +1,4 @@
-classdef al_LeipzigNEWInstructions
+classdef al_HelicopterInstructionsDefaultText
     %AL_COMMONCONFETTIINSTRUCTIONSDEFAULTTEXT This class-definition file
     % specifiec the properties of the instruction text.
     %
@@ -10,7 +10,7 @@ classdef al_LeipzigNEWInstructions
 
         language
         welcomeText
-        context %% Addition for Leipzig Task Version (introduces the pandemic context)
+        context
         introduceCannon
         introduceConfetti
         introduceSpot
@@ -58,7 +58,7 @@ classdef al_LeipzigNEWInstructions
 
     methods
 
-        function self = al_LeipzigNEWInstructions(language)
+        function self = al_HelicopterInstructionsDefaultText(language)
             % This function creates an object of
             % class al_commonConfettiInstructionsDefaultText
             %
@@ -88,28 +88,28 @@ classdef al_LeipzigNEWInstructions
             % Introduce Pandemic Context
 
             if isequal(self.language, 'German')
-                header = 'Achtung Virusausbruch!'; 
-                self.context = ['In Ihrer Region ist ein lebensbedrohliches Virus ausgebrochen. Das ganze Gebiet wurde deshalb\n'...
-    'von der Umgebung abgeschottet. Da kein direkter Kontakt mit der Außenwelt mehr möglich ist, '...
-    'werden Medikamente von Hubschraubern abgeworfen.\n\nSie arbeiten als Koordinationsleitung des Katastrophenschutzes '...
-    'und sind für die Entgegennahme der Güter auf dem Boden verantwortlich. Da der Hubschrauber die Medikamente aus '...
-    'großer Höhe abwirft, kann der Landungsort nie genau vorhergesagt werden. Werden die überlebenswichtigen '...
-    'Medikamente nicht direkt in Empfang genommen, verlieren sie ihre Wirksamkeit und es können weniger Menschen '...
-    'versorgt werden.\n\nIhre Aufgabe ist es, Ihr Team immer dorthin zu schicken, wo Sie den Landungsort vermuten. '...
-    'Versagen Sie, hat dies weitere Todesfälle zur Folge!​'];
-            
-            elseif isequal(self.language, 'English')
-                self.context = 'Welcome to the confetti-cannon task!';
-            else
-                error('language parameter unknown')
-            end 
-                      
+    header = 'Achtung Virusausbruch!';
+    self.context = ['In Ihrer Region ist ein lebensbedrohliches Virus ausgebrochen. Die Zahl der Infizierten steigt rasant und täglich sterben Menschen.'...
+        'Das ganze Gebiet wurde deshalb von der Umgebung abgeschottet.'...
+        'Da kein direkter Kontakt mit der Außenwelt mehr möglich ist, werden lebensrettende Medikamente von Hubschraubern abgeworfen.\n\n '...
+        'Sie arbeiten als Koordinationsleitung des Katastrophenschutzes und sind für die Entgegennahme der Güter auf dem Boden verantwortlich.'...
+        'Da der Hubschrauber die Medikamente aus großer Höhe abwirft, kann der Landungsort nie genau vorhergesagt werden.\n\n'...
+        'Werden die überlebenswichtigen Medikamente nicht sofort gesichert, sind sie unbrauchbar und weniger Infizierten kann geholfen werden.'...
+        'Ihre Aufgabe ist es, Ihr Team immer dorthin zu schicken, wo Sie den Landungsort vermuten. Sie allein tragen die Verantwortung, das Leben vieler Menschen zu retten.\n'...
+        'Versagen Sie, hat dies weitere Todesfälle zur Folge!​'];
+
+elseif isequal(self.language, 'English')
+    self.context = 'Welcome to the confetti-cannon task!';
+else
+    error('language parameter unknown')
+end
+
+           
             
             % Introduce cannon
             if isequal(self.language, 'German')
-                self.introduceCannon = ['Sie blicken von oben auf eine Konfetti-Kanone, die in der Mitte eines Kreises positioniert ist. Ihre Aufgabe ist es, das Konfetti mit einem Eimer zu fangen. Mit dem rosafarbenen '...
-                    'Punkt können Sie angeben, wo auf dem Kreis Sie Ihren Eimer platzieren möchten, um das Konfetti zu fangen. Sie können den Punkt mit der '...
-                    'Maus steuern.'];
+                self.introduceCannon = ['Sie blicken von oben auf das Gefahrengebiet und den Hubschrauber, der die Medikamente abwirft. Ihre Aufgabe ist es, die Medikamente mit einem Netz zu fangen. Mit dem rosafarbenen '...
+    'Punkt können Sie angeben, wo auf dem Kreis Sie Ihr Netz platzieren möchten, um die Medikamente zu fangen. Sie können den Punkt mit der Maus steuern.'];
             elseif isequal(self.language, 'English')
                 self.introduceCannon = ['You are looking from above at a confetti cannon placed in the center of a circle. Your task is to catch the confetti with a bucket. Use the pink dot '...
                     'to indicate where you would like to place your bucket to catch the confetti. '...
@@ -120,7 +120,7 @@ classdef al_LeipzigNEWInstructions
 
             % Introduce confetti
             if isequal(self.language, 'German')
-                self.introduceConfetti = 'Das Ziel der Konfetti-Kanone wird mit der schwarzen Linie angezeigt. Steuern Sie den rosafarbenen Punkt auf den Kreis und drücken Sie die linke Maustaste, damit die Konfetti-Kanone schießt.';
+                self.introduceConfetti = 'Das Ziel des Helikopters wird mit der schwarzen Linie angezeigt. Steuern Sie den rosafarbenen Punkt auf den Kreis und drücken Sie die linke Maustaste, damit der Helikopter die Medikamente abwirft.';
             elseif isequal(self.language, 'English')
                 self.introduceConfetti = 'The aim of the cannon is indicated by the black line. Hit the left mouse button to fire the cannon.';
             else
@@ -129,8 +129,8 @@ classdef al_LeipzigNEWInstructions
 
             % Introduce spot
             if isequal(self.language, 'German')
-                self.introduceSpot = ['Der schwarze Strich zeigt Ihnen die mittlere Position der letzten Konfettiwolke. Der rosafarbene Strich zeigt Ihnen die '...
-                    'letzte Position Ihres Eimers. Steuern Sie den rosafarbenen Punkt jetzt bitte auf das Ziel der Konfetti-Kanone und drücken Sie die linke Maustaste.'];
+                self.introduceSpot = ['Der schwarze Strich zeigt Ihnen die mittlere Position des letzten Lieferung von Medikamenten. Der rosafarbene Strich zeigt Ihnen die '...
+                    'letzte Position Ihres Netzes. Steuern Sie den rosafarbenen Punkt jetzt bitte auf das Ziel des Helikopters und drücken Sie die linke Maustaste.'];
             elseif isequal(self.language, 'English')
                 self.introduceSpot = ['The black line shows the central position of the last confetti burst. The pink line shows the '...
                     'last position of your bucket. Now move the pink dot to the aim of the confetti cannon and press the left mouse button.'];
@@ -140,7 +140,7 @@ classdef al_LeipzigNEWInstructions
 
             % Introduce shield
             if isequal(self.language, 'German')
-                self.introduceShield = 'Nach dem Kanonenschuss sehen Sie den Eimer. Wenn Sie mindestens die Hälfte des Konfettis im Eimer fangen, zählt es als Treffer und Sie erhalten einen Punkt.';
+                self.introduceShield = 'Nach dem Abwurf sehen Sie den das Netz. Wenn Sie mindestens die Hälfte der Medikamente fangen, zählt der Abwurf als gesichert und Sie erhalten einen Punkt.';
             elseif isequal(self.language, 'English')
                 self.introduceShield = ['After the cannon is shot you will see the bucket. '...
                     'If you catch at least half of the confetti with the bucket, it is considered a "catch" and you get a point. '];
@@ -150,7 +150,7 @@ classdef al_LeipzigNEWInstructions
 
             % Introduce miss
             if isequal(self.language, 'German')
-                self.introduceMiss = 'Versuchen Sie nun, Ihren Eimer so zu positionieren, dass Sie das Konfetti verfehlen. Drücken Sie dann die linke Maustaste.';
+                self.introduceMiss = 'Versuchen Sie nun, Ihr Netz so zu positionieren, dass Sie die Medikamente verfehlen. Drücken Sie dann die linke Maustaste.';
             elseif isequal(self.language, 'English')
                 self.introduceMiss = ['Now try to place the bucket so that you miss the confetti. Then press '...
                     'the left mouse button. '];
@@ -160,7 +160,7 @@ classdef al_LeipzigNEWInstructions
 
             % Introduce miss with bucket
             if isequal(self.language, 'German')
-                self.introduceMissBucket = 'In diesem Fall haben Sie das Konfetti verfehlt.';
+                self.introduceMissBucket = 'In diesem Fall haben Sie die Medikamente verfehlt.';
             elseif isequal(self.language, 'English')
                 self.introduceMissBucket = 'In this case you missed the confetti.';
             else
@@ -187,12 +187,12 @@ classdef al_LeipzigNEWInstructions
 
             % First practice
             if isequal(self.language, 'German')
-                self.firstPractice = ['In diesem Durchgang ist die Konfetti-Kanone schon sehr alt und die Schüsse sind daher ziemlich ungenau. Das heißt, auch wenn '...
-                    'Sie den Eimer genau auf das Ziel der Konfetti-Kanone positionieren, können Sie das Konfetti verfehlen. Die Ungenauigkeit ist zufällig. '...
-                    'Dennoch fangen Sie am meisten Konfetti, wenn Sie den rosafarbenen Punkt genau auf die Stelle '...
-                    'steuern, auf die die Konfetti-Kanone zielt.\n\nIn dieser Übung sollen Sie mit der Ungenauigkeit '...
-                    'der Konfetti-Kanone erst mal vertraut werden. Steuern Sie den rosafarbenen Punkt bitte immer auf die anvisierte '...
-                    'Stelle.\n\nAchten Sie bitte auf Augenbewegungen und Blinzeln wie von der Versuchsleitung erklärt.'];
+                self.firstPractice = ['Weil die Umgebung sehr windig ist, ist der Landeort der Medikamente ziemlich ungenau. Das heißt, auch wenn '...
+    'Sie genau auf das Ziel gehen, können Sie die Medikamente verfehlen. Die Ungenauigkeit ist zufällig, '...
+    'dennoch fangen Sie die meisten Medikamente, wenn Sie den rosafarbenen Punkt genau auf die Stelle '...
+    'steuern, die der Hubschrauber anpeilt.\n\nIn dieser Übung sollen Sie mit der Ungenauigkeit '...
+    'des Hubschraubers erst mal vertraut werden. Steuern Sie den rosafarbenen Punkt bitte immer auf die anvisierte '...
+    'Stelle.\n\nAchten Sie bitte auf Augenbewegungen und Blinzeln wie von der Versuchsleitung erklärt.'];
             elseif isequal(self.language, 'English')
                 self.firstPractice = ['In this block, the confetti cannon is very old '...
                     'and its aim therefore pretty inaccurate. Even if you move the bucket to the exact aim of the confetti cannon, '...
@@ -217,11 +217,11 @@ classdef al_LeipzigNEWInstructions
 
             % Reduced
             if isequal(self.language, 'German')
-                self.reduceShield = ['Ab jetzt sehen Sie den Eimer nur noch mit zwei Strichen dargestellt. Außerdem sehen Sie die Aufgabe in weniger Farben. ' ...
+                self.reduceShield = ['Ab jetzt sehen Sie das Netz nur noch mit zwei Strichen dargestellt. Außerdem sehen Sie die Aufgabe in weniger Farben. ' ...
                     'Dies ist notwendig, damit wir Ihre Pupillengröße gut messen können. Achten Sie daher bitte besonders darauf, '...
                     'Ihren Blick auf den Punkt in der Mitte des Kreises zu fixieren. Bitte versuchen Sie Augenbewegungen und Blinzeln '...
                     'so gut es geht zu vermeiden.\n\n'...
-                    'Jetzt folgt zunächst eine kurze Demonstration, wie der Eimer mit Strichen im Vergleich zum Eimer der vorherigen Übung aussieht.'];
+                    'Jetzt folgt zunächst eine kurze Demonstration, wie das Netz mit Strichen im Vergleich zum Netz der vorherigen Übung aussieht.'];
             elseif isequal(self.language, 'English')
                 self.reduceShield = 'Please update if you plan to use this.';
             else
@@ -240,8 +240,8 @@ classdef al_LeipzigNEWInstructions
             % Second practice
             if isequal(self.language, 'German')
                 self.secondPractice = ['Um sicherzugehen, dass Sie die Aufgabe verstanden haben, machen wir jetzt eine kurze Übung:\n\n'...
-                    'Sie werden hintereinander fünf Schüsse der Konfetti-Kanone sehen. Danach geben Sie bitte an, wo Sie das Ziel der Konfetti-Kanone vermuten.\n\n'...
-                    'Die beste Strategie ist, die mittlere Position der Schüsse anzugeben. Diese Position ist die beste Vohersage, um in der Aufgabe am meisten Konfetti zu fangen.'];
+                    'Sie werden hintereinander fünf Abwürfe des Helikopters sehen. Danach geben Sie bitte an, wo Sie das Ziel des Helikopters vermuten.\n\n'...
+                    'Die beste Strategie ist, die mittlere Position der Abwürfe anzugeben. Diese Position ist die beste Vohersage, um in der Aufgabe am meisten Medikamente zu fangen.'];
 
             elseif isequal(self.language, 'English')
                 self.secondPractice = ['Add instructions please']; % update few things if planning to use this
@@ -260,10 +260,10 @@ classdef al_LeipzigNEWInstructions
 
             % Third practice
             if isequal(self.language, 'German')
-                self.thirdPractice = ['In dieser Übung sehen Sie nur noch einen Schuss der Konfetti-Kanone. '...
-                    'Bitte geben Sie wieder an, wo Sie die Konfetti-Kanone vermuten.\n\nBitte beachten Sie, dass das Ziel der Kanone meistens gleich bleibt. Manchmal richtet sich die Kanone allerding neu aus. '...
+                self.thirdPractice = ['In dieser Übung sehen Sie nur noch einen Abwurf des Helikopters. '...
+                    'Bitte geben Sie wieder an, wo Sie den Helikopter vermuten.\n\nBitte beachten Sie, dass das Ziel des Helikopters meistens gleich bleibt. Manchmal richtet sich der Helikopter allerding neu aus. '...
                     'Wenn Sie denken, dass die Konfetti-Kanone ihre Richtung geändert hat, sollten Sie auch den Eimer '...
-                    'dorthin bewegen.\n\nBeachten Sie, dass Sie das Konfetti trotz guter Vorhersagen auch häufig nicht fangen können.'];
+                    'dorthin bewegen.\n\nBeachten Sie, dass Sie die Medikamente trotz guter Vorhersagen auch häufig nicht fangen können.'];
             elseif isequal(self.language, 'English')
                 self.thirdPractice = ['Add instructions please']; % update few things if planning to use this
             else
@@ -281,10 +281,10 @@ classdef al_LeipzigNEWInstructions
 
             % Fourth practice
             if isequal(self.language, 'German')
-                self.fourthPractice = ['Jetzt kommen wir zur letzten Übung.\n\nDiesmal müssen Sie mit dem rosafarbenen Punkt Ihr Schild platzieren und sehen dabei die Kanone nicht mehr. Außerdem werden Sie es sowohl mit einer relativ genauen '...
-                    'als auch einer eher ungenauen versteckten Konfetti-Kanone zu tun haben.\n\n'...
+                self.fourthPractice = ['Jetzt kommen wir zur letzten Übung.\n\nDiesmal müssen Sie mit dem rosafarbenen Punkt Ihr Netz platzieren und sehen dabei den Helikopter nicht mehr. Außerdem werden Sie es sowohl mit einem relativ genauen '...
+                    'als auch einem eher ungenauen versteckten Helikopter zu tun haben.\n\n'...
                     'Achten Sie bitte auf Augenbewegungen und Blinzeln wie von der Versuchsleitung erklärt.'...
-                    '\n\nBeachten Sie bitte auch, dass das Ziel der Konfetti-Kanone in manchen Fällen sichtbar sein wird. In diesen Fällen ist die beste Strategie, zum Ziel der Kanone zu gehen.'];
+                    '\n\nBeachten Sie bitte auch, dass das Ziel des Helikopters in manchen Fällen sichtbar sein wird. In diesen Fällen ist die beste Strategie, zum Ziel des Helikopters zu gehen.'];
 
             elseif isequal(self.language, 'English')
                 self.fourthPractice = ['Add instructions please']; % update few things if planning to use this

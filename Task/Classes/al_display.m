@@ -33,6 +33,9 @@ classdef al_display
         pill3Txt
         pill4Txt
         syringeTxt
+        cloudTexture
+        feedbackTxt
+        
 
         % Image rectangles
         %% todo: check if dst and image rects can be merged
@@ -142,112 +145,97 @@ classdef al_display
         end
 
         function self = createTextures(self, cannonType)
-            % CREATETEXTURES This function creates textures of displayed
-            %   images
-            %
-            %   Input
-            %       cannonType: Which type of cannon should be shown
-            %
+    % CREATETEXTURES This function loads and creates textures of displayed images
+    %
+    %   Inputs:
+    %       cannonType - Determines which type of cannon should be shown
+    %
+    %   Outputs:
+    %       self - Updated display object with loaded textures
+    
+    % === Load Background Image ===
+    [backgroundPic, ~, ~] = imread('Greybanner Coliseum - Day - Large - 44x32.jpg');
 
-            % Todo: these should be methods that are specific to these
-            % versions
+%% Load the Feedback Image for the Leipzig Task Version
 
-            % Load images
-            %[cannonPic, ~, alpha]  = imread('cannon.png');
-            if strcmp(cannonType, 'standard')
-                [cannonPic, ~, alpha]  = imread('cannon_not_centered.png');
-            elseif strcmp(cannonType, 'helicopter')
-                [cannonPic, ~, alpha]  = imread('helicopter.png');
-                [doctorPic, ~, doctorAlpha]  = imread('doctor.png');
-                [heliPic, ~, heliAlpha]  = imread('helicopter.png');
-                [pill1Pic, ~, pill1Alpha]  = imread('pill_1.png');
-                [pill2Pic, ~, pill2Alpha]  = imread('pill_2.png');
-                [pill3Pic, ~, pill3Alpha]  = imread('pill_3.png');
-                [pill4Pic, ~, pill4Alpha]  = imread('pill_4.png');
-                [syringePic, ~, syringeAlpha]  = imread('syringe.png');
-            elseif strcmp(cannonType, 'duck')
-                [duckPic, ~, duckAlpha]  = imread('duck.png');
-            else
-                [cannonPic, ~, alpha]  = imread('confetti_cannon.png');
-            end
-            [backgroundPic, ~, ~] = imread('Greybanner Coliseum - Day - Large - 44x32.jpg');
+% Define image path 
+feedbackImagePath = 'C:\Users\fb74loha\Desktop\HelicopterTaskVersion\pictures\succes_image.png'; 
 
-            % Load social-fedback images
-            % --------------------------
+% Initialize placeholder
+self.feedbackTxt = nan;
 
-            % Parent directory
-            parentDirectory = fileparts(cd);
-            
-            % Optionally load social stimuli
-            if ~self.socialsample == 0
-                
-                % Decide whether to get younger adults or adolescents
-                if self.socialsample == 1
-                    ImDir = [parentDirectory '/Files/socialFeedback/YA'];
-                elseif self.socialsample == 2
-                    ImDir = [parentDirectory '/Files/socialFeedback/Ado'];
-                end
-                
-                % Get number of respective images
-                self.nHas = length(dir([ImDir '/HAS/*.JPG']));
-                self.nDis = length(dir([ImDir '/DIS/*.JPG']));
+% Load Feedback Image
+if exist(feedbackImagePath, 'file') ~= 2
+    warning('Feedback image not found: %s', feedbackImagePath);
+else
+    [feedbackPic, ~, feedbackAlpha] = imread(feedbackImagePath);
 
-                % Load stimuli as textures into structure
-                imagesDis = cell(self.nDis, 1);
-                for n = 1:self.nDis
-                    imagesDis{n} = imread(sprintf('DIS/dis_%d.JPG',n));
-                    self.socialDisTxts{n} = Screen('MakeTexture', self.window.onScreen, imagesDis{n});
-                end
+    % Merge alpha channel if available
+    if ~isempty(feedbackAlpha)
+        feedbackPic(:,:,4) = feedbackAlpha;
+    end
 
-                imagesHas = cell(self.nDis, 1);
-                for n = 1:self.nHas
-                    imagesHas{n} = imread(sprintf('HAS/has_%d.JPG',n));
-                    self.socialHasTxts{n} = Screen('MakeTexture', self.window.onScreen, imagesHas{n});
-                end
-            end
-            
-            % Continue with optional background image
-            backgroundPicSize = size(backgroundPic);
-            ySize = self.window.screenY;
-            scaleFactor = ySize/backgroundPicSize(1);
-            xSize = backgroundPicSize(2) * scaleFactor;
-            self.backgroundCoords = [self.zero(1)-xSize/2, self.zero(2)-ySize/2, self.zero(1)+xSize/2, self.zero(2)+ySize/2];
+    % Create texture and store it
+    self.feedbackTxt = Screen('MakeTexture', self.window.onScreen, feedbackPic);
+    
+end
 
-            % Create pictures based on images
-            if strcmp(cannonType, 'helicopter')
-                doctorPic(:,:,4) = doctorAlpha(:,:);
-                heliPic(:,:,4) = heliAlpha(:,:);
-                pill1Pic(:,:,4) = pill1Alpha(:,:);
-                pill2Pic(:,:,4) = pill2Alpha(:,:);
-                pill3Pic(:,:,4) = pill3Alpha(:,:);
-                pill4Pic(:,:,4) = pill4Alpha(:,:);
-                syringePic(:,:,4) = syringeAlpha(:,:);
-            elseif strcmp(cannonType, 'duck')
-                duckPic(:,:,4) = duckAlpha(:,:);
-            else
-                cannonPic(:,:,4) = alpha(:,:);
-            end
 
-            % Set the current alpha-blending mode and the color buffer
-            Screen('BlendFunction', self.window.onScreen, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-            % Create textures
-            self.backgroundTxt = Screen('MakeTexture', self.window.onScreen, backgroundPic);
+    %% Load Other Images Based on Cannon Type ===
+    if strcmp(cannonType, 'standard')
+        [cannonPic, ~, alpha] = imread('cannon_not_centered.png');
+    elseif strcmp(cannonType, 'HelicopterNEW')
+        [cannonPic, ~, alpha] = imread('Hubschrauber.png');
+    elseif strcmp(cannonType, 'duck')
+        [duckPic, ~, duckAlpha] = imread('duck.png');
+    else
+        [cannonPic, ~, alpha] = imread('confetti_cannon.png');
+    end
 
-            if strcmp(cannonType, 'helicopter')
-                self.doctorTxt = Screen('MakeTexture', self.window.onScreen, doctorPic);
-                self.heliTxt = Screen('MakeTexture', self.window.onScreen, heliPic);
-                self.pill1Txt = Screen('MakeTexture', self.window.onScreen, pill1Pic);
-                self.pill2Txt = Screen('MakeTexture', self.window.onScreen, pill2Pic);
-                self.pill3Txt = Screen('MakeTexture', self.window.onScreen, pill3Pic);
-                self.pill4Txt = Screen('MakeTexture', self.window.onScreen, pill4Pic);
-                self.syringeTxt = Screen('MakeTexture', self.window.onScreen, syringePic);
-            elseif strcmp(cannonType, 'duck')
-                self.duckTxt = Screen('MakeTexture', self.window.onScreen, duckPic);
-            else
-                self.cannonTxt = Screen('MakeTexture', self.window.onScreen, cannonPic);
-            end
-        end
+    % === Set Background Image Size ===
+    backgroundPicSize = size(backgroundPic);
+    ySize = self.window.screenY;
+    scaleFactor = ySize / backgroundPicSize(1);
+    xSize = backgroundPicSize(2) * scaleFactor;
+    self.backgroundCoords = [self.zero(1)-xSize/2, self.zero(2)-ySize/2, self.zero(1)+xSize/2, self.zero(2)+ySize/2];
+
+    % === Merge Alpha Channels for Transparency ===
+    if strcmp(cannonType, 'helicopter')
+        doctorPic(:,:,4) = doctorAlpha(:,:);
+        heliPic(:,:,4) = heliAlpha(:,:);
+        pill1Pic(:,:,4) = pill1Alpha(:,:);
+        pill2Pic(:,:,4) = pill2Alpha(:,:);
+        pill3Pic(:,:,4) = pill3Alpha(:,:);
+        pill4Pic(:,:,4) = pill4Alpha(:,:);
+        syringePic(:,:,4) = syringeAlpha(:,:);
+    elseif strcmp(cannonType, 'duck')
+        duckPic(:,:,4) = duckAlpha(:,:);
+    else
+        cannonPic(:,:,4) = alpha(:,:);
+    end
+
+    % === Set Alpha Blending Mode ===
+    Screen('BlendFunction', self.window.onScreen, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    % === Create Textures ===
+    self.backgroundTxt = Screen('MakeTexture', self.window.onScreen, backgroundPic);
+    
+    if strcmp(cannonType, 'helicopter')
+        self.doctorTxt = Screen('MakeTexture', self.window.onScreen, doctorPic);
+        self.heliTxt = Screen('MakeTexture', self.window.onScreen, heliPic);
+        self.pill1Txt = Screen('MakeTexture', self.window.onScreen, pill1Pic);
+        self.pill2Txt = Screen('MakeTexture', self.window.onScreen, pill2Pic);
+        self.pill3Txt = Screen('MakeTexture', self.window.onScreen, pill3Pic);
+        self.pill4Txt = Screen('MakeTexture', self.window.onScreen, pill4Pic);
+        self.syringeTxt = Screen('MakeTexture', self.window.onScreen, syringePic);
+    elseif strcmp(cannonType, 'duck')
+        self.duckTxt = Screen('MakeTexture', self.window.onScreen, duckPic);
+    else
+        self.cannonTxt = Screen('MakeTexture', self.window.onScreen, cannonPic);
+    end
+end
+
 
         function sizePixel = deg2pix(self, sizeDeg)
             %DEG2PIX This function translates degrees visual angle to

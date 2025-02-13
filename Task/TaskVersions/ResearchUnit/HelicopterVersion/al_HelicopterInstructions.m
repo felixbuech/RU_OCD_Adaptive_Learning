@@ -152,7 +152,7 @@ taskData.nParticles(1:nTrials) = taskParam.cannon.nParticles; % number of confet
 taskData.greenCaught(1:nTrials) = nan;
 taskData.redCaught(1:nTrials) = nan;
 for t = 1:nTrials
-    taskData.dotCol(t).rgb = uint8(round(rand(3, taskParam.cannon.nParticles)*255));
+    taskData.dotCol(t).rgb = taskParam.colors.colorsRedWhite;
 end
 taskParam.unitTest.pred = [300, 0, 300, 0];
 
@@ -290,7 +290,7 @@ while 1
     file_name_suffix = sprintf('_b%i', b);
 
     % Task loop
-    taskData = al_confettiLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsVis, file_name_suffix);
+    taskData = al_helicopterLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsVis, file_name_suffix);
 
     % If estimation error is larger than a criterion on more than five
     % trials, we repeat the instructions

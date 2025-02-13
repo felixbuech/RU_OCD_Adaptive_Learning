@@ -22,7 +22,7 @@ function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
 % arguments have to updated to include the three runs (this has to be
 % compatible with two files in no-scanner version)
 
-addpath(genpath('C:\Users\fb74loha\Desktop\HelicopterTaskVersion'));
+addpath(genpath('C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning'));
 
 KbName('UnifyKeyNames')
 
@@ -62,7 +62,7 @@ if ~exist('config', 'var') || isempty(config)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\HelicopterTaskVersion\test_data';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
@@ -78,7 +78,7 @@ if ~exist('config', 'var') || isempty(config)
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 2.5;
     config.customInstructions = true;
-    config.instructionText = al_commonConfettiInstructionsDefaultText;
+    config.instructionText = al_HelicopterInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
     
@@ -260,7 +260,7 @@ end
 
 % Initialize general task parameters
 gParam = al_gparam();
-gParam.taskType = 'Hamburg';
+gParam.taskType = 'HelicopterNEW';
 gParam.trials = trials;
 gParam.nBlocks = nBlocks;
 gParam.practTrialsVis = practTrialsVis;
@@ -310,7 +310,7 @@ trialflow.cannonball_start = 'center';
 trialflow.cannon = 'hide cannon';
 trialflow.background = 'noPicture';
 trialflow.currentTickmarks = 'show';
-trialflow.cannonType = 'confetti';
+trialflow.cannonType = 'HelicopterNEW';
 trialflow.reward = 'standard';
 trialflow.shield = 'variableWithSD';
 trialflow.shieldType = 'constant';
