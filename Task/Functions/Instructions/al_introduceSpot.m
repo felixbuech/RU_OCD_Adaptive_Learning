@@ -63,7 +63,8 @@ if strcmp(taskParam.trialflow.input, 'keyboard')
     varargout{1} = taskData;
     varargout{2} = taskParam;
 
-elseif strcmp(taskParam.trialflow.input, 'mouse') && strcmp(taskParam.trialflow.cannonType, 'confetti')
+elseif strcmp(taskParam.trialflow.input, 'mouse') && ...
+      (strcmp(taskParam.trialflow.cannonType, 'confetti') || strcmp(taskParam.trialflow.cannonType, 'CommonConfidence')) % Updated to include Confidence Version
 
     % Reset mouse to screen center
     SetMouse(taskParam.display.screensize(3)/2, taskParam.display.screensize(4)/2, taskParam.display.window.onScreen) % 720, 450,

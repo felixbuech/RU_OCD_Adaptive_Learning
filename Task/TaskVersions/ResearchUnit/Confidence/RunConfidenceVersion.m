@@ -1,6 +1,7 @@
-function allTaskData = RunCommonConfettiVersion(config, unitTest, cBal)
-%RUNCOMMONCONFETTIVERSION This function runs the common confetti version
-%  of the cannon task
+
+function allTaskData = RunConfidenceVersion(config, unitTest, cBal)
+%RUNCONFIDENCEVERSION This function runs the common confetti version
+%  of the cannon task BUT with confidence ratings. These ratings are presented in specific blocks. The rest of the design equals the COMMONCONFETTIVERSION
 %
 %   Input
 %       config: Structure with local configuration parameters
@@ -15,7 +16,7 @@ function allTaskData = RunCommonConfettiVersion(config, unitTest, cBal)
 %       To run the unit tests, run "al_unittets" in "DataScripts"
 %
 %   Last updated
-%       11/24
+%       02/25 FB
 
 % Todo: write integration test for fMRI version.
 % First ensure version is good to go and then keep in mind that output
@@ -33,7 +34,7 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 2;
+    config.trialsExp = 4;
     config.nBlocks = 4;
     config.practTrialsVis = 10;
     config.practTrialsHid = 10;
@@ -260,7 +261,7 @@ end
 
 % Initialize general task parameters
 gParam = al_gparam();
-gParam.taskType = 'Hamburg';
+gParam.taskType = 'CommonConfidence';
 gParam.trials = trials;
 gParam.nBlocks = nBlocks;
 gParam.practTrialsVis = practTrialsVis;
@@ -295,7 +296,7 @@ gParam.joy = joy;
 gParam.screenNumber = screenNumber;
 gParam.customInstructions = customInstructions;
 gParam.language = language;
-gParam.commitHash = al_getGitCommitHash();
+% gParam.commitHash = al_getGitCommitHash();
 
 % Save directory
 cd(gParam.dataDirectory);
@@ -654,7 +655,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 if scanner == false
 
     % When experiment does not take place in scanner
-    [allTaskData, totWin] = al_commonConfettiConditions(taskParam);
+    [allTaskData, totWin] = al_commonConfidenceConditions(taskParam);
 
 elseif scanner == true
 

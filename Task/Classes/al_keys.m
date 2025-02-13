@@ -26,6 +26,8 @@ classdef al_keys
         kbDev
         leftRelease
         rightRelease
+        a               % used for confidence slider
+        d               % used for confidence slider
 
     end
     
@@ -55,6 +57,8 @@ classdef al_keys
             self.esc = KbName('ESCAPE');
             self.leftRelease = 43;
             self.rightRelease = 44; 
+            self.a = KbName('a');  % Assign 'A' key used for confidence slider
+            self.d = KbName('d');  % Assign 'D' key used for confidence slider
                       
         end
 
