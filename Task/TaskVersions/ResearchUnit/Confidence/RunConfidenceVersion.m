@@ -34,7 +34,7 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 1;
+    config.trialsExp = 4;
     config.nBlocks = 4;
     config.practTrialsVis = 10;
     config.practTrialsHid = 10;
@@ -45,7 +45,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = false;
+    config.runIntro = true;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;
@@ -261,7 +261,7 @@ end
 
 % Initialize general task parameters
 gParam = al_gparam();
-gParam.taskType = 'Hamburg';
+gParam.taskType = 'CommonConfidence';
 gParam.trials = trials;
 gParam.nBlocks = nBlocks;
 gParam.practTrialsVis = practTrialsVis;
