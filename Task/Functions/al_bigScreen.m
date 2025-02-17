@@ -43,7 +43,7 @@ if feedback == true && contains(txt, 'lebensrettende Medikamente')
     
     % Define image size and position (centered above text)
     imgWidth = 600;  
-    imgHeight = 1600; 
+    imgHeight = 1200; 
     imgSize = [screenX - imgWidth/2, screenY - 350, screenX + imgWidth/2, screenY - 50];
 
     % Set feedback image 

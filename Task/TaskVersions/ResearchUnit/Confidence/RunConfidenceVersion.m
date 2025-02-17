@@ -45,7 +45,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = false;
+    config.runIntro = true;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;
@@ -457,7 +457,7 @@ else
         end
         subject.checkGender();
         subject.checkGroup();
-        subject.checkCBal(2);
+        subject.checkCBal(4); %% siwtched to 4 to allow more cbal inputs
         subject.checkStartsWithBlock(gParam.nBlocks);
 
     elseif scanner == true

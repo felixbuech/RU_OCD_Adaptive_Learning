@@ -135,11 +135,11 @@ end
 
 
 function [totWin, allTaskData] = blockLoop(taskParam, cBal, passiveViewingCondition)
-%BLOCKLOOP - Runs multiple blocks, allowing conditions with or without confidence rating
+%BLOCKLOOP - Runs multiple blocks, counterbalancing confidence & noise order
 %
 %   Input:
 %       taskParam: Task-parameter-object instance
-%       cBal: Counterbalancing condition
+%       cBal: Counterbalancing condition (1-4)
 %       passiveViewingCondition: Boolean flag for passive-viewing condition
 %
 %   Output:
@@ -152,64 +152,60 @@ haz = taskParam.gParam.haz;
 totWin = 0;
 allTaskData = struct();
 
-for b = taskParam.subject.startsWithBlock:taskParam.gParam.nBlocks
+% Define block orders based on cBal
+% Each row corresponds to Block 1 → Block 2 → Block 3 → Block 4
+blockOrders = { 
+    % cBal = 1 (NoConf first, Low-High | Conf, Low-High)
+    [false, 1; false, 2; true, 1; true, 2]; 
+    % cBal = 2 (NoConf first, High-Low | Conf, High-Low)
+    [false, 2; false, 1; true, 2; true, 1]; 
+    % cBal = 3 (Conf first, Low-High | NoConf, Low-High)
+    [true, 1; true, 2; false, 1; false, 2]; 
+    % cBal = 4 (Conf first, High-Low | NoConf, High-Low)
+    [true, 2; true, 1; false, 2; false, 1];
+};
 
-    % Select noise condition:
-    % ----------------------
-    % 1) odd & cBal 1 = low
-    % 2) even & cBal 2 = low_withConfidence
-    % 3) odd & cBal 2 = high
-    % 4) even & cBal 1 = high_withConfidence
-   
-    if (mod(b,2) == 1 && cBal == 1) || (mod(b,2) == 0 && cBal == 2)
-    noiseCondition = 1; % High Noise
-elseif (mod(b,2) == 1 && cBal == 2) || (mod(b,2) == 0 && cBal == 1)
-    noiseCondition = 2; % Low Noise
-end
+% Get the specific order for this subject
+blockOrder = blockOrders{cBal};
 
-% **Enable confidence rating ONLY for Blocks 3 & 4**
-if b >= 3
-    taskParam.trialflow.includeConfidence = true;
-else
-    taskParam.trialflow.includeConfidence = false;
-end
+for b = 1:taskParam.gParam.nBlocks
+    % Extract confidence and noise settings for this block
+    taskParam.trialflow.includeConfidence = blockOrder(b,1); % true = Confidence, false = No Confidence
+    noiseCondition = blockOrder(b,2); % 1 = Low Noise, 2 = High Noise
 
-
-    % **Assign confidence rating condition:**
-    % Blocks 1 & 2 → No Confidence
-    % Blocks 3 & 4 → With Confidence
-    if b <= 2
-        taskParam.trialflow.includeConfidence = false; % First two blocks → No Confidence
-    else
-        taskParam.trialflow.includeConfidence = true;  % Last two blocks → With Confidence
-    end
-
-    % Task data
+    % Task data preparation
     if ~taskParam.unitTest.run
         taskData = al_taskDataMain(trial, taskParam.gParam.taskType);
         taskData = taskData.al_cannonData(taskParam, haz, concentration(noiseCondition), taskParam.gParam.safe);
         taskData = taskData.al_confettiData(taskParam);
         taskData.block(:) = b;
+        taskData.confidence(:) = taskParam.trialflow.includeConfidence; % Store confidence status
         file_name_suffix = sprintf('_b%i', b);
     else
-        if noiseCondition == 1
-            taskData = taskParam.unitTest.taskDataIntegrationTest_HamburgLowNoise;
-        elseif noiseCondition == 2
-            taskData = taskParam.unitTest.taskDataIntegrationTest_HamburgHighNoise;
-        end
+        taskData = taskParam.unitTest.taskDataIntegrationTest_HamburgLowNoise;
         file_name_suffix = '';
     end
 
-    % Indicate noise condition for each block
+    % **Indicate noise condition**
     if noiseCondition == 1
-        al_indicateNoise(taskParam, 'lowNoise', true, passiveViewingCondition)
-        fieldName = sprintf('lowNoiseBlock%d', b);
-    elseif noiseCondition == 2
-        al_indicateNoise(taskParam, 'highNoise', true, passiveViewingCondition)
-        fieldName = sprintf('highNoiseBlock%d', b);
+        noiseLabel = 'lowNoise';
+    else
+        noiseLabel = 'highNoise';
     end
+    al_indicateNoise(taskParam, noiseLabel, true, passiveViewingCondition);
 
-    % **Run task with or without confidence**
+    % Determine confidence condition label
+if taskParam.trialflow.includeConfidence
+    confidenceLabel = 'WithConfidence';
+else
+    confidenceLabel = 'NoConfidence';
+end
+
+% Generate structured field name for storage
+fieldName = sprintf('%s_%s_Block%d', confidenceLabel, noiseLabel, b);
+
+
+    % **Run the task using only `al_confidenceLoop`**
     data = al_confidenceLoop(taskParam, 'main', taskData, trial, file_name_suffix);
 
     % Store block data
@@ -221,8 +217,9 @@ end
 
     % Short break before next block
     if b < taskParam.gParam.nBlocks
-        al_blockBreak(taskParam, b)
+        al_blockBreak(taskParam, b);
     end
 end 
 end
+
 

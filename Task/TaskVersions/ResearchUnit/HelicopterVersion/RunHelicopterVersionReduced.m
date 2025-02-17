@@ -1,4 +1,4 @@
-function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
+function allTaskData = RunHelicopterVersionReduced(config, unitTest, cBal)
 %RUNHELICOPTERVERSION This function runs the Leipzig specific Version of
 %the task
 %
@@ -35,8 +35,8 @@ if ~exist('config', 'var') || isempty(config)
     % Default parameters
     config.trialsExp = 2;
     config.nBlocks = 4;
-    config.practTrialsVis = 10; %10
-    config.practTrialsHid = 10; %10
+    config.practTrialsVis = 5; %10;
+    config.practTrialsHid = 5; %10;
     config.cannonPractCriterion = 4;
     config.cannonPractNumOutcomes = 5;
     config.cannonPractFailCrit = 3;
@@ -456,7 +456,7 @@ else
         end
         subject.checkGender();
         subject.checkGroup();
-        subject.checkCBal(4); % set to 4 (from 2) to allow input of more cbacl values
+        subject.checkCBal(4);
         subject.checkStartsWithBlock(gParam.nBlocks);
 
     elseif scanner == true

@@ -1,6 +1,7 @@
-function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
-%RUNHELICOPTERVERSION This function runs the Leipzig specific Version of
-%the task
+
+function allTaskData = RunConfidenceVersionReduced(config, unitTest, cBal)
+%RUNCONFIDENCEVERSION This function runs the common confetti version
+%  of the cannon task BUT with confidence ratings. These ratings are presented in specific blocks. The rest of the design equals the COMMONCONFETTIVERSION
 %
 %   Input
 %       config: Structure with local configuration parameters
@@ -15,7 +16,7 @@ function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
 %       To run the unit tests, run "al_unittets" in "DataScripts"
 %
 %   Last updated
-%       02/25
+%       02/25 FB
 
 % Todo: write integration test for fMRI version.
 % First ensure version is good to go and then keep in mind that output
@@ -33,10 +34,10 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 2;
+    config.trialsExp = 1;
     config.nBlocks = 4;
-    config.practTrialsVis = 10; %10
-    config.practTrialsHid = 10; %10
+    config.practTrialsVis = 5; %10
+    config.practTrialsHid = 5; %10
     config.cannonPractCriterion = 4;
     config.cannonPractNumOutcomes = 5;
     config.cannonPractFailCrit = 3;
@@ -57,12 +58,12 @@ if ~exist('config', 'var') || isempty(config)
     config.s = 83;
     config.five = 53;
     config.enter = 13;
-    config.defaultParticles = false; 
+    config.defaultParticles = false;
     config.debug = false;
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data_confidence';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
@@ -78,7 +79,7 @@ if ~exist('config', 'var') || isempty(config)
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 2.5;
     config.customInstructions = true;
-    config.instructionText = al_HelicopterInstructionsDefaultText();
+    config.instructionText = al_commonConfettiInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
     
@@ -260,7 +261,7 @@ end
 
 % Initialize general task parameters
 gParam = al_gparam();
-gParam.taskType = 'HelicopterNEW';
+gParam.taskType = 'CommonConfidence';
 gParam.trials = trials;
 gParam.nBlocks = nBlocks;
 gParam.practTrialsVis = practTrialsVis;
@@ -310,12 +311,12 @@ trialflow.cannonball_start = 'center';
 trialflow.cannon = 'hide cannon';
 trialflow.background = 'noPicture';
 trialflow.currentTickmarks = 'show';
-trialflow.cannonType = 'HelicopterNEW';
+trialflow.cannonType = 'confetti';
 trialflow.reward = 'standard';
 trialflow.shield = 'variableWithSD';
 trialflow.shieldType = 'constant';
 trialflow.input = 'mouse';
-trialflow.colors = 'redWhite';
+trialflow.colors = 'colorful';
 
 % ---------------------------------------------
 % Create object instance with cannon parameters
@@ -456,7 +457,7 @@ else
         end
         subject.checkGender();
         subject.checkGroup();
-        subject.checkCBal(4); % set to 4 (from 2) to allow input of more cbacl values
+        subject.checkCBal(4);
         subject.checkStartsWithBlock(gParam.nBlocks);
 
     elseif scanner == true
@@ -513,21 +514,7 @@ display.distance2screen = distance2screen;
 display.screenWidthInMM = screenWidthInMM;
 display.useDegreesVisualAngle = useDegreesVisualAngle;
 
-
-%Cannon Image % Script updated to include Hunschrauber.png instead of
-%cannon 
-
-% Load the new cannon image to get its aspect ratio
-[imgHeight, imgWidth, ~] = size(imread('Hubschrauber.png'));
-
-% Define cannon size in degrees of visual angle
-cannonHeightDeg = 2.5; % Adjust as needed
-cannonWidthDeg = (cannonHeightDeg / imgHeight) * imgWidth; % Maintain aspect ratio
-
-% Update imageRectDeg
-imageRectDeg = [0 0 cannonWidthDeg cannonHeightDeg];
-
-% Convert degrees to pixels
+% Cannon image
 if display.useDegreesVisualAngle
     display.imageRect(3) = display.deg2pix(imageRectDeg(3));
     display.imageRect(4) = display.deg2pix(imageRectDeg(4));
@@ -642,7 +629,6 @@ taskParam.triggers = triggers;
 taskParam.eyeTracker = eyeTracker;
 taskParam.instructionText = instructionText;
 
-
 % Check and update background rgb:
 % It turns out that depending on screen resolution, the exactly ideal
 % background values are slightly different. But for research unit it is
@@ -669,7 +655,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 if scanner == false
 
     % When experiment does not take place in scanner
-    [allTaskData, totWin] = al_HelicopterConditions(taskParam);
+    [allTaskData, totWin] = al_commonConfidenceConditions(taskParam);
 
 elseif scanner == true
 

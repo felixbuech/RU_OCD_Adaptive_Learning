@@ -159,7 +159,7 @@ classdef al_display
 %% Load the Feedback Image for the Leipzig Task Version
 
 % Define image path 
-feedbackImagePath = 'C:\Users\fb74loha\Desktop\HelicopterTaskVersion\pictures\succes_image.png'; 
+feedbackImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\hospital_patient.png'; 
 
 % Initialize placeholder
 self.feedbackTxt = nan;

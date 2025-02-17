@@ -64,6 +64,9 @@ elseif strcmp(noiseCondition, 'lowNoise') && variableShield && passiveViewing ==
     if taskParam.gParam.customInstructions
         header = taskParam.instructionText.introduceLowNoiseHeader;
         txt = taskParam.instructionText.introduceLowNoise;
+
+       
+        
     else
         if isequal(taskParam.gParam.language, 'German')
             header = 'Genauere Konfetti-Kanone';
@@ -91,6 +94,9 @@ elseif strcmp(noiseCondition, 'highNoise') && variableShield && passiveViewing =
     if taskParam.gParam.customInstructions
         header = taskParam.instructionText.introduceHighNoiseHeader;
         txt = taskParam.instructionText.introduceHighNoise;
+
+        
+    
     else
         if isequal(taskParam.gParam.language, 'German')
             header = 'Ungenauere Konfetti-Kanone';
