@@ -508,7 +508,7 @@ taskData = load('hidCannonPracticeHamburg_c8.mat');
 taskDataHighNoise = taskData.taskData;
 taskDataHighNoise.saveAsStruct = true; % ensure that we save as struct
 
-if cBal == 1
+if cBal == 1 || cBal == 2 
 
     % Low noise first...
     % ------------------
@@ -524,7 +524,7 @@ if cBal == 1
     al_indicateNoise(taskParam, 'highNoise', true)
     al_helicopterLoop(taskParam, condition, taskDataHighNoise, taskParam.gParam.practTrialsHid);
 
-elseif cBal == 2
+elseif cBal == 3 || cBal == 4
 
     % High noise first...
     % ------------------
