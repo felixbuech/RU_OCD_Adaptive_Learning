@@ -518,7 +518,7 @@ display.useDegreesVisualAngle = useDegreesVisualAngle;
 %cannon 
 
 % Load the new cannon image to get its aspect ratio
-[imgHeight, imgWidth, ~] = size(imread('Hubschrauber.png'));
+[imgHeight, imgWidth, ~] = size(imread('Hubschrauber_rotated.png'));
 
 % Define cannon size in degrees of visual angle
 cannonHeightDeg = 2.5; % Adjust as needed

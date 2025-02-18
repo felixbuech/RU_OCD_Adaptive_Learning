@@ -186,7 +186,7 @@ end
     if strcmp(cannonType, 'standard')
         [cannonPic, ~, alpha] = imread('cannon_not_centered.png');
     elseif strcmp(cannonType, 'HelicopterNEW')
-        [cannonPic, ~, alpha] = imread('Hubschrauber.png');
+        [cannonPic, ~, alpha] = imread('Hubschrauber_rotated.png');
     elseif strcmp(cannonType, 'duck')
         [duckPic, ~, duckAlpha] = imread('duck.png');
     else

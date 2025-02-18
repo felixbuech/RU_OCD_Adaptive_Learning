@@ -468,7 +468,7 @@ taskParam.trialflow.cannon = 'hide cannon'; % don't show cannon anymore
 taskParam.trialflow.confetti = 'show confetti cloud';
 
 % Run practice block
-al_confettiLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsHid);
+al_helicopterLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsHid);
 
 % 11. Introduce hidden confetti cannon
 % ------------------------------------
@@ -516,13 +516,13 @@ if cBal == 1
     taskParam.trialflow.cannon = 'hide cannon'; % don't show cannon anymore
     taskParam.trialflow.confetti = 'show confetti cloud';
     al_indicateNoise(taskParam, 'lowNoise', true)
-    al_confettiLoop(taskParam, condition, taskDataLowNoise, taskParam.gParam.practTrialsHid);
+    al_helicopterLoop(taskParam, condition, taskDataLowNoise, taskParam.gParam.practTrialsHid);
 
     % ... high noise second
     % ---------------------
 
     al_indicateNoise(taskParam, 'highNoise', true)
-    al_confettiLoop(taskParam, condition, taskDataHighNoise, taskParam.gParam.practTrialsHid);
+    al_helicopterLoop(taskParam, condition, taskDataHighNoise, taskParam.gParam.practTrialsHid);
 
 elseif cBal == 2
 
@@ -532,14 +532,14 @@ elseif cBal == 2
     taskParam.trialflow.cannon = 'hide cannon'; % don't show cannon anymore
     taskParam.trialflow.confetti = 'show confetti cloud';
     al_indicateNoise(taskParam, 'highNoise', true)
-    al_confettiLoop(taskParam, condition, taskDataHighNoise, taskParam.gParam.practTrialsHid);
+    al_helicopterLoop(taskParam, condition, taskDataHighNoise, taskParam.gParam.practTrialsHid);
 
     % ... low noise second
     % ---------------------
 
     % Run task
     al_indicateNoise(taskParam, 'lowNoise', true)
-    al_confettiLoop(taskParam, condition, taskDataLowNoise, taskParam.gParam.practTrialsHid);
+    al_helicopterLoop(taskParam, condition, taskDataLowNoise, taskParam.gParam.practTrialsHid);
 
 end
 
