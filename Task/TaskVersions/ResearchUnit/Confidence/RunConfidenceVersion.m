@@ -1,4 +1,3 @@
-
 function allTaskData = RunConfidenceVersion(config, unitTest, cBal)
 %RUNCONFIDENCEVERSION This function runs the common confetti version
 %  of the cannon task BUT with confidence ratings. These ratings are presented in specific blocks. The rest of the design equals the COMMONCONFETTIVERSION
@@ -36,8 +35,8 @@ if ~exist('config', 'var') || isempty(config)
     % Default parameters
     config.trialsExp = 1;
     config.nBlocks = 4;
-    config.practTrialsVis = 10;
-    config.practTrialsHid = 10;
+    config.practTrialsVis = 5;
+    config.practTrialsHid = 5;
     config.cannonPractCriterion = 4;
     config.cannonPractNumOutcomes = 5;
     config.cannonPractFailCrit = 3;
@@ -45,7 +44,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = false;
+    config.runIntro = true;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;

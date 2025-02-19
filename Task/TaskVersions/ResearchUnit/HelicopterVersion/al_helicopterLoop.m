@@ -469,8 +469,8 @@ hitRatio = nansum(taskData.hit) / totalTrials;
 
 % Define feedback message based on language (without performance calculation)
 if isequal(taskParam.gParam.language, 'German')
-    txt = sprintf(['Sie haben %.0f Einheiten lebensrettende Medikamente gesichert.\n\n' ...
-        'Nur wenn Sie genug Medikamente sichern, kann den Menschen geholfen werden. Jede Ihrer Entscheidungen zählt!'], currPoints);
+    txt = sprintf(['Sie haben %.0f Einheiten lebensrettender Medikamente gesichert.\n\n' ...
+        'Nur wenn Sie genügend Medikamente sichern, können die Kranken geheilt werden.\n\n Jede Ihrer Entscheidungen zählt!'], currPoints);
     
 elseif isequal(taskParam.gParam.language, 'English')
     txt = sprintf(['You caught %.0f life-saving medicine units.\n\n' ...

@@ -52,9 +52,16 @@ Screen('DrawDots', taskParam.display.window.onScreen, [markerX; scaleYPos], 15, 
 DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRating), markerX - 10, scaleYPos - 50, taskParam.colors.gray);
 
    
-    % Draw question
-    DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Ihre Vorhersage eintrifft?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
+    % % Draw question
+    % DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Ihre Vorhersage eintrifft?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
     
+    if isequal (taskParam.gParam.taskType, 'HelicopterNEW')
+                DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Sie die Medikamente fangen werden?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
+            else
+                DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Sie das Konfetti fangen werden?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
+            end
+
+
     % Flip screen
     Screen('Flip', taskParam.display.window.onScreen);
 

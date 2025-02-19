@@ -55,6 +55,8 @@ classdef al_commonConfidenceInstructionsDefaultText
         dynamicBlockTxt
         introduceLowNoiseConfidence
         introduceHighNoiseConfidence
+        ConfidencePracticeHeader
+        ConfidencePractice
 
     end
 
@@ -275,6 +277,26 @@ classdef al_commonConfidenceInstructionsDefaultText
                 error('language parameter unknown')
             end
 
+            % Confidence Pratcice Header
+            
+            if isequal(self.language, 'German')
+                self.ConfidencePracticeHeader = 'Letzter Übungsdurchgang';
+            else
+                error('language parameter unknown')
+            end
+
+            % Confidence Practice
+            if isequal(self.language, 'German')
+                self.ConfidencePractice = ['Jetzt kommen wir zur letzten Übung.\n\n'...
+    'Im folgenden Übungsdurchgang werden Sie zusätzlich zu Ihrer Vorhersage, wo Sie das Ziel der Konfetti-Kanone vermuten, angeben, wie sicher Sie sich sind, dass Ihre Vorhersage zutrifft und Sie das Konfetti mit dem Eimer fangen.\n\n'...
+    'Legen Sie dazu bitte Ihre linke Hand auf die Tastatur, sodass Ihr linker Ringfinger auf der Taste A, Ihr linker Zeigefinger auf der Taste D und Ihr Daumen auf der Leertaste liegt.\n\n'...
+    'Nachdem Sie – wie in den vorherigen Übungen – Ihre Vorhersage auf dem Kreis eingegeben haben, wird ein Schieberegler erscheinen. Dieser Schieberegler kann zwischen 1 (sehr unsicher) und 100 (sehr sicher) bewegt werden.\n\n'...
+    'Nutzen Sie den Schieberegler, um anzugeben, wie sicher Sie sich sind, dass Ihre Vorhersage zutrifft und Sie das Konfetti in Ihrem Eimer fangen.\n\n'...
+    'Im Folgenden absolvieren Sie einige Durchgänge, um sich mit dem Schieberegler vertraut zu machen.'];
+
+            
+             end
+
             % Start task header
             if isequal(self.language, 'German')
                 self.startTaskHeader = 'Start des Experiments';
@@ -440,7 +462,7 @@ classdef al_commonConfidenceInstructionsDefaultText
                     'Zur Erinnerung: Der rosafarbene Strich zeigt Ihre letzte Vorhersage. Der schwarze '...
                     'Strich zeigt die Position der letzten Konfetti-Wolke.\n\n'...
                     'Achten Sie bitte auf Augenbewegungen und Blinzeln wie von der Versuchsleitung erklärt.\n\n'...
-                    'Zusätzlich geben Sie bitte an, wie sicher Sie sind, dass Sie die Medikamente fangen werden. Bewegen Sie dazu den Schieberegler nach jeder Vorhersage auf eine Zahl zwischen 1 (sehr unsicher) und 100 (sehr sicher).\n\n'...
+                    'Zusätzlich geben Sie bitte an, wie sicher Sie sind, dass Sie das Konfetti fangen werden. Bewegen Sie dazu den Schieberegler nach jeder Vorhersage auf eine Zahl zwischen 1 (sehr unsicher) und 100 (sehr sicher).\n\n'...
                     'Um den Schieberegler zu bewegen, verwenden Sie bitte die Tasten a und d und anschließend die Leertaste, um Ihre Antwort einzugeben.'];
             
             elseif isequal(self.language, 'English')
@@ -474,7 +496,7 @@ classdef al_commonConfidenceInstructionsDefaultText
                     'Zur Erinnerung: Der rosafarbene Strich zeigt Ihre letzte Vorhersage. Der schwarze '...
                     'Strich zeigt die Position der letzten Konfetti-Wolke.\n\n'...
                     'Achten Sie bitte auf Augenbewegungen und Blinzeln wie von der Versuchsleitung erklärt.\n\n'...
-                    'Zusätzlich geben Sie bitte an, wie sicher Sie sind, dass Sie die Medikamente fangen werden. Bewegen Sie dazu den Schieberegler nach jeder Vorhersage auf eine Zahl zwischen 1 (sehr unsicher) und 100 (sehr sicher).\n\n'...
+                    'Zusätzlich geben Sie bitte an, wie sicher Sie sind, dass Sie das Konfetti fangen werden. Bewegen Sie dazu den Schieberegler nach jeder Vorhersage auf eine Zahl zwischen 1 (sehr unsicher) und 100 (sehr sicher).\n\n'...
                     'Um den Schieberegler zu bewegen, verwenden Sie bitte die Tasten a und d und anschließend die Leertaste, um Ihre Antwort einzugeben.'];
 
             elseif isequal(self.language, 'English')
@@ -509,7 +531,7 @@ classdef al_commonConfidenceInstructionsDefaultText
             %       self: Instructions-text-object instance
 
 
-            if isequal(type, 'block')
+            if isequal(type, 'block') 
                 if isequal(self.language, 'German')
                     self.dynamicFeedbackTxt = sprintf('In diesem Block haben Sie %.0f Punkte verdient.', currPoints);
                 elseif isequal(self.language, 'English')

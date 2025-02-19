@@ -470,6 +470,9 @@ taskParam.trialflow.confetti = 'show confetti cloud';
 % Run practice block
 al_helicopterLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsHid);
 
+
+
+
 % 11. Introduce hidden confetti cannon
 % ------------------------------------
 
@@ -543,7 +546,50 @@ elseif cBal == 3 || cBal == 4
 
 end
 
-% 12. Instructions experimental blocks
+
+%  12. Introduce Confidence Rating
+% ------------------------------------
+
+% Update condition
+condition = 'ConfidencePractice';
+taskParam.trialflow.exp = condition;
+
+% Display instructions
+if taskParam.gParam.customInstructions
+    header = taskParam.instructionText.ConfidencePracticeHeader;
+    txt = taskParam.instructionText.ConfidencePractice;
+else
+                error('Confidence Practice not succesfull')
+end
+
+
+feedback = false;
+al_bigScreen(taskParam, header, txt, feedback);
+
+% Update trial flow
+taskParam.trialflow.colors = 'dark';
+taskParam.trialflow.shot = 'static';
+taskParam.trialflow.shieldAppearance = 'lines';
+taskParam.cannon = taskParam.cannon.al_staticConfettiCloud(taskParam.trialflow.colors, taskParam.display);
+
+% Load data
+taskData = load('ConfidencePractice.mat');
+taskData = taskData.taskData;
+taskData.saveAsStruct = true; % ensure that we save as struct
+
+% Update trial flow
+taskParam.trialflow.cannon = 'hide cannon'; % show cannon 
+taskParam.trialflow.confetti = 'show confetti cloud';
+
+% Run practice block
+
+taskParam.trialflow.includeConfidence = true;
+
+al_helicopterLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsHid);
+
+
+
+% 13. Instructions experimental blocks
 % ------------------------------------
 
 % Display instructions
