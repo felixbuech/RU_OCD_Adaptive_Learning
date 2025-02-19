@@ -1,3 +1,4 @@
+
 function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
 %RUNHELICOPTERVERSION This function runs the Leipzig specific Version of
 %the task
@@ -33,7 +34,7 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 2;
+    config.trialsExp = 1;
     config.nBlocks = 4;
     config.practTrialsVis = 10; %10
     config.practTrialsHid = 10; %10

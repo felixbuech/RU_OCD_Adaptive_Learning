@@ -36,7 +36,8 @@ while 1
     sentenceLength = taskParam.strings.sentenceLength;
     
   %% --- Draw Feedback Image if Available for Leipzig Version ---
-if feedback == true && contains(txt, 'lebensrettende Medikamente')
+if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') && contains(header, 'Zwischenstand')
+
     
     % Define position for the image (above text)
     [screenX, screenY] = RectCenter(Screen('Rect', taskParam.display.window.onScreen));
@@ -56,7 +57,8 @@ if feedback == true && contains(txt, 'lebensrettende Medikamente')
 end
 
 % --- Draw Feedback Message ---
-if feedback == true && contains(txt, 'lebensrettende Medikamente')
+if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') && contains(header, 'Zwischenstand')
+
     % Display text lower on the screen (e.g., 60% down)
     DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.6, ...
         [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);

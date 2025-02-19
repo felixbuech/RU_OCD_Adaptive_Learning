@@ -45,7 +45,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = true;
+    config.runIntro = false;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;
@@ -79,7 +79,7 @@ if ~exist('config', 'var') || isempty(config)
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 2.5;
     config.customInstructions = true;
-    config.instructionText = al_commonConfettiInstructionsDefaultText();
+    config.instructionText = al_commonConfidenceInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
     
