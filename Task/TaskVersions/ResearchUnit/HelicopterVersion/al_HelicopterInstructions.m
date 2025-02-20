@@ -585,7 +585,7 @@ taskParam.trialflow.confetti = 'show confetti cloud';
 
 taskParam.trialflow.includeConfidence = true;
 
-al_helicopterLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsHid);
+al_helicopterLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsConf);
 
 
 

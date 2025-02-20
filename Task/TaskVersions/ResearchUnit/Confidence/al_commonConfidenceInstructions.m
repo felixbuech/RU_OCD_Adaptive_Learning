@@ -485,7 +485,7 @@ taskParam.trialflow.confetti = 'show confetti cloud';
 
 taskParam.trialflow.includeConfidence = true;
 
-al_confidenceLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsHid);
+al_confidenceLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsConf);
 
 
 % 13. Instructions experimental blocks
