@@ -1,4 +1,4 @@
-function confidenceRating = al_confidenceRating(taskParam, predictedAngle)
+function [confidenceRating, confidenceRT] = al_confidenceRating(taskParam, predictedAngle)
 % AL_CONFIDENCERATING - Handles confidence rating while keeping prediction visible
 %
 %   - A/D keys move the slider smoothly from 1 to 100.
@@ -18,6 +18,9 @@ leftEnd = taskParam.display.zero(1) - (scaleLengthPix / 2);
 rightEnd = taskParam.display.zero(1) + (scaleLengthPix / 2);
 
 confidenceConfirmed = false;
+
+% Record the start time when the slider first appears
+startTimeSlider = GetSecs();
 
 while ~confidenceConfirmed
     % Draw background
@@ -75,6 +78,9 @@ DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRat
             confidenceRating = confidenceRating + 1;
             WaitSecs(0.02);
         elseif keyCode(taskParam.keys.space)
+            % Record the time when spacebar is pressed
+            endTimeSlider = GetSecs();
+            confidenceRT = endTimeSlider - startTimeSlider; % Calculate RT
             confidenceConfirmed = true;
         end
     end

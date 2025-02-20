@@ -206,7 +206,7 @@ fieldName = sprintf('%s_%s_Block%d', confidenceLabel, noiseLabel, b);
 
 
     % **Run the task using only `al_confidenceLoop`**
-    data = al_confidenceLoop(taskParam, 'main', taskData, trial, file_name_suffix);
+    data = al_helicopterLoop(taskParam, 'main', taskData, trial, file_name_suffix);
 
     % Store block data
     data = saveobj(data);

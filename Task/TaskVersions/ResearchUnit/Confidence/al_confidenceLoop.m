@@ -25,7 +25,7 @@ elseif isequal(taskParam.gParam.saveName, 'asymmetric')
     taskData.savename = sprintf('confetti_asymrew_%s_g%d_conc%d_%s', taskParam.trialflow.exp, taskParam.subject.group, concentration, taskParam.subject.ID);
 else
     concentration = unique(taskData.concentration);
-    taskData.savename = sprintf('commonConfetti_%s_g%d_conc%d_%s%s', taskParam.trialflow.exp, taskParam.subject.group, concentration, taskParam.subject.ID, file_name_suffix);
+    taskData.savename = sprintf('commonConfidence_%s_g%d_conc%d_%s%s', taskParam.trialflow.exp, taskParam.subject.group, concentration, taskParam.subject.ID, file_name_suffix);
 end
 
 % Wait until keys released
@@ -164,9 +164,10 @@ for i = 1:trial
 if taskParam.gParam.passiveViewing == false
     [taskData, taskParam] = al_mouseLoop(taskParam, taskData, condition, i, initRT_Timestamp);
     
-    % Pass the user's prediction to the confidence rating function
+   % Pass the user's prediction to the confidence rating function
     if taskParam.trialflow.includeConfidence
-        taskData.confidence(i) = al_confidenceRating(taskParam, taskData.pred(i));
+        [taskData.confidence(i), taskData.confidenceRT(i)] = al_confidenceRating(taskParam, taskData.pred(i));
+        fprintf('Confidence: %.2f\n', taskData.confidence(i));
     end
 
 
@@ -182,6 +183,12 @@ end
     if taskParam.gParam.printTiming
         fprintf('Initiation RT: %.5f\n', taskData.initiationRTs(i))
         fprintf('RT: %.5f\n', taskData.RT(i))
+          
+        % Print Confidence RT
+    if taskParam.trialflow.includeConfidence
+        fprintf('Confidence RT: %.5f\n', taskData.confidenceRT(i));
+    end
+    
     end
 
     % Extract current time and determine when screen should be flipped

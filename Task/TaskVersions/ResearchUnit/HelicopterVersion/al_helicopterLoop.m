@@ -167,7 +167,8 @@ if taskParam.gParam.passiveViewing == false
     
     % Pass the user's prediction to the confidence rating function
     if taskParam.trialflow.includeConfidence
-        taskData.confidence(i) = al_confidenceRating(taskParam, taskData.pred(i));
+        [taskData.confidence(i), taskData.confidenceRT(i)] = al_confidenceRating(taskParam, taskData.pred(i));
+        fprintf('Confidence: %.2f\n', taskData.confidence(i));
     end
 
 
@@ -182,6 +183,11 @@ end
     if taskParam.gParam.printTiming
         fprintf('Initiation RT: %.5f\n', taskData.initiationRTs(i))
         fprintf('RT: %.5f\n', taskData.RT(i))
+         % Print Confidence RT
+    if taskParam.trialflow.includeConfidence
+        fprintf('Confidence RT: %.5f\n', taskData.confidenceRT(i));
+    end
+    
     end
 
     % Extract current time and determine when screen should be flipped

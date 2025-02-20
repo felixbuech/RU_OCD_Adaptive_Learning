@@ -33,7 +33,7 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 1;
+    config.trialsExp = 5;
     config.nBlocks = 4;
     config.practTrialsVis = 5; %10
     config.practTrialsHid = 5; %10
@@ -45,7 +45,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = true;
+    config.runIntro = false;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;

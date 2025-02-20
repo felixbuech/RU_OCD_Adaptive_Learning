@@ -131,7 +131,8 @@ classdef al_taskDataMain
         sacc
 
         % Add this to store confidence rating
-        confidence 
+        confidence
+        confidenceRT
 
 
     end
@@ -253,6 +254,7 @@ classdef al_taskDataMain
 
             % Initialize confidence field
             self.confidence = nan(trials, 1); 
+            self.confidenceRT = nan(trials, 1);
 
         end
 
@@ -917,9 +919,35 @@ classdef al_taskDataMain
                     s.timestampReward = self.timestampReward;
                     s.timestampOffset = self.timestampOffset;
     
-                elseif isequal(self.taskType, 'Leipzig')
+                elseif isequal(self.taskType, 'HelicopterNEW') || isequal(self.taskType, 'CommonConfidence')
     
                     s.group = self.group;
+                    s.nParticles = self.nParticles;
+                    s.confettiStd = self.confettiStd;
+                    s.dotCol = self.dotCol;
+                    s.initialTendency = self.initialTendency;
+                    
+                    s.timestampOnset = self.timestampOnset;
+                    s.timestampBaseline = self.timestampBaseline;
+                    s.timestampPrediction = self.timestampPrediction;
+                    s.timestampFixCross1 = self.timestampFixCross1;
+                    s.timestampFixCross2 = self.timestampFixCross2;
+                    s.timestampFixCross3 = self.timestampFixCross3;
+                    s.timestampOutcome = self.timestampOutcome;
+                    s.timestampShield = self.timestampShield;
+                    s.timestampOffset = self.timestampOffset;
+                    s.triggers = self.triggers;
+    
+                    s.sacc = self.sacc;
+                    s.rotationRad = self.rotationRad;
+                    s.passiveViewing = self.passiveViewing;
+                    
+                    s.confidence = self.confidence;
+                    s.confidenceRT =self.confidenceRT;
+                
+                    % Commit hash
+                    % todo: every version should finally have this
+                    % s.commitHash = self.commitHash;
     
                 else
     
