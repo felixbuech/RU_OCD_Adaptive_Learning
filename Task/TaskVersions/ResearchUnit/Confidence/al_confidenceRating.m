@@ -1,9 +1,10 @@
-function [confidenceRating, confidenceRT] = al_confidenceRating(taskParam, predictedAngle)
+function [confidenceRating, confidenceRT, timestampConfidenceOnset, timestampConfidenceResponse] = al_confidenceRating(taskParam, predictedAngle)
 % AL_CONFIDENCERATING - Handles confidence rating while keeping prediction visible
 %
 %   - A/D keys move the slider smoothly from 1 to 100.
 %   - Spacebar confirms the selection.
 %   - The user's previous prediction is displayed on the circle.
+%   - Records timestamps for slider onset and confidence input relative to the reference time.
 
 % Define scale
 minScale = 1;
@@ -19,8 +20,8 @@ rightEnd = taskParam.display.zero(1) + (scaleLengthPix / 2);
 
 confidenceConfirmed = false;
 
-% Record the start time when the slider first appears
-startTimeSlider = GetSecs();
+% Record timestamp when confidence slider first appears (relative to ref)
+timestampConfidenceOnset = GetSecs() - taskParam.timingParam.ref;
 
 while ~confidenceConfirmed
     % Draw background
@@ -30,15 +31,13 @@ while ~confidenceConfirmed
     al_drawCircle(taskParam);
 
     % Optionally, show confetti cloud
-        if isequal(taskParam.trialflow.confetti, 'show confetti cloud')
-            Screen('DrawDots', taskParam.display.window.onScreen, taskParam.cannon.xyMatrixRing, taskParam.cannon.sCloud, taskParam.cannon.colvectCloud, [taskParam.display.window.centerX, taskParam.display.window.centerY], 1);
-            al_drawFixPoint(taskParam)
-        elseif isequal(condition, 'cannonPract1') == false ||  isequal(condition, 'cannonPract2') == false
-            % Otherwise just fixation cross
-            al_drawFixPoint(taskParam)
-        end
-   
-    
+    if isequal(taskParam.trialflow.confetti, 'show confetti cloud')
+        Screen('DrawDots', taskParam.display.window.onScreen, taskParam.cannon.xyMatrixRing, taskParam.cannon.sCloud, taskParam.cannon.colvectCloud, [taskParam.display.window.centerX, taskParam.display.window.centerY], 1);
+        al_drawFixPoint(taskParam);
+    else
+        al_drawFixPoint(taskParam);
+    end
+
     % **Draw prediction mark safely**
     if ~isnan(predictedAngle)
         al_tickMark(taskParam, predictedAngle, 'pred');
@@ -47,23 +46,19 @@ while ~confidenceConfirmed
     % Draw confidence slider
     Screen('DrawLine', taskParam.display.window.onScreen, taskParam.colors.gray, leftEnd, scaleYPos, rightEnd, scaleYPos, 3);
     
-   % Draw confidence marker
-markerX = leftEnd + ((confidenceRating - minScale) / (maxScale - minScale)) * scaleLengthPix;
-Screen('DrawDots', taskParam.display.window.onScreen, [markerX; scaleYPos], 15, taskParam.colors.blue, [], 2);
+    % Draw confidence marker
+    markerX = leftEnd + ((confidenceRating - minScale) / (maxScale - minScale)) * scaleLengthPix;
+    Screen('DrawDots', taskParam.display.window.onScreen, [markerX; scaleYPos], 15, taskParam.colors.blue, [], 2);
 
-% Display current confidence rating above marker
-DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRating), markerX - 10, scaleYPos - 50, taskParam.colors.gray);
+    % Display current confidence rating above marker
+    DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRating), markerX - 10, scaleYPos - 50, taskParam.colors.gray);
 
-   
-    % % Draw question
-    % DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Ihre Vorhersage eintrifft?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
-    
-    if isequal (taskParam.gParam.taskType, 'HelicopterNEW')
-                DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Sie die Medikamente fangen werden?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
-            else
-                DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Sie das Konfetti fangen werden?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
-            end
-
+    % Draw question
+    if isequal(taskParam.gParam.taskType, 'HelicopterNEW')
+        DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Sie die Medikamente fangen werden?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
+    else
+        DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Sie das Konfetti fangen werden?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
+    end
 
     % Flip screen
     Screen('Flip', taskParam.display.window.onScreen);
@@ -78,9 +73,8 @@ DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRat
             confidenceRating = confidenceRating + 1;
             WaitSecs(0.02);
         elseif keyCode(taskParam.keys.space)
-            % Record the time when spacebar is pressed
-            endTimeSlider = GetSecs();
-            confidenceRT = endTimeSlider - startTimeSlider; % Calculate RT
+            % Record timestamp when confidence rating is confirmed (relative to ref)
+            timestampConfidenceResponse = GetSecs() - taskParam.timingParam.ref;
             confidenceConfirmed = true;
         end
     end
@@ -88,5 +82,8 @@ DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRat
     % Check for escape key
     taskParam.keys.checkQuitTask(taskParam);
 end
+
+% Compute Confidence RT
+confidenceRT = timestampConfidenceResponse - timestampConfidenceOnset;
 
 end
