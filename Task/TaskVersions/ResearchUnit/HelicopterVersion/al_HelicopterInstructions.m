@@ -70,6 +70,46 @@ KbReleaseWait();
 Screen('FillRect', taskParam.display.window.onScreen, taskParam.colors.background);
 Screen('Flip', taskParam.display.window.onScreen);
 
+
+% 1.B: Display a warning image before the context message
+% -------------------------------------------------------
+
+
+% Load the warning image
+warningImage = imread('black_virus_cell.png'); % Replace with your actual image file
+warningTexture = Screen('MakeTexture', taskParam.display.window.onScreen, warningImage);
+
+while 1
+    % Draw warning image
+    Screen('DrawTexture', taskParam.display.window.onScreen, warningTexture, [], []);
+    
+    % Display warning text
+    Screen('TextSize', taskParam.display.window.onScreen, 100); % Large font size
+    DrawFormattedText(taskParam.display.window.onScreen, 'Achtung Virusausbruch!', 'center', 'center', [255 0 0]); % Red color
+
+    % Flip screen
+    Screen('Flip', taskParam.display.window.onScreen);
+    
+    % Check for key press
+    [~, ~, keyCode] = KbCheck(taskParam.keys.kbDev);
+    if keyCode(taskParam.keys.enter)  % Wait for Enter key
+        break;
+    elseif keyCode(taskParam.keys.esc)  % Allow user to exit with Escape key
+        ListenChar();
+        ShowCursor;
+        Screen('CloseAll');
+        error('User pressed Escape to exit task');
+    end
+end
+
+% Wait for key release
+KbReleaseWait();
+
+% Reset background to gray
+Screen('FillRect', taskParam.display.window.onScreen, taskParam.colors.background);
+Screen('Flip', taskParam.display.window.onScreen);
+
+
 % 2. Introduce Pandemic Context
 % -----------------------------
 
@@ -78,21 +118,21 @@ if taskParam.gParam.customInstructions
     header = 'Achtung Virusausbruch!';
     txt = taskParam.instructionText.context;
     
-    % Load the pandemic context image
-    contextImage = imread('virus_or_parasite_cell.png'); % Ensure this is an RGB image
-
-    % Convert to RGBA format (Add an Alpha channel)
-    alphaLevel = 100;  % Adjust transparency (0 = fully transparent, 255 = fully opaque)
-    if size(contextImage, 3) == 3  % If the image is RGB (not RGBA)
-        contextImage(:,:,4) = alphaLevel; % Add alpha channel with transparency
-    end
-    
-    % Create texture with transparency
-    contextTexture = Screen('MakeTexture', taskParam.display.window.onScreen, contextImage);
+    % % Load the pandemic context image
+    % contextImage = imread('Katastrophenschutz_image.png'); % Ensure this is an RGB image
+    % 
+    % % % Convert to RGBA format (Add an Alpha channel)
+    % % alphaLevel = 100;  % Adjust transparency (0 = fully transparent, 255 = fully opaque)
+    % % if size(contextImage, 3) == 3  % If the image is RGB (not RGBA)
+    % %     contextImage(:,:,4) = alphaLevel; % Add alpha channel with transparency
+    % % end
+    % 
+    % % Create texture with transparency
+    % contextTexture = Screen('MakeTexture', taskParam.display.window.onScreen, contextImage);
     
     while 1
-        % Draw the semi-transparent context image
-        Screen('DrawTexture', taskParam.display.window.onScreen, contextTexture, [], []);
+        % % Draw the semi-transparent context image
+        % Screen('DrawTexture', taskParam.display.window.onScreen, contextTexture, [], []);
 
         % Set text size and font for better visibility
         Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.headerSize);

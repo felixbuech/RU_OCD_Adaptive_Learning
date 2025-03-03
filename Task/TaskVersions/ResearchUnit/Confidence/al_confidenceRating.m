@@ -66,6 +66,7 @@ while ~confidenceConfirmed
     % Handle key input
     [keyIsDown, ~, keyCode] = KbCheck(taskParam.keys.kbDev);
     if keyIsDown
+        stepSize = 1; % Base movement speed
         if keyCode(taskParam.keys.a) && confidenceRating > minScale
             confidenceRating = confidenceRating - 1;
             WaitSecs(0.02);

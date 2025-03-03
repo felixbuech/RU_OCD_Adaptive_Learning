@@ -43,8 +43,9 @@ if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') &
     [screenX, screenY] = RectCenter(Screen('Rect', taskParam.display.window.onScreen));
     
     % Define image size and position (centered above text)
-    imgWidth = 600;  
-    imgHeight = 1200; 
+    imgWidth = 400;  %400;
+    imgHeight = 600; %600;
+    
     imgSize = [screenX - imgWidth/2, screenY - 350, screenX + imgWidth/2, screenY - 50];
 
     % Set feedback image 
