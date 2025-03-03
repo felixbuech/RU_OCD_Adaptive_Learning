@@ -130,10 +130,11 @@ classdef al_taskDataMain
         % Online saccade detection
         sacc
 
-        % Add this to store confidence rating
+        % confidence rating
         confidence
         confidenceRT
-
+        timestampConfidenceOnset
+        timestampConfidenceResponse
 
     end
 
@@ -255,6 +256,8 @@ classdef al_taskDataMain
             % Initialize confidence field
             self.confidence = nan(trials, 1); 
             self.confidenceRT = nan(trials, 1);
+            self.timestampConfidenceOnset = nan(trials, 1);
+            self.timestampConfidenceResponse = nan(trials, 1);
 
         end
 
@@ -943,7 +946,9 @@ classdef al_taskDataMain
                     s.passiveViewing = self.passiveViewing;
                     
                     s.confidence = self.confidence;
-                    s.confidenceRT =self.confidenceRT;
+                    s.confidenceRT = self.confidenceRT;
+                    s.timestampConfidenceOnset = self.timestampConfidenceOnset;
+                    s.timestampConfidenceResponse = self.timestampConfidenceResponse;
                 
                     % Commit hash
                     % todo: every version should finally have this

@@ -153,16 +153,16 @@ totWin = 0;
 allTaskData = struct();
 
 % Define block orders based on cBal
-% Each row corresponds to Block 1 → Block 2 → Block 3 → Block 4
+% Each row corresponds to Block 1 → Block 2 → Block 3 → Block 4 → Block 5 → Block 6
 blockOrders = { 
-    % cBal = 1 (NoConf first, Low-High | Conf, Low-High)
-    [false, 1; false, 2; true, 1; true, 2]; 
-    % cBal = 2 (NoConf first, High-Low | Conf, High-Low)
-    [false, 2; false, 1; true, 2; true, 1]; 
-    % cBal = 3 (Conf first, Low-High | NoConf, Low-High)
-    [true, 1; true, 2; false, 1; false, 2]; 
-    % cBal = 4 (Conf first, High-Low | NoConf, High-Low)
-    [true, 2; true, 1; false, 2; false, 1];
+    % cBal = 1 (NoConf first, Low-High-Low-High | Conf, Low-High)
+    [false,1; false,2; false,1; false,2; true,1; true,2]; 
+    % cBal = 2 (NoConf first, High-Low-High-Low | Conf, High-Low)
+    [false,2; false,1; false,2; false,1; true,2; true,1]; 
+    % cBal = 3 (Conf first, Low-High | NoConf, Low-High-Low-High)
+    [true,1; true,2; false,1; false,2; false,1; false,2]; 
+    % cBal = 4 (Conf first, High-Low | NoConf, High-Low-High-Low)
+    [true,2; true,1; false,2; false,1; false,2; false,1];
 };
 
 % Get the specific order for this subject
@@ -195,17 +195,16 @@ for b = 1:taskParam.gParam.nBlocks
     al_indicateNoise(taskParam, noiseLabel, true, passiveViewingCondition);
 
     % Determine confidence condition label
-if taskParam.trialflow.includeConfidence
-    confidenceLabel = 'WithConfidence';
-else
-    confidenceLabel = 'NoConfidence';
-end
+    if taskParam.trialflow.includeConfidence
+        confidenceLabel = 'WithConfidence';
+    else
+        confidenceLabel = 'NoConfidence';
+    end
 
-% Generate structured field name for storage
-fieldName = sprintf('%s_%s_Block%d', confidenceLabel, noiseLabel, b);
+    % Generate structured field name for storage
+    fieldName = sprintf('%s_%s_Block%d', confidenceLabel, noiseLabel, b);
 
-
-    % **Run the task using only `al_confidenceLoop`**
+    % **Run the task**
     data = al_helicopterLoop(taskParam, 'main', taskData, trial, file_name_suffix);
 
     % Store block data
@@ -220,4 +219,6 @@ fieldName = sprintf('%s_%s_Block%d', confidenceLabel, noiseLabel, b);
         al_blockBreak(taskParam, b);
     end
 end 
+
 end
+

@@ -1,3 +1,4 @@
+
 function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
 %RUNHELICOPTERVERSION This function runs the Leipzig specific Version of
 %the task
@@ -11,12 +12,11 @@ function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
 %       allTaskData: Structure with all task-data-object instances
 %
 %   Testing
-%       To run the integration test, run "al_HamburgIntegrationTest"
 %       To run the unit tests, run "al_unittets" in "DataScripts"
 %
 %   Last updated
-%       02/25
-
+%       02/25 FB
+ 
 % Todo: write integration test for fMRI version.
 % First ensure version is good to go and then keep in mind that output
 % arguments have to updated to include the three runs (this has to be
@@ -33,8 +33,8 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 5;
-    config.nBlocks = 4;
+    config.trialsExp = 2;
+    config.nBlocks = 6;
     config.practTrialsVis = 5; %10
     config.practTrialsHid = 5; %10
     config.practTrialsConf = 5; % added for Confidence Ratings

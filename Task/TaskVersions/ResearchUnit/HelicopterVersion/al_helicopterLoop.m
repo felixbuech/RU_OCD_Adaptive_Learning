@@ -167,7 +167,7 @@ if taskParam.gParam.passiveViewing == false
     
     % Pass the user's prediction to the confidence rating function
     if taskParam.trialflow.includeConfidence
-        [taskData.confidence(i), taskData.confidenceRT(i)] = al_confidenceRating(taskParam, taskData.pred(i));
+       [taskData.confidence(i), taskData.confidenceRT(i), taskData.timestampConfidenceOnset(i), taskData.timestampConfidenceResponse(i)] = al_confidenceRating(taskParam, taskData.pred(i));
         fprintf('Confidence: %.2f\n', taskData.confidence(i));
     end
 

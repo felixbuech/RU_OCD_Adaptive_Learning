@@ -160,7 +160,7 @@ for i = 1:trial
     % Reset mouse to screen center
     SetMouse(taskParam.display.screensize(3)/2, taskParam.display.screensize(4)/2, taskParam.display.window.onScreen)
 
-   % User makes a prediction
+   % Participant makes a prediction
 if taskParam.gParam.passiveViewing == false
     [taskData, taskParam] = al_mouseLoop(taskParam, taskData, condition, i, initRT_Timestamp);
     
