@@ -31,7 +31,14 @@ function [Order] = order()
         config1 = al_ConfidenceConfig(true);  % First task = more practice
         RunConfidenceVersion(config1); 
 
-        config2 = al_HelicopterConfig(false); % Second task = less practice
+        config2 = al_HelicopterConfig
+        
+        
+        
+        
+        
+        
+        (false); % Second task = less practice
         RunHelicopterVersion(config2); 
     end
 end

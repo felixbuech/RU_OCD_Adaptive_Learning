@@ -1,4 +1,4 @@
-function config = al_HelicopterConfig(isFirstTask)
+function config = al_ConfidenceConfig(isFirstTask)
 % SETUPHELICOPTERCONFIG Configures settings for the Helicopter version.
 %
 % This function dynamically adjusts the number of practice trials depending
@@ -15,7 +15,7 @@ function config = al_HelicopterConfig(isFirstTask)
 
     
     config.trialsExp = 1;
-    config.nBlocks = 4;
+    config.nBlocks = 6;
   
     if isFirstTask
         config.practTrialsVis = 10; % More practice trials if Helicopter is first

@@ -15,7 +15,7 @@ function config = al_HelicopterConfig(isFirstTask)
 
     
     config.trialsExp = 1;
-    config.nBlocks = 4;
+    config.nBlocks = 6;
   
     if isFirstTask
         config.practTrialsVis = 10; % More practice trials if Helicopter is first
