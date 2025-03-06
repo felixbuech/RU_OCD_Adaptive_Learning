@@ -184,7 +184,7 @@ end
 %% Load the Keyboard Image for the Leipzig Task Version
 
 % Define image path 
-KeyboardImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\Tastatur.png'; 
+KeyboardImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\Tastatur_No_Background.png'; 
 
 % Initialize placeholder
 self.keyboardTxt = nan;
