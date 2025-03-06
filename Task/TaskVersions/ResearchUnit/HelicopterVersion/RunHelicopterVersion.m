@@ -35,7 +35,7 @@ if ~exist('config', 'var') || isempty(config)
     % Default parameters
     config.trialsExp = 1;
     config.nBlocks = 6;
-    config.practTrialsVis = 5; %10
+    config.practTrialsVis = 1; %10
     config.practTrialsHid = 5; %10
     config.practTrialsConf = 5; % added for Confidence Ratings
     config.cannonPractCriterion = 3;
@@ -311,7 +311,7 @@ trialflow = al_trialflow();
 trialflow.confetti = 'show confetti cloud';
 trialflow.cannonball_start = 'center';
 trialflow.cannon = 'hide cannon';
-trialflow.background = 'noPicture';
+trialflow.background = 'NoPicture';
 trialflow.currentTickmarks = 'show';
 trialflow.cannonType = 'HelicopterNEW';
 trialflow.reward = 'standard';
@@ -319,6 +319,7 @@ trialflow.shield = 'variableWithSD';
 trialflow.shieldType = 'constant';
 trialflow.input = 'mouse';
 trialflow.colors = 'redWhite';
+
 
 % ---------------------------------------------
 % Create object instance with cannon parameters

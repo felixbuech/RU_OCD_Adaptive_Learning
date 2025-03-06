@@ -57,20 +57,53 @@ if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') &
     end
 end
 
+
 % --- Draw Feedback Message ---
 if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') && contains(header, 'Zwischenstand')
 
     % Display text lower on the screen (e.g., 60% down)
     DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.6, ...
         [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
+
+elseif contains(header, 'Bedienung Schieberegler')
+
+    % Display text even lower for Bedienung Schieberegler (e.g., 70% down)
+    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.6, ...
+        [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
+
 elseif feedback == true
-        % When feedback is presented, print in screen center...
-        DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', 'center', [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
-    else
-        % ...otherwise at defined location
-        DrawFormattedText(taskParam.display.window.onScreen, txt, taskParam.display.screensize(4)*0.2, taskParam.display.screensize(4)*0.2,...
-            [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
+    % When feedback is presented, print in screen center...
+    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', 'center', [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
+
+else
+    % Default text position for other screens
+    DrawFormattedText(taskParam.display.window.onScreen, txt, taskParam.display.screensize(4) * 0.2, taskParam.display.screensize(4) * 0.2, ...
+        [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
+end
+
+
+%% Draw Keyboard for Leipzig Version to practice confidence
+
+if contains(header, 'Bedienung Schieberegler')
+
+    
+    % Define position for the image (above text)
+    [screenX, screenY] = RectCenter(Screen('Rect', taskParam.display.window.onScreen));
+    
+    % Define image size and position (centered above text)
+    imgWidth = 1200;  %400;
+    imgHeight = 600; %600;
+
+    imgSize = [screenX - imgWidth/2, screenY - 350, screenX + imgWidth/2, screenY - 50];
+
+    % Set feedback image 
+    keyboardImg = taskParam.display.keyboardTxt; % Always use one image
+
+    % Draw the image (if available)
+    if ~isempty(keyboardImg)
+        Screen('DrawTexture', taskParam.display.window.onScreen, keyboardImg, [], imgSize);
     end
+end
 
     
     % Print "Press Enter" to Continue

@@ -57,7 +57,8 @@ classdef al_commonConfidenceInstructionsDefaultText
         introduceHighNoiseConfidence
         ConfidencePracticeHeader
         ConfidencePractice
-
+        ConfidencePracticeHeaderTwo
+        ConfidencePracticeTwo
     end
 
     methods
@@ -277,7 +278,7 @@ classdef al_commonConfidenceInstructionsDefaultText
                 error('language parameter unknown')
             end
 
-            % Confidence Pratcice Header
+            % First Screen Confidence Pratcice Header
             
             if isequal(self.language, 'German')
                 self.ConfidencePracticeHeader = 'Letzter Übungsdurchgang';
@@ -285,14 +286,31 @@ classdef al_commonConfidenceInstructionsDefaultText
                 error('language parameter unknown')
             end
 
-            % Confidence Practice
+            % First Screen Confidence Practice
             if isequal(self.language, 'German')
                 self.ConfidencePractice = ['Jetzt kommen wir zur letzten Übung.\n\n'...
-    'Im folgenden Übungsdurchgang werden Sie zusätzlich zu Ihrer Vorhersage, wo Sie das Ziel der Konfetti-Kanone vermuten, angeben, wie sicher Sie sich sind, dass Ihre Vorhersage zutrifft und Sie das Konfetti mit dem Eimer fangen.\n\n'...
-    'Legen Sie dazu bitte Ihre linke Hand auf die Tastatur, sodass Ihr linker Ringfinger auf der Taste A, Ihr linker Zeigefinger auf der Taste D und Ihr Daumen auf der Leertaste liegt.\n\n'...
-    'Nachdem Sie – wie in den vorherigen Übungen – Ihre Vorhersage auf dem Kreis eingegeben haben, wird ein Schieberegler erscheinen. Dieser Schieberegler kann zwischen 1 (sehr unsicher) und 100 (sehr sicher) bewegt werden.\n\n'...
-    'Nutzen Sie den Schieberegler, um anzugeben, wie sicher Sie sich sind, dass Ihre Vorhersage zutrifft und Sie das Konfetti in Ihrem Eimer fangen.\n\n'...
-    'Im Folgenden absolvieren Sie einige Durchgänge, um sich mit dem Schieberegler vertraut zu machen.'];
+                                            'Im folgenden Übungsdurchgang werden Sie zusätzlich zu Ihrer Vorhersage, wo Sie das Ziel der Konfetti-Kanone vermuten, angeben, wie sicher Sie sich sind, dass Ihre Vorhersage zutrifft und Sie das Konfetti mit dem Eimer fangen.\n\n'...
+                                            'Nachdem Sie – wie in den vorherigen Übungen – Ihre Vorhersage auf dem Kreis eingegeben haben, wird ein Schieberegler erscheinen. Dieser Schieberegler kann zwischen 1 (sehr unsicher) und 100 (sehr sicher) bewegt werden.\n\n'...
+                                            'Nutzen Sie den Schieberegler, um anzugeben, wie sicher Sie sich sind, dass Ihre Vorhersage zutrifft und Sie das Konfetti in Ihrem Eimer fangen.\n\n'...
+                                            'Diese zusärtliche Abfrage wird nur in bestimmten Blöcken erfolgen und wird Ihnen vorher angesagt werden.'];
+
+            
+            end
+
+             % Second Screen Confidence Practice Header
+            
+            if isequal(self.language, 'German')
+                self.ConfidencePracticeHeaderTwo = 'Bedienung Schieberegler';
+            else
+                error('language parameter unknown')
+            end
+
+            % Second Screen Confidence Practice
+            if isequal(self.language, 'German')
+                self.ConfidencePracticeTwo = ['Legen Sie dazu bitte nun Ihre linke Hand auf die Tastatur, sodass Ihr Ringfinger auf der Taste A, Ihr Zeigefinger auf der Taste D und Ihr Daumen auf der Leertaste liegt.\n\n'...
+                    'Drücken Sie "A" bewegt sich der Regler nach links (unsicher) und drücken Sie die Taste "D" bewegt sich der Regler nach rechts (sicher).'...
+                    ' Abschließend bestätigen Sie mit der Leertaste Ihre Eingabe.\nn'
+                    'Im Folgenden absolvieren Sie einige Durchgänge, um sich mit dem Schieberegler vertraut zu machen.'];
 
             
              end

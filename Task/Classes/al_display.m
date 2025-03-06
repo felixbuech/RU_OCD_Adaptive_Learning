@@ -35,6 +35,7 @@ classdef al_display
         syringeTxt
         cloudTexture
         feedbackTxt
+        keyboardTxt
         
 
         % Image rectangles
@@ -154,7 +155,7 @@ classdef al_display
     %       self - Updated display object with loaded textures
     
     % === Load Background Image ===
-    [backgroundPic, ~, ~] = imread('Greybanner Coliseum - Day - Large - 44x32.jpg');
+    [backgroundPic, ~, ~] = imread('hospital_setting_from_above.png');
 
 %% Load the Feedback Image for the Leipzig Task Version
 
@@ -180,7 +181,29 @@ else
     
 end
 
+%% Load the Keyboard Image for the Leipzig Task Version
 
+% Define image path 
+KeyboardImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\Tastatur.png'; 
+
+% Initialize placeholder
+self.keyboardTxt = nan;
+
+% Load Keyboard Image
+if exist(KeyboardImagePath, 'file') ~= 2
+    warning('Feedback image not found: %s', KeyboardImagePath);
+else
+    [keyboardPic, ~, keyboardAlpha] = imread(KeyboardImagePath);
+
+    % Merge alpha channel if available
+    if ~isempty(keyboardAlpha)
+        keyboardPic(:,:,4) = keyboardAlpha;
+    end
+
+    % Create texture and store it
+    self.keyboardTxt = Screen('MakeTexture', self.window.onScreen, keyboardPic);
+    
+end
 
     %% Load Other Images Based on Cannon Type ===
     if strcmp(cannonType, 'standard')

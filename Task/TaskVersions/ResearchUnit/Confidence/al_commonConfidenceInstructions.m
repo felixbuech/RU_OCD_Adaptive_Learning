@@ -450,20 +450,26 @@ end
 %  12. Introduce Confidence Rating
 % ------------------------------------
 
-% Update condition
-condition = 'ConfidencePractice';
-taskParam.trialflow.exp = condition;
-
-% Display instructions
+% Step 1: Present First Instruction Screen (No Image)
 if taskParam.gParam.customInstructions
     header = taskParam.instructionText.ConfidencePracticeHeader;
     txt = taskParam.instructionText.ConfidencePractice;
 else
-                error('Confidence Practice not succesfull')
+    txt = 'Welcome to the Confidence Practice Task!';
 end
 
-
 feedback = false;
+al_bigScreen(taskParam, header, txt, feedback); % al_bigScreen handles waiting for Enter
+
+% Step 2: Present Second Instruction Screen (With Image Handled in al_bigScreen)
+if taskParam.gParam.customInstructions
+    header = taskParam.instructionText.ConfidencePracticeHeaderTwo;
+    txt = taskParam.instructionText.ConfidencePracticeTwo;
+else
+    txt = 'This is the second part of the Confidence Practice instructions.';
+end
+
+% Call al_bigScreen to display text (Image will be handled automatically inside)
 al_bigScreen(taskParam, header, txt, feedback);
 
 % Update trial flow
@@ -482,9 +488,7 @@ taskParam.trialflow.cannon = 'hide cannon'; % show cannon
 taskParam.trialflow.confetti = 'show confetti cloud';
 
 % Run practice block
-
 taskParam.trialflow.includeConfidence = true;
-
 al_confidenceLoop(taskParam, condition, taskData, taskParam.gParam.practTrialsConf);
 
 

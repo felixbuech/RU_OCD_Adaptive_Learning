@@ -38,9 +38,9 @@ if ~exist('config', 'var') || isempty(config)
     config.practTrialsVis = 5;
     config.practTrialsHid = 5;
     config.practTrialsConf = 5; % added for Confidence Ratings
-    config.cannonPractCriterion = 4;
+    config.cannonPractCriterion = 3;
     config.cannonPractNumOutcomes = 5;
-    config.cannonPractFailCrit = 3;
+    config.cannonPractFailCrit = 1;
     config.passiveViewingPractTrials = 10;
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;

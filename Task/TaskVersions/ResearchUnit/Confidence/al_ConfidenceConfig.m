@@ -1,5 +1,5 @@
 function config = al_ConfidenceConfig(isFirstTask)
-% SETUPHELICOPTERCONFIG Configures settings for the Helicopter version.
+% SETUPCONFIDDENCECONFIG Configures settings for the CommonConfidence version.
 %
 % This function dynamically adjusts the number of practice trials depending
 % on whether the Helicopter task is the first or second task in the experiment.
