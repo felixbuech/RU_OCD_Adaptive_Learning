@@ -160,24 +160,33 @@ for i = 1:trial
     % Reset mouse to screen center
     SetMouse(taskParam.display.screensize(3)/2, taskParam.display.screensize(4)/2, taskParam.display.window.onScreen)
 
-   % Participant makes a prediction
+  % Participant makes a prediction
 if taskParam.gParam.passiveViewing == false
     [taskData, taskParam] = al_mouseLoop(taskParam, taskData, condition, i, initRT_Timestamp);
     
-   % Pass the user's prediction to the confidence rating function
+    % If confidence is enabled, record timestampPrediction before confidence timestamps
     if taskParam.trialflow.includeConfidence
-        [taskData.confidence(i), taskData.confidenceRT(i)] = al_confidenceRating(taskParam, taskData.pred(i));
+        % Ensure prediction timestamp is recorded FIRST
+        if isnan(taskData.timestampPrediction(i)) % Prevents overwriting
+            taskData.timestampPrediction(i) = GetSecs() - taskParam.timingParam.ref;
+        end
+
+        % Call confidence rating function and store timestamps
+        [taskData.confidence(i), taskData.confidenceRT(i), ...
+         taskData.timestampConfidenceOnset(i), taskData.timestampConfidenceResponse(i)] = ...
+            al_confidenceRating(taskParam, taskData.pred(i));
+
         fprintf('Confidence: %.2f\n', taskData.confidence(i));
     end
-
-
 else
     taskData = al_passiveViewingSpot(taskParam, taskData, i, initRT_Timestamp);
 end
 
 
-    % Timestamp prediction
+% If confidence is NOT enabled, record timestampPrediction normally (but only if not set already)
+if ~taskParam.trialflow.includeConfidence && isnan(taskData.timestampPrediction(i))
     taskData.timestampPrediction(i) = GetSecs() - taskParam.timingParam.ref;
+end
 
     % Display RT and initiation RT in console
     if taskParam.gParam.printTiming
