@@ -35,7 +35,7 @@ else
 end
 
 % Load and display welcome image
-welcomeImage = imread('pandemic_heli_backg.png'); % Replace with your actual image file
+welcomeImage = imread('Helicopter_Medicine.png'); % Replace with your actual image file
 welcomeTexture = Screen('MakeTexture', taskParam.display.window.onScreen, welcomeImage);
 
 while 1
@@ -74,20 +74,40 @@ Screen('Flip', taskParam.display.window.onScreen);
 % 1.B: Display a warning image before the context message
 % -------------------------------------------------------
 
-
 % Load the warning image
-warningImage = imread('black_virus_cell.png'); % Replace with your actual image file
+warningImage = imread('virus_outbrake.png'); % Replace with your actual image file
 warningTexture = Screen('MakeTexture', taskParam.display.window.onScreen, warningImage);
 
+% Get screen dimensions
+screenRect = Screen('Rect', taskParam.display.window.onScreen);
+
+% Display only the warning image first
+Screen('DrawTexture', taskParam.display.window.onScreen, warningTexture, [], []);
+Screen('Flip', taskParam.display.window.onScreen);
+
+% Pause before displaying warning text (e.g., 2 seconds)
+WaitSecs(2);
+
+% Display warning text
+Screen('DrawTexture', taskParam.display.window.onScreen, warningTexture, [], []);
+Screen('TextSize', taskParam.display.window.onScreen, 100); % Large font size
+DrawFormattedText(taskParam.display.window.onScreen, 'Achtung Virusausbruch!', 'center', 'center', [255 0 0]); % Red color
+Screen('Flip', taskParam.display.window.onScreen);
+
+% Pause before displaying instruction text (e.g., 2 more seconds)
+WaitSecs(2);
+
 while 1
-    % Draw warning image
+    % Draw warning image and text again
     Screen('DrawTexture', taskParam.display.window.onScreen, warningTexture, [], []);
-    
-    % Display warning text
-    Screen('TextSize', taskParam.display.window.onScreen, 100); % Large font size
+    Screen('TextSize', taskParam.display.window.onScreen, 100);
     DrawFormattedText(taskParam.display.window.onScreen, 'Achtung Virusausbruch!', 'center', 'center', [255 0 0]); % Red color
 
-    % Flip screen
+    % Display instruction text at the bottom after delay
+    Screen('TextSize', taskParam.display.window.onScreen, 40); % Smaller font size
+    DrawFormattedText(taskParam.display.window.onScreen, 'Drücken Sie Enter, um fortzufahren', 'center', screenRect(4) - 100, [255 255 255]); % White text at bottom
+
+    % Flip screen to show updated content
     Screen('Flip', taskParam.display.window.onScreen);
     
     % Check for key press
@@ -110,64 +130,78 @@ Screen('FillRect', taskParam.display.window.onScreen, taskParam.colors.backgroun
 Screen('Flip', taskParam.display.window.onScreen);
 
 
+
 % 2. Introduce Pandemic Context
 % -----------------------------
 
 
-if taskParam.gParam.customInstructions
-    header = 'Achtung Virusausbruch!';
-    txt = taskParam.instructionText.context;
-    
-    % % Load the pandemic context image
-    % contextImage = imread('Katastrophenschutz_image.png'); % Ensure this is an RGB image
-    % 
-    % % % Convert to RGBA format (Add an Alpha channel)
-    % % alphaLevel = 100;  % Adjust transparency (0 = fully transparent, 255 = fully opaque)
-    % % if size(contextImage, 3) == 3  % If the image is RGB (not RGBA)
-    % %     contextImage(:,:,4) = alphaLevel; % Add alpha channel with transparency
-    % % end
-    % 
-    % % Create texture with transparency
-    % contextTexture = Screen('MakeTexture', taskParam.display.window.onScreen, contextImage);
-    
-    while 1
-        % % Draw the semi-transparent context image
-        % Screen('DrawTexture', taskParam.display.window.onScreen, contextTexture, [], []);
+% Load the pandemic context image (Ensure it's a PNG with transparency)
+[contextImage, ~, alpha] = imread('Virus_3-Photoroom.png'); 
 
-        % Set text size and font for better visibility
-        Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.headerSize);
-        
-        % Display header in bold and centered
-        DrawFormattedText(taskParam.display.window.onScreen, header, 'center', taskParam.display.screensize(4) * 0.08, [255 255 255]);
-
-        % Set text size for context paragraph
-        Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.textSize);
-        
-        % **Fix Text Alignment: Centered and Wider**
-        DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', 'center', [255 255 255], 80, [], [], 1.5);  
-        % ⬆ Wrap at **80 characters** (wider text), vertical spacing **1.5**
-        
-        % Display "Press Enter" message
-        DrawFormattedText(taskParam.display.window.onScreen, 'Drücken Sie Enter, um fortzufahren', 'center', taskParam.display.screensize(4) * 0.92, [255 255 255]);
-        
-        % Flip screen
-        Screen('Flip', taskParam.display.window.onScreen);
-        
-        % Check for key press
-        [~, ~, keyCode] = KbCheck(taskParam.keys.kbDev);
-        if keyCode(taskParam.keys.enter)  % If Enter key is pressed, break the loop
-            break;
-        elseif keyCode(taskParam.keys.esc)  % Allow user to exit with Escape key
-            ListenChar();
-            ShowCursor;
-            Screen('CloseAll');
-            error('User pressed Escape to exit task');
-        end
-    end
-
-    % Wait for key release
-    KbReleaseWait();
+% Convert grayscale image to RGB (if needed)
+if size(contextImage, 3) == 1  
+    contextImage = repmat(contextImage, [1, 1, 3]); 
 end
+
+% Ensure the alpha channel exists, else create a fully opaque one
+if isempty(alpha)
+    alpha = uint8(255 * ones(size(contextImage, 1), size(contextImage, 2))); % Fully opaque
+end
+
+% Combine image and alpha into an RGBA format
+contextImageRGBA = cat(3, contextImage, alpha);
+
+% Create a texture with transparency
+contextTexture = Screen('MakeTexture', taskParam.display.window.onScreen, contextImageRGBA);
+
+% Display loop
+while 1
+    
+    % Get screen size
+screenRect = Screen('Rect', taskParam.display.window.onScreen);
+
+% Define new size for the image (scale factor)
+scaleFactor = 1; % Adjust this value to make the image larger or smaller
+
+% Get original image size
+[imageHeight, imageWidth, ~] = size(contextImage);
+
+% Calculate new image position (centered)
+newWidth = imageWidth * scaleFactor;
+newHeight = imageHeight * scaleFactor;
+dstRect = CenterRectOnPoint([0, 0, newWidth, newHeight], screenRect(3)/2, screenRect(4)/2);
+
+% Draw the enlarged context image
+Screen('DrawTexture', taskParam.display.window.onScreen, contextTexture, [], dstRect);
+
+    % Set text size and display warning
+    Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.headerSize);
+    DrawFormattedText(taskParam.display.window.onScreen, 'Achtung Virusausbruch!', 'center', taskParam.display.screensize(4) * 0.08, [255 255 255]);
+
+    % Set text size for paragraph
+    Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.textSize);
+    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 80, [], [], 1.5);
+
+    % Display "Press Enter" message
+    DrawFormattedText(taskParam.display.window.onScreen, 'Drücken Sie Enter, um fortzufahren', 'center', taskParam.display.screensize(4) * 0.92, [255 255 255]);
+
+    % Flip screen
+    Screen('Flip', taskParam.display.window.onScreen);
+    
+    % Check for key press
+    [~, ~, keyCode] = KbCheck(taskParam.keys.kbDev);
+    if keyCode(taskParam.keys.enter)  % If Enter key is pressed, break the loop
+        break;
+    elseif keyCode(taskParam.keys.esc)  % Allow user to exit with Escape key
+        ListenChar();
+        ShowCursor;
+        Screen('CloseAll');
+        error('User pressed Escape to exit task');
+    end
+end
+
+% Wait for key release
+KbReleaseWait();
 
 
 
