@@ -18,12 +18,12 @@ function config = al_ConfidenceConfig(isFirstTask)
     config.nBlocks = 6;
   
     if isFirstTask
-        config.practTrialsVis = 10; % More practice trials if Helicopter is first
-        config.practTrialsHid = 15;
+        config.practTrialsVis = 5; % More practice trials if Helicopter is first
+        config.practTrialsHid = 5;
         config.practTrialsConf = 5; % for Confidence extra number for trials
         config.cannonPractCriterion = 3; % Criterion for successful practice
         config.cannonPractNumOutcomes = 5; % Number of cannon shots per practice round
-        config.cannonPractFailCrit = 2; % Maximum allowed failures before continuing
+        config.cannonPractFailCrit = 1; % Maximum allowed failures before continuing
     
     else
         config.practTrialsVis = 5;  % Fewer practice trials if Helicopter is second

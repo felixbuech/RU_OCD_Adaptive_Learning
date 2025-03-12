@@ -1,5 +1,5 @@
 classdef al_HelicopterInstructionsDefaultText
-    %AL_COMMONCONFETTIINSTRUCTIONSDEFAULTTEXT This class-definition file
+    %AL_HELICOPTERINSTRUCTIONSDEFAULTTEXT This class-definition file
     % specifiec the properties of the instruction text.
     %
     % The advantage of this kind of text file is that most text is in one

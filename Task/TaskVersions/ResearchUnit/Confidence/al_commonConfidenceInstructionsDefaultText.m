@@ -155,7 +155,7 @@ classdef al_commonConfidenceInstructionsDefaultText
 
             % Introduce practice session
             if isequal(self.language, 'German')
-                self.introducePracticeSession = 'Im Folgenden durchlaufen Sie ein paar Übungsdurchgänge\nund im Anschluss zwei Durchgänge des Experiments.';
+                self.introducePracticeSession = 'Im Folgenden durchlaufen Sie ein paar Übungsdurchgänge\nund im Anschluss sechs Durchgänge des Experiments.';
             elseif isequal(self.language, 'English')
                 self.introducePracticeSession = 'In the following, you will go through a few practice runs\nand then two blocks of the experiment.';
             else
@@ -290,7 +290,7 @@ classdef al_commonConfidenceInstructionsDefaultText
             if isequal(self.language, 'German')
                 self.ConfidencePractice = ['Jetzt kommen wir zur letzten Übung.\n\n'...
                                             'Im folgenden Übungsdurchgang werden Sie zusätzlich zu Ihrer Vorhersage, wo Sie das Ziel der Konfetti-Kanone vermuten, angeben, wie sicher Sie sich sind, dass Ihre Vorhersage zutrifft und Sie das Konfetti mit dem Eimer fangen.\n\n'...
-                                            'Nachdem Sie – wie in den vorherigen Übungen – Ihr Netz auf dem Kreis platziert haben, wird ein Schieberegler erscheinen. Dieser Schieberegler kann zwischen 1 (sehr unsicher) und 100 (sehr sicher) bewegt werden.\n\n'...
+                                            'Nachdem Sie – wie in den vorherigen Übungen – Ihren Eimer auf dem Kreis platziert haben, wird ein Schieberegler erscheinen. Dieser Schieberegler kann zwischen 1 (sehr unsicher) und 100 (sehr sicher) bewegt werden.\n\n'...
                                             'Nutzen Sie den Schieberegler, um anzugeben, wie sicher Sie sich sind, dass Ihre Vorhersage zutrifft und Sie das Konfetti in Ihrem Eimer fangen werden.\n\n'...
                                             'Diese zusätzliche Abfrage wird nur in bestimmten Blöcken erfolgen und wird Ihnen vorher immer angesagt werden.'];
 
@@ -309,7 +309,7 @@ classdef al_commonConfidenceInstructionsDefaultText
             if isequal(self.language, 'German')
                 self.ConfidencePracticeTwo = ['Legen Sie dazu bitte nun Ihre linke Hand auf die Tastatur, sodass Ihr Ringfinger auf der Taste A, Ihr Zeigefinger auf der Taste D und Ihr Daumen auf der Leertaste liegt.\n\n'...
                     'Drücken Sie "A" bewegt sich der Regler nach links (unsicher) und drücken Sie "D" bewegt sich der Regler nach rechts (sicher).'...
-                    ' Abschließend bestätigen Sie Ihre Eingabe mit der Leertaste.\n\n'
+                    ' Abschließend bestätigen Sie Ihre Eingabe mit der Leertaste.\n\n'...
                     'Im Folgenden absolvieren Sie einige Durchgänge, um sich mit dem Schieberegler vertraut zu machen.'];
 
             
