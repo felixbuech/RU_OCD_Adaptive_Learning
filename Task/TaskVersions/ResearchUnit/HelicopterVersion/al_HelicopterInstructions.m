@@ -136,7 +136,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 
 
 % Load the pandemic context image (Ensure it's a PNG with transparency)
-[contextImage, ~, alpha] = imread('Virus_3-Photoroom.png'); 
+[contextImage, ~, alpha] = imread('Virus_Large_no_bg.png'); 
 
 % Convert grayscale image to RGB (if needed)
 if size(contextImage, 3) == 1  
