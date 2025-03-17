@@ -96,12 +96,14 @@ classdef al_cannon
             load('xymatrix_ringDeg.mat', 'xymatrix_ringDeg')
             load('s_cloudDeg.mat')
 
-            if isequal(colors, 'colorful')
+            if isequal(colors, 'colorful') 
                 load('colvect_cloud.mat', 'colvect_cloud')
             elseif isequal(colors, 'dark')
                 load('colvect_cloud_gray.mat', 'colvect_cloud')
             elseif isequal(colors, 'blackWhite')
                 load('colvect_cloud_blackWhite.mat', 'colvect_cloud')
+            elseif isequal(colors, 'redWhite')
+                load('colvect_cloud_helicopter.mat', 'colvect_cloud')  % Helicopter: blue, white static confetti cloud for Leipzig Version
             else
                 error('Color input not defined')
             end

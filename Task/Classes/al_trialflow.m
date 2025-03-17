@@ -59,7 +59,7 @@ classdef al_trialflow
         cannonType 
             % standard: eLife style cannon
             % confetti: confetti-cannon style
-            % helicopter: for Leipzig version
+            % HelicopterNEW: for Leipzig version
             % duck: for infant version
 
         % How rewards are delivered (e.g., standard, asymmetric)
@@ -130,12 +130,18 @@ classdef al_trialflow
             % colorful: standard
             % isoluminant: pupillometry
             % blackwhite: alternative version for pupillometry
+            % redwhite: alternative for Leipzig Practice
 
         % Save data
         saveData % behavioral
         saveEtData % eye-tracking
             % true
             % false
+
+        % Whether or not confidence rating is included in the block
+        includeConfidence
+            % true: confidence rating is included
+            % false: confidence rating is NOT included
     end
     
     methods
@@ -170,6 +176,7 @@ classdef al_trialflow
             self.colors = 'colorful';
             self.saveData = 'true';
             self.saveEtData = 'true';
+            self.includeConfidence = false; % Default: Confidence rating OFF
         end
     end
     

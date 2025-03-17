@@ -262,6 +262,30 @@ else
     triggerID = 255;
 end
 
+% % Leipzig EEG / Pupilometry Triggers 
+% % ======================================
+% if isequal(taskParam.gParam.taskType, 'HelicopterNEW') || isequal(taskParam.gParam.taskType, 'CommonConfidence')
+%     if isequal(Tevent, 'trialOnset')
+%         triggerID = 1;
+%     elseif isequal(Tevent, 'responseOnset')
+%         triggerID = 2;
+%     elseif isequal(Tevent, 'responseLogged')
+%         triggerID = 3;
+%     elseif isequal(Tevent, 'fix')
+%         triggerID = 4;
+% 
+%     % NEW Confidence Triggers
+%     elseif isequal(Tevent, 'confidenceOnset')
+%         triggerID = 20;  
+%     elseif isequal(Tevent, 'confidenceResponse')
+%         triggerID = 21;
+% 
+% else
+%     triggerID = 255;
+% 
+%     end
+% end 
+
 % Send the pupil trigger
 if taskParam.gParam.eyeTracker && isequal(taskParam.trialflow.exp, 'exp') || taskParam.gParam.eyeTracker && isequal(taskParam.trialflow.exp, 'passive')
     Eyelink('message', num2str(triggerID));

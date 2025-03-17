@@ -32,6 +32,7 @@ classdef al_gparam
         shieldTrials % number of shield-practice trials 
         controlTrials  % number of trials of the control versions (Dresden)
         passiveViewingPractTrials % practice passive viewing
+        practTrialsConf
 
         nBlocks % number of blocks
         blockIndices % trials AFTER which participants can take a break
@@ -106,7 +107,8 @@ classdef al_gparam
             self.shieldMax = 150;
             self.trials = nan; 
             self.practTrialsVis = nan; 
-            self.practTrialsHid = nan; 
+            self.practTrialsHid = nan;
+            self.practTrialsConf = nan;
             self.shieldTrials = nan; 
             self.controlTrials = nan;
             self.passiveViewingPractTrials = 10;

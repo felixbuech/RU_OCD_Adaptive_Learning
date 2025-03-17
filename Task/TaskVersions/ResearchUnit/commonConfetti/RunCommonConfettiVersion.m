@@ -22,6 +22,8 @@ function allTaskData = RunCommonConfettiVersion(config, unitTest, cBal)
 % arguments have to updated to include the three runs (this has to be
 % compatible with two files in no-scanner version)
 
+addpath(genpath('C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning'));
+
 KbName('UnifyKeyNames')
 
 % Check if config structure is provided
@@ -49,18 +51,18 @@ if ~exist('config', 'var') || isempty(config)
     config.textSize = 35;
     config.headerSize = 50;
     config.vSpacing = 1;
-    config.screenSize = get(0,'MonitorPositions')*1;
+    config.screenSize = [0           0        1920        1200];
     config.globalScreenBorder = 0;
     config.screenNumber = 1;
-    config.s = 40;
-    config.five = 15;
-    config.enter = 37;
+    config.s = 83;
+    config.five = 53;
+    config.enter = 13;
     config.defaultParticles = false;
     config.debug = false;
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = '~/Dropbox/AdaptiveLearning/DataDirectory';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data_confetti';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
