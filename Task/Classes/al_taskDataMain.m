@@ -135,6 +135,7 @@ classdef al_taskDataMain
         confidenceRT
         timestampConfidenceOnset
         timestampConfidenceResponse
+        initialRTconfidence
 
     end
 
@@ -258,6 +259,7 @@ classdef al_taskDataMain
             self.confidenceRT = nan(trials, 1);
             self.timestampConfidenceOnset = nan(trials, 1);
             self.timestampConfidenceResponse = nan(trials, 1);
+            self.initialRTconfidence = nan(trials, 1);
 
         end
 
@@ -949,6 +951,7 @@ classdef al_taskDataMain
                     s.confidenceRT = self.confidenceRT;
                     s.timestampConfidenceOnset = self.timestampConfidenceOnset;
                     s.timestampConfidenceResponse = self.timestampConfidenceResponse;
+                    s.initialRTconfidence = self.initialRTconfidence; 
                 
                     % Commit hash
                     % todo: every version should finally have this

@@ -175,8 +175,10 @@ if taskParam.gParam.passiveViewing == false
 
         % Call confidence rating function and store timestamps
         [taskData.confidence(i), taskData.confidenceRT(i), ...
-         taskData.timestampConfidenceOnset(i), taskData.timestampConfidenceResponse(i)] = ...
-            al_confidenceRating(taskParam, taskData.pred(i));
+         taskData.timestampConfidenceOnset(i), taskData.timestampConfidenceResponse(i), ...
+         taskData.initialRTconfidence(i)] = ...
+        al_confidenceRating(taskParam, taskData.pred(i));
+
 
         fprintf('Confidence: %.2f\n', taskData.confidence(i));
     end
@@ -488,7 +490,7 @@ hitRatio = nansum(taskData.hit) / totalTrials;
 % Define feedback message based on language (without performance calculation)
 if isequal(taskParam.gParam.language, 'German')
     txt = sprintf(['Sie haben %.0f Einheiten lebensrettender Medikamente gesichert.\n\n' ...
-        'Nur wenn Sie genügend Medikamente sichern, können die Kranken geheilt werden.\n\n Jede Ihrer Entscheidungen zählt!'], currPoints);
+        'Nur wenn Sie genügend Medikamente sichern, können die kranken Menschen geheilt werden.\n\n Jede Ihrer Entscheidungen zählt!'], currPoints);
     
 elseif isequal(taskParam.gParam.language, 'English')
     txt = sprintf(['You caught %.0f life-saving medicine units.\n\n' ...

@@ -1,10 +1,10 @@
-function [confidenceRating, confidenceRT, timestampConfidenceOnset, timestampConfidenceResponse] = al_confidenceRating(taskParam, predictedAngle)
+function [confidenceRating, confidenceRT, timestampConfidenceOnset, timestampConfidenceResponse, initialRTconfidence] = al_confidenceRating(taskParam, predictedAngle)
 % AL_CONFIDENCERATING - Handles confidence rating while keeping prediction visible
 %
 %   - A/D keys move the slider smoothly from 1 to 100.
 %   - Spacebar confirms the selection.
 %   - The user's previous prediction is displayed on the circle.
-%   - Records timestamps for slider onset and confidence input relative to the reference time.
+%   - Records timestamps for slider onset, first movement, and confidence input relative to the reference time.
 
 % Define scale
 minScale = 1;
@@ -19,9 +19,11 @@ leftEnd = taskParam.display.zero(1) - (scaleLengthPix / 2);
 rightEnd = taskParam.display.zero(1) + (scaleLengthPix / 2);
 
 confidenceConfirmed = false;
+initialMovementDetected = false; % Flag to track first movement
 
 % Record timestamp when confidence slider first appears (relative to ref)
 timestampConfidenceOnset = GetSecs() - taskParam.timingParam.ref;
+initialRTconfidence = NaN; % Initialize as NaN
 
 while ~confidenceConfirmed
     % Draw background
@@ -67,11 +69,20 @@ while ~confidenceConfirmed
     [keyIsDown, ~, keyCode] = KbCheck(taskParam.keys.kbDev);
     if keyIsDown
         stepSize = 1; % Base movement speed
-        if keyCode(taskParam.keys.a) && confidenceRating > minScale
-            confidenceRating = confidenceRating - 1;
-            WaitSecs(0.02);
-        elseif keyCode(taskParam.keys.d) && confidenceRating < maxScale
-            confidenceRating = confidenceRating + 1;
+        
+        % Detect first key press for slider movement
+        if (keyCode(taskParam.keys.a) && confidenceRating > minScale) || (keyCode(taskParam.keys.d) && confidenceRating < maxScale)
+            if ~initialMovementDetected
+                initialRTconfidence = GetSecs() - taskParam.timingParam.ref - timestampConfidenceOnset;
+                initialMovementDetected = true; % Mark first movement as detected
+            end
+
+            % Adjust slider position
+            if keyCode(taskParam.keys.a) && confidenceRating > minScale
+                confidenceRating = confidenceRating - 1;
+            elseif keyCode(taskParam.keys.d) && confidenceRating < maxScale
+                confidenceRating = confidenceRating + 1;
+            end
             WaitSecs(0.02);
         elseif keyCode(taskParam.keys.space)
             % Record timestamp when confidence rating is confirmed (relative to ref)

@@ -35,7 +35,7 @@ else
 end
 
 % Load and display welcome image
-welcomeImage = imread('Helicopter_Medicine.png'); % Replace with your actual image file
+welcomeImage = imread('Glowing_Heli.png'); % Replace with your actual image file
 welcomeTexture = Screen('MakeTexture', taskParam.display.window.onScreen, welcomeImage);
 
 while 1
@@ -75,7 +75,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 % -------------------------------------------------------
 
 % Load the warning image
-warningImage = imread('virus_outbrake.png'); % Replace with your actual image file
+warningImage = imread('virus_outbrake.png'); 
 warningTexture = Screen('MakeTexture', taskParam.display.window.onScreen, warningImage);
 
 % Get screen dimensions
@@ -136,7 +136,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 
 
 % Load the pandemic context image (Ensure it's a PNG with transparency)
-[contextImage, ~, alpha] = imread('Virus_Large_no_bg.png'); 
+[contextImage, ~, alpha] = imread('Text_bckg_transparent.png'); 
 
 % Convert grayscale image to RGB (if needed)
 if size(contextImage, 3) == 1  
