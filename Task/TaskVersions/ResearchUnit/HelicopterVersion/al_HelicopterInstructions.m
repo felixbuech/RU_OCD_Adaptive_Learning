@@ -35,7 +35,7 @@ else
 end
 
 % Load and display welcome image
-welcomeImage = imread('Glowing_Heli.png'); % Replace with your actual image file
+welcomeImage = imread('Glowing_Heli_Improved.png'); % Replace with your actual image file
 welcomeTexture = Screen('MakeTexture', taskParam.display.window.onScreen, welcomeImage);
 
 while 1

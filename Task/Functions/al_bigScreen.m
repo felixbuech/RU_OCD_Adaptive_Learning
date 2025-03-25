@@ -35,7 +35,10 @@ while 1
     % Extract Length of Text
     sentenceLength = taskParam.strings.sentenceLength;
     
-  %% --- Draw Feedback Image if Available for Leipzig Version ---
+  
+  % Draw Feedback Image if Available for Leipzig Version 
+  %-----------------------------------------------------------
+
 if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') && contains(header, 'Zwischenstand')
 
     
@@ -49,9 +52,9 @@ if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') &
     imgSize = [screenX - imgWidth/2, screenY - 350, screenX + imgWidth/2, screenY - 50];
 
     % Set feedback image 
-    feedbackImg = taskParam.display.feedbackTxt; % Always use one image
+    feedbackImg = taskParam.display.feedbackTxt; 
 
-    % Draw the image (if available)
+    % Draw the image 
     if ~isempty(feedbackImg)
         Screen('DrawTexture', taskParam.display.window.onScreen, feedbackImg, [], imgSize);
     end
@@ -61,14 +64,14 @@ end
 % --- Draw Feedback Message ---
 if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') && contains(header, 'Zwischenstand')
 
-    % Display text lower on the screen (e.g., 60% down)
+    % Display text lower on the screen
     DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.6, ...
         [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
 
 elseif contains(header, 'Bedienung Schieberegler')
 
-    % Display text even lower for Bedienung Schieberegler (e.g., 70% down)
-    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.6, ...
+    % Display text slightly lower for "Bedienung Schieberegler" (e.g., 50% down)
+    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.5, ...
         [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
 
 elseif feedback == true
@@ -82,7 +85,8 @@ else
 end
 
 
-%% Draw Keyboard for Leipzig Version to practice confidence
+% Draw Keyboard for Leipzig Version to practice confidence
+%-----------------------------------------------------------
 
 if contains(header, 'Bedienung Schieberegler')
 
@@ -97,9 +101,9 @@ if contains(header, 'Bedienung Schieberegler')
     imgSize = [screenX - imgWidth/2, screenY - 350, screenX + imgWidth/2, screenY - 50];
 
     % Set feedback image 
-    keyboardImg = taskParam.display.keyboardTxt; % Always use one image
+    keyboardImg = taskParam.display.keyboardTxt; 
 
-    % Draw the image (if available)
+    % Draw the image 
     if ~isempty(keyboardImg)
         Screen('DrawTexture', taskParam.display.window.onScreen, keyboardImg, [], imgSize);
     end

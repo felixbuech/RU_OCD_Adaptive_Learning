@@ -622,7 +622,8 @@ end
             elseif isequal(type, 'task')
                 if isequal(self.language, 'German')
                     self.dynamicFeedbackHeader = 'Ende des Versuchs!';
-                    self.dynamicFeedbackTxt = sprintf('Vielen Dank für Ihre Teilnahme!\n\n\nSie haben insgesamt %i Einheiten lebensrettender Medikamente gesichert!', currPoints);
+                    self.dynamicFeedbackTxt = sprintf(['Vielen Dank für Ihre Teilnahme!\n\n\nSie haben insgesamt %i Einheiten lebensrettender Medikamente gesichert!\n\n'...
+                        'Damit konnte vielen Menschen geholfen werden!'], currPoints);
                 elseif isequal(self.language, 'English')
                     self.dynamicFeedbackHeader = 'End of the Experiment!';
                     self.dynamicFeedbackTxt = sprintf('Thank you for taking part!\n\n\nYou have won a total of %i points!', currPoints);
