@@ -1,13 +1,13 @@
 function [confidenceRating, confidenceRT, timestampConfidenceOnset, timestampConfidenceResponse, initialRTconfidence] = al_confidenceRating(taskParam, predictedAngle)
 % AL_CONFIDENCERATING - Handles confidence rating while keeping prediction visible
 %
-%   - A/D keys move the slider smoothly from 1 to 100.
+%   - A/D keys move the slider smoothly from 0 to 100.
 %   - Spacebar confirms the selection.
 %   - The user's previous prediction is displayed on the circle.
 %   - Records timestamps for slider onset, first movement, and confidence input relative to the reference time.
 
 % Define scale
-minScale = 1;
+minScale = 0;
 maxScale = 100;
 confidenceRating = 50; % Start in the middle
 
@@ -48,12 +48,33 @@ while ~confidenceConfirmed
     % Draw confidence slider
     Screen('DrawLine', taskParam.display.window.onScreen, taskParam.colors.gray, leftEnd, scaleYPos, rightEnd, scaleYPos, 3);
     
+    % Calculate text width for '0' and '100'
+    bounds0 = Screen('TextBounds', taskParam.display.window.onScreen, '0');
+    bounds100 = Screen('TextBounds', taskParam.display.window.onScreen, '100');
+    
+    % Set symmetrical spacing distance from slider
+    spacing = 30; % pixels of spacing between slider ends and labels
+    
+    % Calculate precise X positions
+    posX_left = leftEnd - bounds0(3) - spacing;    % left label ("0")
+    posX_right = rightEnd + spacing;               % right label ("100")
+    
+    % Draw left (0) and right (100) labels symmetrically
+    DrawFormattedText(taskParam.display.window.onScreen, '0', posX_left, scaleYPos + 10, taskParam.colors.gray);
+    DrawFormattedText(taskParam.display.window.onScreen, '100', posX_right, scaleYPos + 10, taskParam.colors.gray);
+
+
     % Draw confidence marker
     markerX = leftEnd + ((confidenceRating - minScale) / (maxScale - minScale)) * scaleLengthPix;
     Screen('DrawDots', taskParam.display.window.onScreen, [markerX; scaleYPos], 15, taskParam.colors.blue, [], 2);
 
-    % Display current confidence rating above marker
-    DrawFormattedText(taskParam.display.window.onScreen, sprintf('%d', confidenceRating), markerX - 10, scaleYPos - 50, taskParam.colors.gray);
+    ratingText = sprintf('%d', confidenceRating);
+    textBounds = Screen('TextBounds', taskParam.display.window.onScreen, ratingText);
+    textX = markerX - textBounds(3)/2; % Center horizontally above marker
+    textY = scaleYPos - 50;            % Vertical offset (50 pixels above slider)
+
+    DrawFormattedText(taskParam.display.window.onScreen, ratingText, textX, textY, taskParam.colors.gray);
+
 
     % Draw question
     if isequal(taskParam.gParam.taskType, 'HelicopterNEW')
