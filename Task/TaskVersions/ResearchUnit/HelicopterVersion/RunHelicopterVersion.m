@@ -63,7 +63,7 @@ if ~exist('config', 'var') || isempty(config)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\helicopter';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;

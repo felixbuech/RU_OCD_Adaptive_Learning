@@ -1,4 +1,6 @@
 function [Order] = order()
+
+addpath(genpath('C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning'));
     
 % Define default values
     ID    = '99999';
@@ -12,7 +14,7 @@ function [Order] = order()
 
     % Get user input
     Info = inputdlg(prompt, name, numlines, defaultanswer);
-
+    
     % Validate input
     if isempty(Info)  % If user cancels input dialog
         error('User canceled input. Exiting function.');

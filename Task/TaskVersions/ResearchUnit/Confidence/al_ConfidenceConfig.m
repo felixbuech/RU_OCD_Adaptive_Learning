@@ -14,16 +14,16 @@ function config = al_ConfidenceConfig(isFirstTask)
     config = struct();
 
     
-    config.trialsExp = 1;
+    config.trialsExp = 60;
     config.nBlocks = 6;
   
     if isFirstTask
-        config.practTrialsVis = 5; % More practice trials if Helicopter is first
-        config.practTrialsHid = 5;
+        config.practTrialsVis = 10; % More practice trials if Helicopter is first
+        config.practTrialsHid = 15;
         config.practTrialsConf = 5; % for Confidence extra number for trials
         config.cannonPractCriterion = 3; % Criterion for successful practice
         config.cannonPractNumOutcomes = 5; % Number of cannon shots per practice round
-        config.cannonPractFailCrit = 1; % Maximum allowed failures before continuing
+        config.cannonPractFailCrit = 2; % Maximum allowed failures before continuing
     
     else
         config.practTrialsVis = 5;  % Fewer practice trials if Helicopter is second
@@ -57,7 +57,7 @@ function config = al_ConfidenceConfig(isFirstTask)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data_confidence';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\common_confidence';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
