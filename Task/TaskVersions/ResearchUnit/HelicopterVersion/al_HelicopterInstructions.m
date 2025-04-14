@@ -35,7 +35,7 @@ else
 end
 
 % Load and display welcome image
-welcomeImage = imread('Glowing_Heli_Improved.png'); % Replace with your actual image file
+welcomeImage = imread('NEW_start_image.png'); % Replace with your actual image file
 welcomeTexture = Screen('MakeTexture', taskParam.display.window.onScreen, welcomeImage);
 
 while 1
@@ -75,7 +75,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 % -------------------------------------------------------
 
 % Load the warning image
-warningImage = imread('virus_outbrake.png'); 
+warningImage = imread('virus_over_city.png'); 
 warningTexture = Screen('MakeTexture', taskParam.display.window.onScreen, warningImage);
 
 % Get screen dimensions

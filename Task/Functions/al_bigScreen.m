@@ -46,10 +46,15 @@ if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') &
     [screenX, screenY] = RectCenter(Screen('Rect', taskParam.display.window.onScreen));
     
     % Define image size and position (centered above text)
-    imgWidth = 400;  %400;
-    imgHeight = 600; %600;
+    imgWidth = 1024 *0.5;  %400;
+    imgHeight = 1024 *0.5; %600;
     
-    imgSize = [screenX - imgWidth/2, screenY - 350, screenX + imgWidth/2, screenY - 50];
+    % NEW: Move the image lower by changing the vertical center
+    yOffsetFromCenter = -120;  % increase this to move image even lower
+
+    % Image rectangle
+    imgSize = [screenX - imgWidth/2, screenY + yOffsetFromCenter - imgHeight/2, ...
+               screenX + imgWidth/2, screenY + yOffsetFromCenter + imgHeight/2];
 
     % Set feedback image 
     feedbackImg = taskParam.display.feedbackTxt; 
@@ -66,7 +71,7 @@ end
 if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') && contains(header, 'Zwischenstand')
 
     % Display text lower on the screen
-    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.6, ...
+    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.65, ...
         [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
 
 elseif contains(header, 'Bedienung Schieberegler')
