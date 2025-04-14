@@ -54,10 +54,11 @@ if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') &
     % Set feedback image 
     feedbackImg = taskParam.display.feedbackTxt; 
 
-    % Draw the image 
-    if ~isempty(feedbackImg)
-        Screen('DrawTexture', taskParam.display.window.onScreen, feedbackImg, [], imgSize);
-    end
+    % Check if feedbackTxt is a matrix (image), and convert if needed
+if ~isempty(taskParam.display.feedbackTxt)
+    Screen('DrawTexture', taskParam.display.window.onScreen, taskParam.display.feedbackTxt, [], imgSize);
+end
+
 end
 
 
