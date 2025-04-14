@@ -1,3 +1,4 @@
+
 function allTaskData = RunConfidenceVersion(config, unitTest, cBal)
 %RUNCONFIDENCEVERSION This function runs the common confetti version
 %  of the cannon task BUT with confidence ratings. These ratings are presented in specific blocks. The rest of the design equals the COMMONCONFETTIVERSION
@@ -33,7 +34,7 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 1;
+    config.trialsExp = 10;
     config.nBlocks = 6;
     config.practTrialsVis = 5;
     config.practTrialsHid = 5;
@@ -63,7 +64,7 @@ if ~exist('config', 'var') || isempty(config)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\common_confidence';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data_confidence';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
@@ -77,7 +78,7 @@ if ~exist('config', 'var') || isempty(config)
     config.sampleRate = 500;
     config.port = hex2dec('E050');
     config.rotationRadPixel = 140;
-    config.rotationRadDeg = 2.5;
+    config.rotationRadDeg = 3.16;
     config.customInstructions = true;
     config.instructionText = al_commonConfidenceInstructionsDefaultText();
     config.noPtbWarnings = false;

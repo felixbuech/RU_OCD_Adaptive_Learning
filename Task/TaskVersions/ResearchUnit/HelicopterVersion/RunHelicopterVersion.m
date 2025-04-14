@@ -45,7 +45,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = false;
+    config.runIntro = true;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;
@@ -77,7 +77,7 @@ if ~exist('config', 'var') || isempty(config)
     config.sampleRate = 500;
     config.port = hex2dec('E050');
     config.rotationRadPixel = 140;
-    config.rotationRadDeg = 2.5;
+    config.rotationRadDeg = 3.16;
     config.customInstructions = true;
     config.instructionText = al_HelicopterInstructionsDefaultText();
     config.noPtbWarnings = false;
