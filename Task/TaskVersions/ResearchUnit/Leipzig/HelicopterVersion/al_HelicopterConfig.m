@@ -1,5 +1,5 @@
-function config = al_ConfidenceConfig(isFirstTask)
-% SETUPCONFIDDENCECONFIG Configures settings for the CommonConfidence version.
+function config = al_HelicopterConfig(isFirstTask)
+% SETUPHELICOPTERCONFIG Configures settings for the Helicopter version.
 %
 % This function dynamically adjusts the number of practice trials depending
 % on whether the Helicopter task is the first or second task in the experiment.
@@ -57,23 +57,23 @@ function config = al_ConfidenceConfig(isFirstTask)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\common_confidence';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\helicopter';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
     config.onlineSaccades = true;
     config.saccThres = 0.7;
     config.useDegreesVisualAngle = true;
-    config.distance2screen = 700;
-    config.screenWidthInMM = 309.40;
-    config.screenHeightInMM = 210;
+    config.distance2screen = 600;
+    config.screenWidthInMM = 530;
+    config.screenHeightInMM = 330;
     config.sendTrigger = false;
     config.sampleRate = 500;
     config.port = hex2dec('E050');
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 3.16;
     config.customInstructions = true;
-    config.instructionText = al_commonConfidenceInstructionsDefaultText();
+    config.instructionText = al_HelicopterInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
 

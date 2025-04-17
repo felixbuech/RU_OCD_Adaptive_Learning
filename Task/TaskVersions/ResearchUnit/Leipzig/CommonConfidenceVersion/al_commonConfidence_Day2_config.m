@@ -1,4 +1,4 @@
-% Helicopter Version Configuration 
+% Common Confetti Version Configuration Example
 %
 % Example of how to add local parameter settings as config input to the
 % function that runs the task.
@@ -11,19 +11,20 @@
 config = struct();
 
 % Add desired parameters
-config.trialsExp = 2; %5;
-config.nBlocks = 4;
-config.practTrialsVis = 10;
-config.practTrialsHid = 20; 
-config.cannonPractCriterion = 4; % criterion cannon practice
-config.cannonPractNumOutcomes = 5; % number of trials cannon practice
-config.cannonPractFailCrit = 3;
+config.trialsExp = 60; 
+config.nBlocks = 6;
+config.practTrialsVis = 5; 
+config.practTrialsHid = 10; 
+config.practTrialsConf = 5; % for Confidence extra number for trials
+config.cannonPractCriterion = 2; % criterion cannon practice
+config.cannonPractNumOutcomes = 5; % number of trials cannon practice 
+config.cannonPractFailCrit = 1; 
 config.passiveViewing = false;
 config.passiveViewingPractTrials = 10;
 config.baselineFixLength = 0.25;
 config.blockIndices = [1 999 999 999]; % we don't have breaks within each block
 config.runIntro = true; % false;
-config.baselineArousal = true; %false; % true;
+config.baselineArousal = false; %false; % true;
 config.language = 'German'; % 'English';
 config.sentenceLength = 100;
 config.textSize = 35;
@@ -40,23 +41,23 @@ config.debug = false;
 config.showConfettiThreshold = false;
 config.printTiming = true;
 config.hidePtbCursor = true;
-config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data';
+config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\common_confidence';
 config.meg = false;
 config.scanner = false;
 config.eyeTracker = false; %true;
 config.onlineSaccades = true;
-config.saccThres = 0.7;
+config.saccThres = 1;
 config.useDegreesVisualAngle = true;
 config.distance2screen = 700;
-config.screenWidthInMM = 309.40;
-config.screenHeightInMM = 210;
+config.screenWidthInMM = 530;
+config.screenHeightInMM = 330;
 config.sendTrigger = false;
-config.sampleRate = 500;
+config.sampleRate = 500; % Sampling rate for EEG
 config.port = hex2dec('E050');
-config.rotationRadPixel = 140;
-config.rotationRadDeg = 2.5;
+config.rotationRadPixel = 140; % 170
+config.rotationRadDeg = 3.16; % 2.5
 config.customInstructions = true;
-config.instructionText = al_HelicopterInstructionsDefaultText();
+config.instructionText = al_commonConfidenceInstructionsDefaultText();
 config.noPtbWarnings = false;
 config.predSpotCircleTolerance = 2;
 
@@ -67,9 +68,4 @@ else
 end
 
 % Run task with config input
-RunHelicopterVersion(config);
-
-
-
-
-
+RunConfidenceVersion(config);
