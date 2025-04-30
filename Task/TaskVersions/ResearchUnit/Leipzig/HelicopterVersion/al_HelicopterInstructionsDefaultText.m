@@ -492,7 +492,7 @@ end
   
             % Indicate low noise
 if isequal(self.language, 'German')
-    self.introduceLowNoiseHeader = 'Genauer Helikopter - wenig Wind';
+    self.introduceLowNoiseHeader = 'Genauerer Helikopter - wenig Wind';
     
    
         self.introduceLowNoiseConfidence = ['Im folgenden Block wird der Helikopter relativ genau sein.\n\n'...

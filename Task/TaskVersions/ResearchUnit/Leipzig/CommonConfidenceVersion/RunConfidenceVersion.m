@@ -34,7 +34,7 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 10;
+    config.trialsExp = 15;
     config.nBlocks = 6;
     config.practTrialsVis = 5;
     config.practTrialsHid = 5;

@@ -11,112 +11,127 @@ minScale = 0;
 maxScale = 100;
 confidenceRating = 50; % Start in the middle
 
-% Define slider position
+% Define slider size (using degrees of visual angle if enabled)
+if taskParam.display.useDegreesVisualAngle
+    sliderDeg = 10;
+    scaleLengthPix = taskParam.display.deg2pix(sliderDeg);
+else
+    screensize = taskParam.display.screensize;
+    scaleLengthPix = screensize(3) * 0.6;
+end
+
+% Slider position
 screensize = taskParam.display.screensize;
-scaleLengthPix = screensize(3) * 0.6;
 scaleYPos = screensize(4) * 0.85;
 leftEnd = taskParam.display.zero(1) - (scaleLengthPix / 2);
 rightEnd = taskParam.display.zero(1) + (scaleLengthPix / 2);
 
-confidenceConfirmed = false;
-initialMovementDetected = false; % Flag to track first movement
+stepSize = 1;  % Fine control
 
-% Record timestamp when confidence slider first appears (relative to ref)
+confidenceConfirmed = false;
+initialMovementDetected = false;
+
 timestampConfidenceOnset = GetSecs() - taskParam.timingParam.ref;
-initialRTconfidence = NaN; % Initialize as NaN
+initialRTconfidence = NaN;
 
 while ~confidenceConfirmed
-    % Draw background
+    % Draw background and visuals
     Screen('FillRect', taskParam.display.window.onScreen, taskParam.colors.background);
-    
-    % Draw circle
     al_drawCircle(taskParam);
-
-    % Optionally, show confetti cloud
+    
     if isequal(taskParam.trialflow.confetti, 'show confetti cloud')
         Screen('DrawDots', taskParam.display.window.onScreen, taskParam.cannon.xyMatrixRing, taskParam.cannon.sCloud, taskParam.cannon.colvectCloud, [taskParam.display.window.centerX, taskParam.display.window.centerY], 1);
-        al_drawFixPoint(taskParam);
-    else
-        al_drawFixPoint(taskParam);
     end
+    al_drawFixPoint(taskParam);
 
-    % **Draw prediction mark safely**
+    % Draw previous prediction
     if ~isnan(predictedAngle)
         al_tickMark(taskParam, predictedAngle, 'pred');
     end
-    
-    % Draw confidence slider
+
+    % Draw slider
     Screen('DrawLine', taskParam.display.window.onScreen, taskParam.colors.gray, leftEnd, scaleYPos, rightEnd, scaleYPos, 3);
     
-    % Calculate text width for '0' and '100'
+    % Set text size for slider labels
+    if taskParam.display.useDegreesVisualAngle
+        Screen('TextSize', taskParam.display.window.onScreen, round(taskParam.display.deg2pix(0.6)));
+    else
+        Screen('TextSize', taskParam.display.window.onScreen, 24);
+    end
+
+    % Label spacing
+    spacing = 20;
+
     bounds0 = Screen('TextBounds', taskParam.display.window.onScreen, '0');
     bounds100 = Screen('TextBounds', taskParam.display.window.onScreen, '100');
-    
-    % Set symmetrical spacing distance from slider
-    spacing = 30; % pixels of spacing between slider ends and labels
-    
-    % Calculate precise X positions
-    posX_left = leftEnd - bounds0(3) - spacing;    % left label ("0")
-    posX_right = rightEnd + spacing;               % right label ("100")
-    
-    % Draw left (0) and right (100) labels symmetrically
+
+    posX_left = leftEnd - bounds0(3) - spacing;
+    posX_right = rightEnd + spacing;
+
     DrawFormattedText(taskParam.display.window.onScreen, '0', posX_left, scaleYPos + 10, taskParam.colors.gray);
     DrawFormattedText(taskParam.display.window.onScreen, '100', posX_right, scaleYPos + 10, taskParam.colors.gray);
 
-
-    % Draw confidence marker
+    % Draw slider marker
     markerX = leftEnd + ((confidenceRating - minScale) / (maxScale - minScale)) * scaleLengthPix;
     Screen('DrawDots', taskParam.display.window.onScreen, [markerX; scaleYPos], 15, taskParam.colors.blue, [], 2);
 
+    % Draw confidence number above marker
     ratingText = sprintf('%d', confidenceRating);
+    
+    if taskParam.display.useDegreesVisualAngle
+        Screen('TextSize', taskParam.display.window.onScreen, round(taskParam.display.deg2pix(0.6)));
+    else
+        Screen('TextSize', taskParam.display.window.onScreen, 24);
+    end
+
     textBounds = Screen('TextBounds', taskParam.display.window.onScreen, ratingText);
-    textX = markerX - textBounds(3)/2; % Center horizontally above marker
-    textY = scaleYPos - 50;            % Vertical offset (50 pixels above slider)
+    textX = markerX - textBounds(3)/2;
+    textY = scaleYPos - 50;
 
     DrawFormattedText(taskParam.display.window.onScreen, ratingText, textX, textY, taskParam.colors.gray);
 
-
-    % Draw question
-    if isequal(taskParam.gParam.taskType, 'HelicopterNEW')
-        DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Sie die Medikamente fangen werden?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
+    % Draw confidence question
+    if taskParam.display.useDegreesVisualAngle
+        Screen('TextSize', taskParam.display.window.onScreen, round(taskParam.display.deg2pix(0.6)));
     else
-        DrawFormattedText(taskParam.display.window.onScreen, 'Wie sicher sind Sie, dass Sie das Konfetti fangen werden?', 'center', screensize(4) * 0.75, taskParam.colors.gray);
+        Screen('TextSize', taskParam.display.window.onScreen, 35);
     end
 
-    % Flip screen
+    if isequal(taskParam.gParam.taskType, 'HelicopterNEW')
+        question = 'Wie sicher sind Sie, dass Sie die Medikamente fangen werden?';
+    else
+        question = 'Wie sicher sind Sie, dass Sie das Konfetti fangen werden?';
+    end
+    DrawFormattedText(taskParam.display.window.onScreen, question, 'center', screensize(4) * 0.75, taskParam.colors.gray);
+
     Screen('Flip', taskParam.display.window.onScreen);
 
     % Handle key input
     [keyIsDown, ~, keyCode] = KbCheck(taskParam.keys.kbDev);
     if keyIsDown
-        stepSize = 1; % Base movement speed
-        
-        % Detect first key press for slider movement
         if (keyCode(taskParam.keys.a) && confidenceRating > minScale) || (keyCode(taskParam.keys.d) && confidenceRating < maxScale)
             if ~initialMovementDetected
                 initialRTconfidence = GetSecs() - taskParam.timingParam.ref - timestampConfidenceOnset;
-                initialMovementDetected = true; % Mark first movement as detected
+                initialMovementDetected = true;
             end
 
-            % Adjust slider position
             if keyCode(taskParam.keys.a) && confidenceRating > minScale
-                confidenceRating = confidenceRating - 1;
+                confidenceRating = confidenceRating - stepSize;
             elseif keyCode(taskParam.keys.d) && confidenceRating < maxScale
-                confidenceRating = confidenceRating + 1;
+                confidenceRating = confidenceRating + stepSize;
             end
-            WaitSecs(0.02);
+            WaitSecs(0.015);
         elseif keyCode(taskParam.keys.space)
-            % Record timestamp when confidence rating is confirmed (relative to ref)
             timestampConfidenceResponse = GetSecs() - taskParam.timingParam.ref;
             confidenceConfirmed = true;
         end
     end
 
-    % Check for escape key
+    % Escape key check
     taskParam.keys.checkQuitTask(taskParam);
 end
 
-% Compute Confidence RT
+% Final RT
 confidenceRT = timestampConfidenceResponse - timestampConfidenceOnset;
 
 end
