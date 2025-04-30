@@ -179,7 +179,7 @@ for b = 1:taskParam.gParam.nBlocks
         taskData = taskData.al_cannonData(taskParam, haz, concentration(noiseCondition), taskParam.gParam.safe);
         taskData = taskData.al_confettiData(taskParam);
         taskData.block(:) = b;
-        taskData.confidence(:) = taskParam.trialflow.includeConfidence; % Store confidence status
+        % taskData.confidence(:) = taskParam.trialflow.includeConfidence; % Store confidence status
         file_name_suffix = sprintf('_b%i', b);
     else
         taskData = taskParam.unitTest.taskDataIntegrationTest_HamburgLowNoise;
