@@ -36,6 +36,7 @@ classdef al_display
         cloudTexture
         feedbackTxt
         keyboardTxt
+        ReminderTxt
         
 
         % Image rectangles
@@ -204,6 +205,30 @@ else
     self.keyboardTxt = Screen('MakeTexture', self.window.onScreen, keyboardPic);
     
 end
+
+%% Load the Reminder Image for the Leipzig Task Version
+
+% Define image path 
+ReminderImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\Reminder_image.png';
+
+% Initialize placeholder
+self.ReminderTxt = nan;
+
+% Load Reminder Image
+if exist(ReminderImagePath, 'file') ~= 2
+    warning('Reminder image not found: %s', ReminderImagePath);
+else
+    [reminderPic, ~, reminderAlpha] = imread(ReminderImagePath);
+
+    % Merge alpha channel if available
+    if ~isempty(reminderAlpha)
+        reminderPic(:,:,4) = reminderAlpha;
+    end
+
+    % Create texture and store it
+    self.ReminderTxt = Screen('MakeTexture', self.window.onScreen, reminderPic);
+end
+
 
     %% Load Other Images Based on Cannon Type ===
     if strcmp(cannonType, 'standard')

@@ -60,6 +60,7 @@ classdef al_HelicopterInstructionsDefaultText
         ConfidencePracticeHeader
         ConfidencePracticeHeaderTwo
         ConfidencePracticeTwo
+        ReminderText
         
     end
 
@@ -113,7 +114,20 @@ else
     error('language parameter unknown')
 end
 
-           
+           % Introduce Pandemic Context Reminder
+
+            if isequal(self.language, 'German')
+    % self.pandemicHeader = 'Achtung Virusausbruch!';
+    self.ReminderText = ['Behalten Sie in Erinnerung: Die Zahl der Infizierten steigt immer weiter.\n\n' ...
+               'Jetzt gilt es, so viele Medikamente wie möglich zu sichern.\n\n' ...
+               'Das Überleben der kranken Menschen liegt nun in Ihren Händen.\n\n'...
+               'Viel Erfolg!'];
+
+elseif isequal(self.language, 'English')
+    self.ReminderText = 'Welcome to the confetti-cannon task!';
+else
+    error('language parameter unknown')
+end
             
             % Introduce cannon
             if isequal(self.language, 'German')

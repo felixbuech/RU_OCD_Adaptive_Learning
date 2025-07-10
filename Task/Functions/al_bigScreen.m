@@ -80,6 +80,13 @@ elseif contains(header, 'Bedienung Schieberegler')
     DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.5, ...
         [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
 
+elseif contains(header, 'Virusausbruch')
+
+    % Display text slightly lower for "Virusausbruch" (e.g., 65% down)
+    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.65, ...
+        [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
+
+
 elseif feedback == true
     % When feedback is presented, print in screen center...
     DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', 'center', [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
@@ -115,8 +122,36 @@ if contains(header, 'Bedienung Schieberegler')
     end
 end
 
+% Draw Reminder Image Leipzig Version
+%-----------------------------------------------------------
+
+if contains(header, 'Virusausbruch')
+  
+    % Bildschirm-Zentrum bestimmen
+    [screenX, screenY] = RectCenter(Screen('Rect', taskParam.display.window.onScreen));
+
+   % Dynamische Skalierung basierend auf Screengröße
+maxWidth = taskParam.display.window.screenX * 0.35;  % z. B. 60% der Breite
+aspectRatio = 3713 / 2563;
+imgWidth = maxWidth;
+imgHeight = imgWidth / aspectRatio;
+
+
+    ReminderImg = taskParam.display.ReminderTxt; 
+
+    % Bild zentriert horizontal, oberhalb des Textes
+imgTop = taskParam.display.window.screenY * 0.10;  % obere Y-Position z. B. 20 %
+imgSize = [screenX - imgWidth/2, imgTop, ...
+           screenX + imgWidth/2, imgTop + imgHeight];
+
+     % Draw the image 
+    if ~isempty(ReminderImg)
+        Screen('DrawTexture', taskParam.display.window.onScreen, ReminderImg, [], imgSize);
+    end
+end
     
-    % Print "Press Enter" to Continue
+    
+% Print "Press Enter" to Continue
     if ~endOfTask
         DrawFormattedText(taskParam.display.window.onScreen, taskParam.strings.txtPressEnter, 'center', taskParam.display.screensize(4)*0.9);
     else
