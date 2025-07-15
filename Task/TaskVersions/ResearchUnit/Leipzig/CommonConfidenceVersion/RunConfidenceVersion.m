@@ -23,7 +23,7 @@ function allTaskData = RunConfidenceVersion(config, unitTest, cBal)
 % arguments have to updated to include the three runs (this has to be
 % compatible with two files in no-scanner version)
 
-addpath(genpath('C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning'));
+addpath(genpath('C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning'));
 
 KbName('UnifyKeyNames')
 
@@ -46,7 +46,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = false;
+    config.runIntro = true;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;
@@ -64,10 +64,10 @@ if ~exist('config', 'var') || isempty(config)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\test_data_confidence';
+    config.dataDirectory = 'C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning\data\commonConfidence';
     config.meg = false;
     config.scanner = false;
-    config.eyeTracker = false;
+    config.eyeTracker = true;
     config.onlineSaccades = true;
     config.saccThres = 0.7;
     config.useDegreesVisualAngle = true;

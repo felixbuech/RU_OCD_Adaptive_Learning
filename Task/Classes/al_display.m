@@ -160,7 +160,7 @@ classdef al_display
 %% Load the Feedback Image for the Leipzig Task Version
 
 % Define image path 
-feedbackImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\new_hospital_image.png'; 
+feedbackImagePath = 'C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning\pictures\new_hospital_image.png'; 
 
 % Initialize placeholder
 self.feedbackTxt = nan;
@@ -184,7 +184,7 @@ end
 %% Load the Keyboard Image for the Leipzig Task Version
 
 % Define image path 
-KeyboardImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\Tastatur_No_Background.png'; 
+KeyboardImagePath = 'C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning\pictures\Tastatur_No_Background.png'; 
 
 % Initialize placeholder
 self.keyboardTxt = nan;

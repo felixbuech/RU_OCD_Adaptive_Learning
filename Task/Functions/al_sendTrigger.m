@@ -264,27 +264,64 @@ end
 
 % % Leipzig EEG / Pupilometry Triggers 
 % % ======================================
-% if isequal(taskParam.gParam.taskType, 'HelicopterNEW') || isequal(taskParam.gParam.taskType, 'CommonConfidence')
-%     if isequal(Tevent, 'trialOnset')
-%         triggerID = 1;
-%     elseif isequal(Tevent, 'responseOnset')
-%         triggerID = 2;
-%     elseif isequal(Tevent, 'responseLogged')
-%         triggerID = 3;
-%     elseif isequal(Tevent, 'fix')
-%         triggerID = 4;
-% 
-%     % NEW Confidence Triggers
-%     elseif isequal(Tevent, 'confidenceOnset')
-%         triggerID = 20;  
-%     elseif isequal(Tevent, 'confidenceResponse')
-%         triggerID = 21;
-% 
-% else
-%     triggerID = 255;
-% 
-%     end
-% end 
+% -------------------------------------------------------------------------
+% Leipzig EEG / Pupillometrie – Helicopter & CommonConfidence
+% -------------------------------------------------------------------------
+if  isequal(taskParam.gParam.taskType,'HelicopterNEW') || ...
+    isequal(taskParam.gParam.taskType,'CommonConfidence')
+
+    if     isequal(Tevent,'trialOnset')
+        triggerID = 1;
+
+    elseif isequal(Tevent,'responseOnset')
+        triggerID = 2;
+
+    elseif isequal(Tevent,'responseLogged')
+        triggerID = 3;
+
+    elseif isequal(Tevent,'fix')
+        triggerID = 4;
+
+    elseif isequal(Tevent,'black')
+        triggerID = 5;
+
+    elseif isequal(Tevent,'white')
+        triggerID = 6;
+
+    elseif isequal(Tevent,'gray')
+        triggerID = 7;
+
+    elseif isequal(Tevent,'outcome')
+        if      taskData.catchTrial(trial)
+            triggerID = 49;
+        elseif  taskData.cp(trial) == 0
+            triggerID = 50;
+        else    % cp == 1
+            triggerID = 51;
+        end
+
+    elseif isequal(Tevent,'shield')
+        if      taskData.hit(trial) == 0
+            triggerID = 90;
+        else    % hit == 1
+            triggerID = 91;
+        end
+
+    % ---------- NEU: Confidence ----------
+    elseif isequal(Tevent,'confidenceOnset')
+        triggerID = 20;
+
+    elseif isequal(Tevent,'confidenceResponse')
+        triggerID = 21;
+
+    % -------------------------------------
+    else
+        triggerID = 255;   % unbekanntes Event
+    end
+end
+
+
+
 
 % Send the pupil trigger
 if taskParam.gParam.eyeTracker && isequal(taskParam.trialflow.exp, 'exp') || taskParam.gParam.eyeTracker && isequal(taskParam.trialflow.exp, 'passive')
@@ -292,18 +329,13 @@ if taskParam.gParam.eyeTracker && isequal(taskParam.trialflow.exp, 'exp') || tas
 end
 
 % Send the EEG trigger
-if taskParam.gParam.sendTrigger == true
-    %     outp(taskParam.triggers.port, trigger); This is the Dresden version
-    %     WaitSecs(1/taskParam.triggers.sampleRate);
-    %     outp(taskParam.triggers.port,0) % Set port to 0.
+if taskParam.gParam.sendTrigger
 
-    % io64(ioObject,taskParam.triggers.port, trigger)
+    % --- LPT-Trigger über io64 ---
+    io64(taskParam.ioObj, taskParam.triggers.port, triggerID);
+    WaitSecs(1 / taskParam.triggers.sampleRate);   % ~2 ms
+    io64(taskParam.ioObj, taskParam.triggers.port, 0);   % Reset auf 0
 
-    % This is Hamburg
-    duration = 0.001;
-    IOPort( 'Write', taskParam.triggers.session, uint8(triggerID), 0);
-    WaitSecs(duration);
-    IOPort( 'Write', taskParam.triggers.session, uint8(0), 0);
 end
 
 % Send the MEG trigger

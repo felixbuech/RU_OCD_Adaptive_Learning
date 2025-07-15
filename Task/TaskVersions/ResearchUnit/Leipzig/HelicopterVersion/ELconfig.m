@@ -35,7 +35,7 @@ Eyelink('command', 'file_sample_data = LEFT,RIGHT,GAZE,DIAMETER,GAZERES,HREF,PUP
 Eyelink('command', 'file_event_data = GAZE,GAZERES,HREF,DIAMETER,VELOCITY');
 Eyelink('command', 'file_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON,INPUT');
 Eyelink('command', 'enable_automatic_calibration = NO');
-Eyelink('command', 'calibration_type = HV5');
+Eyelink('command', 'calibration_type = HV9');
 Eyelink('command', 'generate_default_targets = NO');
 
 % set up targets ("dots") for calibration and validation

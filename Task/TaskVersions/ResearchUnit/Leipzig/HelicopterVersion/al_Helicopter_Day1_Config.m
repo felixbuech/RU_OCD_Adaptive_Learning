@@ -1,3 +1,4 @@
+
 % Common Confetti Version Configuration Example
 %
 % Example of how to add local parameter settings as config input to the
@@ -23,14 +24,14 @@ config.passiveViewing = false;
 config.passiveViewingPractTrials = 10;
 config.baselineFixLength = 0.25;
 config.blockIndices = [1 999 999 999]; % we don't have breaks within each block
-config.runIntro = false; % false;
+config.runIntro = true; % false;
 config.baselineArousal = false; %false; % true;
 config.language = 'German'; % 'English';
 config.sentenceLength = 100;
 config.textSize = 35;
 config.vSpacing = 1;
 config.headerSize = 50;
-config.screenSize = [0           0        1920        1200]; % get(0,'MonitorPositions')*1.0;
+config.screenSize = [0           0        1920        1080]; % get(0,'MonitorPositions')*1.0;
 config.globalScreenBorder = 0; %1920; % default is 0
 config.screenNumber = 1;
 config.s = 83;
@@ -41,16 +42,16 @@ config.debug = false;
 config.showConfettiThreshold = false;
 config.printTiming = true;
 config.hidePtbCursor = true;
-config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\helicopter';
+config.dataDirectory = 'C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning\data\helicopter';
 config.meg = false;
 config.scanner = false;
-config.eyeTracker = false; %true;
+config.eyeTracker = true; %true;
 config.onlineSaccades = true;
 config.saccThres = 1;
 config.useDegreesVisualAngle = true;
 config.distance2screen = 700;
 config.screenWidthInMM = 530;
-config.screenHeightInMM = 330;
+config.screenHeightInMM = 300;
 config.sendTrigger = false;
 config.sampleRate = 500; % Sampling rate for EEG
 config.port = hex2dec('E050');
