@@ -22,7 +22,7 @@ function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
 % arguments have to updated to include the three runs (this has to be
 % compatible with two files in no-scanner version)
 
-addpath(genpath('C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning'));
+addpath(genpath('C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning'));
 
 KbName('UnifyKeyNames')
 
@@ -45,14 +45,14 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = true;
+    config.runIntro = false;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;
     config.textSize = 35;
     config.headerSize = 50;
     config.vSpacing = 1;
-    config.screenSize = [0           0        1920        1200];
+    config.screenSize = [0           0        1920        1080];
     config.globalScreenBorder = 0;
     config.screenNumber = 1;
     config.s = 83;
@@ -63,32 +63,34 @@ if ~exist('config', 'var') || isempty(config)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\helicopter';
+    config.dataDirectory = 'C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning\data\helicopter';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
-    config.onlineSaccades = true;
+    config.onlineSaccades = false;
     config.saccThres = 0.7;
     config.useDegreesVisualAngle = true;
-    config.distance2screen = 700;
+    config.distance2screen = 500;
     config.screenWidthInMM = 309.40;
     config.screenHeightInMM = 210;
-    config.sendTrigger = false;
+    config.sendTrigger = true;
     config.sampleRate = 500;
-    config.port = hex2dec('E050');
+    config.port = hex2dec('0378');
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 3.16;
     config.customInstructions = true;
     config.instructionText = al_HelicopterInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
-    
-    if config.sendTrigger
-        [config.session, ~] = IOPort( 'OpenSerialPort', 'COM3' );
-    else 
-        config.session = nan;
-    end
-end
+    config.session = nan;
+
+
+%     if config.sendTrigger
+%         [config.session, ~] = IOPort( 'OpenSerialPort', 'COM1' );
+%     else 
+%         config.session = nan;
+%     end
+% end
 
 
 % Check if unit test is requested
@@ -645,6 +647,11 @@ taskParam.unitTest = unitTest;
 taskParam.triggers = triggers;
 taskParam.eyeTracker = eyeTracker;
 taskParam.instructionText = instructionText;
+
+ioObj = io64;
+status = io64(ioObj);
+taskParam.ioObj = ioObj;
+
 
 
 % Check and update background rgb:
