@@ -336,6 +336,18 @@ if taskParam.gParam.sendTrigger
     WaitSecs(1 / taskParam.triggers.sampleRate);   % ~2 ms
     io64(taskParam.ioObj, taskParam.triggers.port, 0);   % Reset auf 0
 
+    %      outp(taskParam.triggers.port, trigger); This is the Dresden version
+    %     WaitSecs(1/taskParam.triggers.sampleRate);
+    %     outp(taskParam.triggers.port,0) % Set port to 0.
+    % 
+    % io64(ioObject,taskParam.triggers.port, trigger)
+    % 
+    % This is Hamburg
+    % duration = 0.001;
+    % IOPort( 'Write', taskParam.triggers.session, uint8(triggerID), 0);
+    % WaitSecs(duration);
+    % IOPort( 'Write', taskParam.triggers.session, uint8(0), 0);
+
 end
 
 % Send the MEG trigger
