@@ -22,7 +22,7 @@ function allTaskData = RunHelicopterVersion(config, unitTest, cBal)
 % arguments have to updated to include the three runs (this has to be
 % compatible with two files in no-scanner version)
 
-addpath(genpath('C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning'));
+addpath(genpath('C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning'));
 
 KbName('UnifyKeyNames')
 
@@ -52,7 +52,7 @@ if ~exist('config', 'var') || isempty(config)
     config.textSize = 35;
     config.headerSize = 50;
     config.vSpacing = 1;
-    config.screenSize = [0           0        1920        1080];
+    config.screenSize = [0           0        1920        1200];
     config.globalScreenBorder = 0;
     config.screenNumber = 1;
     config.s = 83;
@@ -63,7 +63,7 @@ if ~exist('config', 'var') || isempty(config)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning\data\helicopter';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\helicopter';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = false;
@@ -73,7 +73,7 @@ if ~exist('config', 'var') || isempty(config)
     config.distance2screen = 500;
     config.screenWidthInMM = 309.40;
     config.screenHeightInMM = 210;
-    config.sendTrigger = true;
+    config.sendTrigger = false;
     config.sampleRate = 500;
     config.port = hex2dec('0378');
     config.rotationRadPixel = 140;
@@ -90,7 +90,8 @@ if ~exist('config', 'var') || isempty(config)
 %     else 
 %         config.session = nan;
 %     end
-% end
+end
+
 
 
 % Check if unit test is requested
@@ -648,10 +649,16 @@ taskParam.triggers = triggers;
 taskParam.eyeTracker = eyeTracker;
 taskParam.instructionText = instructionText;
 
-ioObj = io64;
-status = io64(ioObj);
-taskParam.ioObj = ioObj;
-
+%--- initializing the trigger sending:---%
+if config.sendTrigger
+    ioObj = io64;
+    status = io64(ioObj);
+    if status == 0
+        taskParam.ioObj = ioObj;
+    else
+        warning('io64 init failed (status=%d).', status);
+    end
+end
 
 
 % Check and update background rgb:

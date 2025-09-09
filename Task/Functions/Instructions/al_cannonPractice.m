@@ -152,21 +152,28 @@ for i = 1:nTrials
         al_drawCannon(taskParam, sampleMean)
         al_aim(taskParam, sampleMean)
 
-        % Compute estimation error and give feedback
+                % Compute estimation error and give feedback
         taskData.estErr(i) = al_diff(sampleMean, taskData.pred(i));
         if abs(taskData.estErr(i)) >= taskParam.gParam.practiceTrialCriterionEstErr
             cannonText = 'Leider daneben!';
         elseif abs(taskData.estErr(i)) < taskParam.gParam.practiceTrialCriterionEstErr
-            cannonText = 'Super! Konfetti-Kanone sehr gut eingeschätzt!';
+            if isequal(taskParam.gParam.taskType,'HelicopterNEW')
+                cannonText = 'Super! Helikopter sehr gut eingeschätzt!';
+            else
+                cannonText = 'Super! Konfetti-Kanone sehr gut eingeschätzt!';
+            end
             testPassed = testPassed + 1;
         end
 
         % Cannon feedback
         if taskParam.gParam.customInstructions
-           cannonText = strcat(cannonText, taskParam.instructionText.cannonFeedbackText);
-
+            cannonText = strcat(cannonText, taskParam.instructionText.cannonFeedbackText);
         else
-            cannonText = strcat(cannonText, '\n\nHier können Sie Ihre Angabe und die echte Konfetti-Kanone vergleichen.');
+            if isequal(taskParam.gParam.taskType,'HelicopterNEW')
+                cannonText = strcat(cannonText, '\n\nHier können Sie Ihre Angabe und den echten Helikopter vergleichen.');
+            else
+                cannonText = strcat(cannonText, '\n\nHier können Sie Ihre Angabe und die echte Konfetti-Kanone vergleichen.');
+            end
         end
 
         DrawFormattedText(taskParam.display.window.onScreen,cannonText, 'center', taskParam.display.screensize(4)*0.05, [255 255 255], taskParam.strings.sentenceLength, [], [], taskParam.strings.vSpacing);

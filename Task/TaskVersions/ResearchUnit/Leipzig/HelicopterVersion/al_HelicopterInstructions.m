@@ -180,7 +180,7 @@ Screen('DrawTexture', taskParam.display.window.onScreen, contextTexture, [], dst
 
     % Set text size for paragraph
     Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.textSize);
-    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 80, [], [], 1.5);
+    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 66, [], [], 1.5);
 
     % Display "Press Enter" message
     DrawFormattedText(taskParam.display.window.onScreen, 'Drücken Sie Enter, um fortzufahren', 'center', taskParam.display.screensize(4) * 0.92, [255 255 255]);

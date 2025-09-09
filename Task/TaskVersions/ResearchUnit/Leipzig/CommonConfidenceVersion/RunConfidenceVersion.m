@@ -46,7 +46,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = false;
+    config.runIntro = true;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;
@@ -71,24 +71,25 @@ if ~exist('config', 'var') || isempty(config)
     config.onlineSaccades = true;
     config.saccThres = 0.7;
     config.useDegreesVisualAngle = true;
-    config.distance2screen = 700;
+    config.distance2screen = 500;
     config.screenWidthInMM = 309.40;
     config.screenHeightInMM = 210;
     config.sendTrigger = false;
     config.sampleRate = 500;
-    config.port = hex2dec('E050');
+    config.port = hex2dec('0378');
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 3.16;
     config.customInstructions = true;
     config.instructionText = al_commonConfidenceInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
+    config.session = nan;
     
-    if config.sendTrigger
-        [config.session, ~] = IOPort( 'OpenSerialPort', 'COM3' );
-    else 
-        config.session = nan;
-    end
+%     if config.sendTrigger
+%         [config.session, ~] = IOPort( 'OpenSerialPort', 'COM3' );
+%     else 
+%         config.session = nan;
+%     end
 end
 
 
@@ -631,6 +632,17 @@ taskParam.unitTest = unitTest;
 taskParam.triggers = triggers;
 taskParam.eyeTracker = eyeTracker;
 taskParam.instructionText = instructionText;
+ 
+%--- initializing the trigger sending:---%
+if config.sendTrigger
+    ioObj = io64;
+    status = io64(ioObj);
+    if status == 0
+        taskParam.ioObj = ioObj;
+    else
+        warning('io64 init failed (status=%d).', status);
+    end
+end
 
 % Check and update background rgb:
 % It turns out that depending on screen resolution, the exactly ideal

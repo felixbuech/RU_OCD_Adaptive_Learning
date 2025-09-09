@@ -319,7 +319,7 @@ if  isequal(taskParam.gParam.taskType,'HelicopterNEW') || ...
 
     % -------------------------------------
     else
-        triggerID = 255;   % unbekanntes Event
+        triggerID = 255;   
     end
 
 
