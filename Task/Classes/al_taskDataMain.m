@@ -130,7 +130,7 @@ classdef al_taskDataMain
         % Online saccade detection
         sacc
 
-        % confidence rating
+        % confidence rating: added for P9 Leipzig/Hamburg
         confidence
         confidenceRT
         timestampConfidenceOnset

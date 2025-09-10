@@ -26,8 +26,8 @@ classdef al_keys
         kbDev
         leftRelease
         rightRelease
-        a               % used for confidence slider
-        d               % used for confidence slider
+        a               % used for confidence slider in Leipzig
+        d               % used for confidence slider in Leipzig
 
     end
     

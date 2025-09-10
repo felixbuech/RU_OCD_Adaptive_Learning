@@ -138,7 +138,8 @@ classdef al_trialflow
             % true
             % false
 
-        % Whether or not confidence rating is included in the block
+        % Whether or not confidence rating is included in the block: P9
+        % Leipzig/Hamburg
         includeConfidence
             % true: confidence rating is included
             % false: confidence rating is NOT included
