@@ -81,6 +81,8 @@ classdef al_gparam
 
         commitHash % tracking version on GitHub
 
+        P9location % added to distinct Leipzig from Hamburg for P9
+
     end
     
     % Methods of the gparam object
@@ -148,6 +150,7 @@ classdef al_gparam
             self.baselineArousalDuration = 180;
             self.duckMovementFrequency = 0.1;
             self.duckMovementRange = 5;
+            self.P9location = nan;
 
         end
     end

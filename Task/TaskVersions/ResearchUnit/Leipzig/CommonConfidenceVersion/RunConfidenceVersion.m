@@ -64,28 +64,29 @@ if ~exist('config', 'var') || isempty(config)
     config.showConfettiThreshold = false;
     config.printTiming = true;
     config.hidePtbCursor = true;
-    config.dataDirectory = 'C:\Users\pc\Desktop\RU_OCD_Adaptive_Learning\data\commonConfidence';
+    config.dataDirectory = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pilot_data\common_confidence';
     config.meg = false;
     config.scanner = false;
     config.eyeTracker = true;
     config.onlineSaccades = true;
     config.saccThres = 0.7;
     config.useDegreesVisualAngle = true;
-    config.distance2screen = 700;
+    config.distance2screen = 500;
     config.screenWidthInMM = 309.40;
     config.screenHeightInMM = 210;
     config.sendTrigger = false;
     config.sampleRate = 500;
-    config.port = hex2dec('E050');
+    config.port = hex2dec('0378'); % if Exp run in Hamburg: ('E050');
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 3.16;
     config.customInstructions = true;
     config.instructionText = al_commonConfidenceInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
+    config.P9location = 'Leipzig';
     
-    if config.sendTrigger
-        [config.session, ~] = IOPort( 'OpenSerialPort', 'COM3' );
+if config.sendTrigger && strcmpi(config.P9location,'Hamburg')
+        [config.session, ~] = IOPort( 'OpenSerialPort', 'COM1' );
     else 
         config.session = nan;
     end
@@ -172,6 +173,7 @@ customInstructions = config.customInstructions;
 instructionText = config.instructionText;
 noPtbWarnings = config.noPtbWarnings;
 predSpotCircleTolerance = config.predSpotCircleTolerance;
+P9location = config.P9location;
 
 % More general parameters
 % ----------------------
@@ -300,6 +302,7 @@ gParam.screenNumber = screenNumber;
 gParam.customInstructions = customInstructions;
 gParam.language = language;
 % gParam.commitHash = al_getGitCommitHash();
+gParam.P9location = P9location;
 
 % Save directory
 cd(gParam.dataDirectory);
@@ -631,6 +634,17 @@ taskParam.unitTest = unitTest;
 taskParam.triggers = triggers;
 taskParam.eyeTracker = eyeTracker;
 taskParam.instructionText = instructionText;
+ 
+%--- initializing the trigger sending:---%
+if config.sendTrigger && strcmpi(P9location,'Leipzig')
+    ioObj = io64;
+    status = io64(ioObj);
+    if status == 0
+        taskParam.ioObj = ioObj;
+    else
+        warning('io64 init failed (status=%d).', status);
+    end
+end
 
 % Check and update background rgb:
 % It turns out that depending on screen resolution, the exactly ideal

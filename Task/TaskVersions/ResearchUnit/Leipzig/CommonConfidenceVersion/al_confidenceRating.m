@@ -23,7 +23,7 @@ labelNumberLeftPix = 20;
 labelNumberRightPix = 28;
 
 % Text size (visual angle)
-fontDeg_conf = 0.6;
+fontDeg_conf = 0.5;
 fontDeg_labels = 0.5;
 fontDeg_question = 0.6;
 

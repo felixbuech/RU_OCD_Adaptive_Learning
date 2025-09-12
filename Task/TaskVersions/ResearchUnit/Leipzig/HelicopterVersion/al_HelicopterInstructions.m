@@ -180,7 +180,7 @@ Screen('DrawTexture', taskParam.display.window.onScreen, contextTexture, [], dst
 
     % Set text size for paragraph
     Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.textSize);
-    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 80, [], [], 1.5);
+    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 66, [], [], 1.5);
 
     % Display "Press Enter" message
     DrawFormattedText(taskParam.display.window.onScreen, 'Drücken Sie Enter, um fortzufahren', 'center', taskParam.display.screensize(4) * 0.92, [255 255 255]);
@@ -686,5 +686,29 @@ end
 
 feedback = false;
 al_bigScreen(taskParam, header, txt, feedback);
+
+
+% 14. Reminder für die Cover-Story
+% ------------------------------------
+
+% Reminder-Text
+header = 'Virusausbruch';
+
+
+% Lade den Text (optional mit Bedingung, je nach Konfiguration)
+if taskParam.gParam.customInstructions
+    txt = taskParam.instructionText.ReminderText;
+else
+    txt = ['Behalten Sie in Erinnerung: Die Zahl der Infizierten steigt immer weiter.\n' ...
+           'Das Überleben der kranken Menschen liegt nun in Ihren Händen.\n\n' ...
+           'Jetzt gilt es so viele Medikamente wie möglich zu sichern.\n\nViel Erfolg!'];
+end
+
+% Zeige Reminder über al_bigScreen 
+feedback = false;
+al_bigScreen(taskParam, header, txt, feedback);
+
+
+
 
 end
