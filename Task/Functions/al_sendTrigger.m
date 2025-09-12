@@ -291,24 +291,21 @@ if  isequal(taskParam.gParam.taskType,'HelicopterNEW') || ...
     elseif isequal(Tevent,'gray')
         triggerID = 7;
 
-    elseif isequal(Tevent, 'outcome')
-        
-        if taskData.catchTrial(trial) == 1
+    elseif isequal(Tevent,'outcome')
+        if      taskData.catchTrial(trial)
             triggerID = 49;
-        elseif taskData.cp(trial) == 0
+        elseif  taskData.cp(trial) == 0
             triggerID = 50;
-        elseif taskData.cp(trial) == 1
+        else    % cp == 1
             triggerID = 51;
         end
 
-    elseif isequal(Tevent, 'shield')
-
-        if taskData.hit(trial) == 0
+    elseif isequal(Tevent,'shield')
+        if      taskData.hit(trial) == 0
             triggerID = 90;
-        elseif taskData.hit(trial) == 1
+        else    % hit == 1
             triggerID = 91;
         end
-    end
 
     % ---------- NEU: Confidence ----------
     elseif isequal(Tevent,'confidenceOnset')
@@ -319,9 +316,9 @@ if  isequal(taskParam.gParam.taskType,'HelicopterNEW') || ...
 
     % -------------------------------------
     else
-        triggerID = 255;   
+        triggerID = 255;   % unbekanntes Event
     end
-
+end
 
 % Send the pupil trigger
 if taskParam.gParam.eyeTracker && isequal(taskParam.trialflow.exp, 'exp') || taskParam.gParam.eyeTracker && isequal(taskParam.trialflow.exp, 'passive')
