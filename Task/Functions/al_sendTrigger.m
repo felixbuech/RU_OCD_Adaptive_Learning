@@ -262,7 +262,7 @@ else
     triggerID = 255;
 end
 
-% % Leipzig EEG / Pupilometry Triggers 
+% % Leipzig EEG / Pupillometry Triggers 
 % % ======================================
 % -------------------------------------------------------------------------
 % Leipzig EEG / Pupillometrie – Helicopter & CommonConfidence
@@ -329,26 +329,34 @@ if taskParam.gParam.eyeTracker && isequal(taskParam.trialflow.exp, 'exp') || tas
 end
 
 % Send the EEG trigger
-if taskParam.gParam.sendTrigger
-
-    % --- LPT-Trigger über io64 ---
-    io64(taskParam.ioObj, taskParam.triggers.port, triggerID);
-    WaitSecs(1 / taskParam.triggers.sampleRate);   % ~2 ms
-    io64(taskParam.ioObj, taskParam.triggers.port, 0);   % Reset auf 0
-
-    %      outp(taskParam.triggers.port, trigger); This is the Dresden version
+if taskParam.gParam.sendTrigger == true
+    
+    %     outp(taskParam.triggers.port, trigger); This is the Dresden version
     %     WaitSecs(1/taskParam.triggers.sampleRate);
     %     outp(taskParam.triggers.port,0) % Set port to 0.
-    % 
-    % io64(ioObject,taskParam.triggers.port, trigger)
-    % 
-    % This is Hamburg
-    % duration = 0.001;
-    % IOPort( 'Write', taskParam.triggers.session, uint8(triggerID), 0);
-    % WaitSecs(duration);
-    % IOPort( 'Write', taskParam.triggers.session, uint8(0), 0);
 
-end
+    % io64(ioObject,taskParam.triggers.port, trigger)
+
+    if isequal(taskParam.gParam.taskType,'HelicopterNEW') || isequal(taskParam.gParam.taskType,'CommonConfidence') && strcmpi(taskParam.gParam.P9location,'Leipzig')
+        % --- LPT-Trigger über io64  ---
+        io64(taskParam.ioObj, taskParam.triggers.port, triggerID);
+        WaitSecs(1 / taskParam.triggers.sampleRate);   % ~2 ms
+        io64(taskParam.ioObj, taskParam.triggers.port, 0);   % Reset auf 0
+    
+    elseif isequal(taskParam.gParam.taskType,'HelicopterNEW') || isequal(taskParam.gParam.taskType,'CommonConfidence') && strcmpi(taskParam.gParam.P9location,'Hamburg')
+        duration = 0.001;
+        IOPort('Write', taskParam.triggers.session, uint8(triggerID), 0);
+        WaitSecs(duration);
+        IOPort('Write', taskParam.triggers.session, uint8(0), 0);
+    
+    else
+        % --- Hamburg path via IOPort (or for other versions) ---
+        duration = 0.001;
+        IOPort('Write', taskParam.triggers.session, uint8(triggerID), 0);
+        WaitSecs(duration);
+        IOPort('Write', taskParam.triggers.session, uint8(0), 0);
+    end
+
 
 % Send the MEG trigger
 if taskParam.gParam.meg

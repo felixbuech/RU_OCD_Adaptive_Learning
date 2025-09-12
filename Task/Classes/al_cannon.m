@@ -103,7 +103,7 @@ classdef al_cannon
             elseif isequal(colors, 'blackWhite')
                 load('colvect_cloud_blackWhite.mat', 'colvect_cloud')
             elseif isequal(colors, 'redWhite')
-                load('colvect_cloud_helicopter.mat', 'colvect_cloud')  % Helicopter: blue, white static confetti cloud for Leipzig Version
+                load('colvect_cloud_helicopter.mat', 'colvect_cloud')  % Helicopter: red, white static confetti cloud for Leipzig Version
             else
                 error('Color input not defined')
             end

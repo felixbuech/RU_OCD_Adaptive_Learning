@@ -33,7 +33,7 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 20;
+    config.trialsExp = 1;
     config.nBlocks = 6;
     config.practTrialsVis = 1; %10
     config.practTrialsHid = 5; %10
@@ -45,7 +45,7 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
     config.blockIndices = [1 51 101 151];
-    config.runIntro = false;
+    config.runIntro = true;
     config.baselineArousal = false;
     config.language = 'German';
     config.sentenceLength = 100;
@@ -75,24 +75,22 @@ if ~exist('config', 'var') || isempty(config)
     config.screenHeightInMM = 210;
     config.sendTrigger = false;
     config.sampleRate = 500;
-    config.port = hex2dec('0378');
+    config.port = hex2dec('0378'); % if Exp run in Hamburg: ('E050');
     config.rotationRadPixel = 140;
     config.rotationRadDeg = 3.16;
     config.customInstructions = true;
     config.instructionText = al_HelicopterInstructionsDefaultText();
     config.noPtbWarnings = false;
     config.predSpotCircleTolerance = 2;
-    config.session = nan;
+    config.P9location = 'Leipzig';
 
+    if config.sendTrigger && strcmpi(config.P9location,'Hamburg')
+        [config.session, ~] = IOPort( 'OpenSerialPort', 'COM1' );
+    else 
+        config.session = nan;
+    end
 
-%     if config.sendTrigger
-%         [config.session, ~] = IOPort( 'OpenSerialPort', 'COM1' );
-%     else 
-%         config.session = nan;
-%     end
 end
-
-
 
 % Check if unit test is requested
 if ~exist('unitTest', 'var') || isempty(unitTest)
@@ -174,6 +172,8 @@ customInstructions = config.customInstructions;
 instructionText = config.instructionText;
 noPtbWarnings = config.noPtbWarnings;
 predSpotCircleTolerance = config.predSpotCircleTolerance;
+P9location = config.P9location;
+
 
 % More general parameters
 % ----------------------
@@ -302,6 +302,7 @@ gParam.screenNumber = screenNumber;
 gParam.customInstructions = customInstructions;
 gParam.language = language;
 % gParam.commitHash = al_getGitCommitHash();
+gParam.P9location = P9location;
 
 % Save directory
 cd(gParam.dataDirectory);
@@ -650,7 +651,7 @@ taskParam.eyeTracker = eyeTracker;
 taskParam.instructionText = instructionText;
 
 %--- initializing the trigger sending:---%
-if config.sendTrigger
+if config.sendTrigger && strcmpi(P9location,'Leipzig')
     ioObj = io64;
     status = io64(ioObj);
     if status == 0
