@@ -243,7 +243,6 @@ taskParam = al_introduceCannon(taskParam, taskData, currTrial, txt);
 
 
 
-
 % 3. Introduce confetti
 % ---------------------
 
