@@ -92,7 +92,7 @@ elseif feedback == true
     DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', 'center', [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
 
 else
-    % Default text position for other screens
+     % ...otherwise at defined location
     DrawFormattedText(taskParam.display.window.onScreen, txt, taskParam.display.screensize(4) * 0.2, taskParam.display.screensize(4) * 0.2, ...
         [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
 end
@@ -151,21 +151,21 @@ imgSize = [screenX - imgWidth/2, imgTop, ...
 end
     
     
-% Print "Press Enter" to Continue
+ % Print "Press Enter" to indicate how to continue with instructions
     if ~endOfTask
         DrawFormattedText(taskParam.display.window.onScreen, taskParam.strings.txtPressEnter, 'center', taskParam.display.screensize(4)*0.9);
     else
         DrawFormattedText(taskParam.display.window.onScreen, 'Bitte auf Versuchtsleiter:in warten...', 'center', taskParam.display.screensize(4)*0.9);
     end
 
-    % Finalize Drawing
+     % All text strings are presented
     Screen('DrawingFinished', taskParam.display.window.onScreen);
 
     % Flip Screen to Present Changes
     time = GetSecs;
     Screen('Flip', taskParam.display.window.onScreen, time + 0.1);
     
-    % Wait for User Input to Continue
+    % Check for response of participant to continue to next screen
     [~, ~, keyCode] = KbCheck(taskParam.keys.kbDev);
     if keyCode(taskParam.keys.enter) && ~taskParam.unitTest.run && ~endOfTask
         break;
@@ -182,6 +182,5 @@ end
     end
 end
 
-% Wait for Keyboard Release
+% Wait for keyboard release
 KbReleaseWait();
-end

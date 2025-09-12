@@ -147,21 +147,24 @@ classdef al_display
         end
 
         function self = createTextures(self, cannonType)
-    % CREATETEXTURES This function loads and creates textures of displayed images
-    %
-    %   Inputs:
-    %       cannonType - Determines which type of cannon should be shown
-    %
-    %   Outputs:
-    %       self - Updated display object with loaded textures
-    
-    % === Load Background Image ===
-    [backgroundPic, ~, ~] = imread('hospital_setting_from_above.png');
+    % CREATETEXTURES This function creates textures of displayed
+            %   images
+            %
+            %   Input
+            %       cannonType: Which type of cannon should be shown
+            %
 
-%% Load the Feedback Image for the Leipzig Task Version
+            % Todo: these should be methods that are specific to these
+            % versions
+
+
+%-------------------------
+% Load the Feedback Image for the Leipzig Task Version
+%-------------------------
 
 % Define image path 
-feedbackImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\new_hospital_image.png'; 
+feedbackImagePath = fullfile('pictures','new_hospital_image.png');
+
 
 % Initialize placeholder
 self.feedbackTxt = nan;
@@ -182,10 +185,12 @@ else
     
 end
 
-%% Load the Keyboard Image for the Leipzig Task Version
+%------------------------
+% Load the Keyboard Image for the Leipzig Task Version
+%------------------------
 
 % Define image path 
-KeyboardImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\Tastatur_No_Background.png'; 
+KeyboardImagePath = fullfile('pictures','Tastatur_No_Background.png');
 
 % Initialize placeholder
 self.keyboardTxt = nan;
@@ -206,10 +211,12 @@ else
     
 end
 
-%% Load the Reminder Image for the Leipzig Task Version
+%---------------------
+% Load the Reminder Image for the Leipzig Task Version
+%---------------------
 
 % Define image path 
-ReminderImagePath = 'C:\Users\fb74loha\Desktop\GitHub_Clone_Adaptive_Learning\AdaptiveLearning\pictures\Reminder_image.png';
+ReminderImagePath = fullfile('pictures','Reminder_image.png');
 
 % Initialize placeholder
 self.ReminderTxt = nan;
@@ -230,7 +237,8 @@ else
 end
 
 
-    %% Load Other Images Based on Cannon Type ===
+    % Load images
+            %[cannonPic, ~, alpha]  = imread('cannon.png'); 
     if strcmp(cannonType, 'standard')
         [cannonPic, ~, alpha] = imread('cannon_not_centered.png');
     elseif strcmp(cannonType, 'HelicopterNEW')
@@ -241,14 +249,65 @@ end
         [cannonPic, ~, alpha] = imread('confetti_cannon.png');
     end
 
-    % === Set Background Image Size ===
+     % Load Background Image
+    [backgroundPic, ~, ~] = imread('Greybanner Coliseum - Day - Large - 44x32.jpg');
+
+
+   % elseif strcmp(cannonType, 'helicopter') --> not needed anymore for P9
+   % Heli-Task
+    %             [cannonPic, ~, alpha]  = imread('helicopter.png');
+    %             [doctorPic, ~, doctorAlpha]  = imread('doctor.png');
+    %             [heliPic, ~, heliAlpha]  = imread('helicopter.png');
+    %             [pill1Pic, ~, pill1Alpha]  = imread('pill_1.png');
+    %             [pill2Pic, ~, pill2Alpha]  = imread('pill_2.png');
+    %             [pill3Pic, ~, pill3Alpha]  = imread('pill_3.png');
+    %             [pill4Pic, ~, pill4Alpha]  = imread('pill_4.png');
+    %             [syringePic, ~, syringeAlpha]  = imread('syringe.png');
+
+    
+    % --------------------------
+    % Load social-fedback images
+    % --------------------------
+
+            % Parent directory
+            parentDirectory = fileparts(cd);
+            
+            % Optionally load social stimuli
+            if ~self.socialsample == 0
+                
+                % Decide whether to get younger adults or adolescents
+                if self.socialsample == 1
+                    ImDir = [parentDirectory '/Files/socialFeedback/YA'];
+                elseif self.socialsample == 2
+                    ImDir = [parentDirectory '/Files/socialFeedback/Ado'];
+                end
+                
+                % Get number of respective images
+                self.nHas = length(dir([ImDir '/HAS/*.JPG']));
+                self.nDis = length(dir([ImDir '/DIS/*.JPG']));
+
+                % Load stimuli as textures into structure
+                imagesDis = cell(self.nDis, 1);
+                for n = 1:self.nDis
+                    imagesDis{n} = imread(sprintf('DIS/dis_%d.JPG',n));
+                    self.socialDisTxts{n} = Screen('MakeTexture', self.window.onScreen, imagesDis{n});
+                end
+
+                imagesHas = cell(self.nDis, 1);
+                for n = 1:self.nHas
+                    imagesHas{n} = imread(sprintf('HAS/has_%d.JPG',n));
+                    self.socialHasTxts{n} = Screen('MakeTexture', self.window.onScreen, imagesHas{n});
+                end
+            end
+
+    % Continue with optional background image
     backgroundPicSize = size(backgroundPic);
     ySize = self.window.screenY;
     scaleFactor = ySize / backgroundPicSize(1);
     xSize = backgroundPicSize(2) * scaleFactor;
     self.backgroundCoords = [self.zero(1)-xSize/2, self.zero(2)-ySize/2, self.zero(1)+xSize/2, self.zero(2)+ySize/2];
 
-    % === Merge Alpha Channels for Transparency ===
+    % Create pictures based on images
     if strcmp(cannonType, 'helicopter')
         doctorPic(:,:,4) = doctorAlpha(:,:);
         heliPic(:,:,4) = heliAlpha(:,:);
@@ -263,10 +322,10 @@ end
         cannonPic(:,:,4) = alpha(:,:);
     end
 
-    % === Set Alpha Blending Mode ===
+    % Set the current alpha-blending mode and the color buffer
     Screen('BlendFunction', self.window.onScreen, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    % === Create Textures ===
+    % Create textures
     self.backgroundTxt = Screen('MakeTexture', self.window.onScreen, backgroundPic);
     
     if strcmp(cannonType, 'helicopter')
