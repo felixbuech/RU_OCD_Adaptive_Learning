@@ -171,10 +171,14 @@ if taskParam.gParam.passiveViewing == false
             taskData.timestampPrediction(i) = GetSecs() - taskParam.timingParam.ref;
         end
 
-        % Call confidence rating function and store timestamps
+        taskData.triggers(i, 2) = al_sendTrigger(taskParam, taskData, condition, i, 'confidenceOnset');
+        
+% Call confidence rating function and store timestamps
         [taskData.confidence(i), taskData.confidenceRT(i), ...
          taskData.timestampConfidenceOnset(i), taskData.timestampConfidenceResponse(i)] = ...
             al_confidenceRating(taskParam, taskData.pred(i));
+
+        taskData.triggers(i, 3) = al_sendTrigger(taskParam, taskData, condition, i, 'confidenceResponse');
 
         fprintf('Confidence: %.2f\n', taskData.confidence(i));
     end

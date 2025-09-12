@@ -176,14 +176,14 @@ Screen('DrawTexture', taskParam.display.window.onScreen, contextTexture, [], dst
 
     % Set text size and display warning
     Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.headerSize);
-    DrawFormattedText(taskParam.display.window.onScreen, 'Achtung Virusausbruch!', 'center', taskParam.display.screensize(4) * 0.08, [255 255 255]);
+    DrawFormattedText(taskParam.display.window.onScreen, 'Achtung Virusausbruch!', 'center', taskParam.display.screensize(4) * 0.05, [255 255 255]);
 
     % Set text size for paragraph
     Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.textSize);
-    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 66, [], [], 1.5);
+    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 73, [], [], 1.5);
 
     % Display "Press Enter" message
-    DrawFormattedText(taskParam.display.window.onScreen, 'Drücken Sie Enter, um fortzufahren', 'center', taskParam.display.screensize(4) * 0.92, [255 255 255]);
+    DrawFormattedText(taskParam.display.window.onScreen, 'Drücken Sie Enter, um fortzufahren', 'center', taskParam.display.screensize(4) * 0.95, [255 255 255]);
 
     % Flip screen
     Screen('Flip', taskParam.display.window.onScreen);
