@@ -50,7 +50,7 @@ if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') &
     imgHeight = 1024 *0.5; %600;
     
     % NEW: Move the image lower by changing the vertical center
-    yOffsetFromCenter = -120;  % increase this to move image even lower
+    yOffsetFromCenter = -113;  % increase this to move image even lower
 
     % Image rectangle
     imgSize = [screenX - imgWidth/2, screenY + yOffsetFromCenter - imgHeight/2, ...
@@ -71,7 +71,7 @@ end
 if feedback == true && strcmp(taskParam.trialflow.cannonType, 'HelicopterNEW') && contains(header, 'Zwischenstand')
 
     % Display text lower on the screen
-    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.65, ...
+    DrawFormattedText(taskParam.display.window.onScreen, txt, 'center', taskParam.display.screensize(4) * 0.66, ...
         [255 255 255], sentenceLength, [], [], taskParam.strings.vSpacing);
 
 elseif contains(header, 'Bedienung Schieberegler')
@@ -140,13 +140,14 @@ imgHeight = imgWidth / aspectRatio;
     ReminderImg = taskParam.display.ReminderTxt; 
 
     % Bild zentriert horizontal, oberhalb des Textes
-imgTop = taskParam.display.window.screenY * 0.10;  % obere Y-Position z. B. 20 %
+imgTop = taskParam.display.window.screenY * 0.15;  % obere Y-Position z. B. 10 %
 imgSize = [screenX - imgWidth/2, imgTop, ...
            screenX + imgWidth/2, imgTop + imgHeight];
 
      % Draw the image 
     if ~isempty(ReminderImg)
-        Screen('DrawTexture', taskParam.display.window.onScreen, ReminderImg, [], imgSize);
+        Screen('DrawTexture', taskParam.display.window.onScreen, ReminderImg, [], imgSize, [], 0);
+
     end
 end
     

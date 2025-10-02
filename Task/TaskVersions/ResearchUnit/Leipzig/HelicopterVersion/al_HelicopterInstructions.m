@@ -1,3 +1,4 @@
+
 function al_HelicopterInstructions(taskParam)
 %AL_HELICOPTERINSTRUCTIONS This function runs the instructions for the
 % Leipzig version of the cannon task
@@ -136,7 +137,7 @@ Screen('Flip', taskParam.display.window.onScreen);
 
 
 % Load the pandemic context image (Ensure it's a PNG with transparency)
-[contextImage, ~, alpha] = imread('Text_bckg_transparent.png'); 
+[contextImage, ~, alpha] = imread('Virus_background_smaller.png'); 
 
 % Convert grayscale image to RGB (if needed)
 if size(contextImage, 3) == 1  
@@ -161,7 +162,7 @@ while 1
 screenRect = Screen('Rect', taskParam.display.window.onScreen);
 
 % Define new size for the image (scale factor)
-scaleFactor = 1; % Adjust this value to make the image larger or smaller
+scaleFactor = 0.5; % Adjust this value to make the image larger or smaller
 
 % Get original image size
 [imageHeight, imageWidth, ~] = size(contextImage);
@@ -176,11 +177,11 @@ Screen('DrawTexture', taskParam.display.window.onScreen, contextTexture, [], dst
 
     % Set text size and display warning
     Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.headerSize);
-    DrawFormattedText(taskParam.display.window.onScreen, 'Achtung Virusausbruch!', 'center', taskParam.display.screensize(4) * 0.05, [255 255 255]);
+    DrawFormattedText(taskParam.display.window.onScreen, 'Achtung Virusausbruch!', 'center', taskParam.display.screensize(4) * 0.08, [255 255 255]);
 
     % Set text size for paragraph
     Screen('TextSize', taskParam.display.window.onScreen, taskParam.strings.textSize);
-    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 73, [], [], 1.5);
+    DrawFormattedText(taskParam.display.window.onScreen, taskParam.instructionText.context, 'center', 'center', [255 255 255], 85, [], [], 1.5);
 
     % Display "Press Enter" message
     DrawFormattedText(taskParam.display.window.onScreen, 'Drücken Sie Enter, um fortzufahren', 'center', taskParam.display.screensize(4) * 0.95, [255 255 255]);
@@ -685,28 +686,6 @@ end
 
 feedback = false;
 al_bigScreen(taskParam, header, txt, feedback);
-
-
-% 14. Reminder für die Cover-Story
-% ------------------------------------
-
-% Reminder-Text
-header = 'Virusausbruch';
-
-
-% Lade den Text (optional mit Bedingung, je nach Konfiguration)
-if taskParam.gParam.customInstructions
-    txt = taskParam.instructionText.ReminderText;
-else
-    txt = ['Behalten Sie in Erinnerung: Die Zahl der Infizierten steigt immer weiter.\n' ...
-           'Das Überleben der kranken Menschen liegt nun in Ihren Händen.\n\n' ...
-           'Jetzt gilt es so viele Medikamente wie möglich zu sichern.\n\nViel Erfolg!'];
-end
-
-% Zeige Reminder über al_bigScreen 
-feedback = false;
-al_bigScreen(taskParam, header, txt, feedback);
-
 
 
 

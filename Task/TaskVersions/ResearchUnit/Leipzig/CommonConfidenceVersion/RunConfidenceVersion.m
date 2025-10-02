@@ -34,10 +34,10 @@ if ~exist('config', 'var') || isempty(config)
     config = struct();
 
     % Default parameters
-    config.trialsExp = 15;
+    config.trialsExp = 60;
     config.nBlocks = 6;
-    config.practTrialsVis = 5;
-    config.practTrialsHid = 5;
+    config.practTrialsVis = 10;
+    config.practTrialsHid = 15;
     config.practTrialsConf = 5; % added for Confidence Ratings
     config.cannonPractCriterion = 3;
     config.cannonPractNumOutcomes = 5;
@@ -45,9 +45,9 @@ if ~exist('config', 'var') || isempty(config)
     config.passiveViewingPractTrials = 10;
     config.passiveViewing = false;
     config.baselineFixLength = 0.25;
-    config.blockIndices = [1 51 101 151];
-    config.runIntro = false;
-    config.baselineArousal = false;
+    config.blockIndices = [1 999 999 999];
+    config.runIntro = true;
+    config.baselineArousal = true;
     config.language = 'German';
     config.sentenceLength = 100;
     config.textSize = 35;
@@ -67,13 +67,13 @@ if ~exist('config', 'var') || isempty(config)
     config.dataDirectory = 'C:\Users\pc\Desktop\Behavioral_EyeLink_Data\commonconfidence';
     config.meg = false;
     config.scanner = false;
-    config.eyeTracker = false;
-    config.onlineSaccades = true;
+    config.eyeTracker = true;
+    config.onlineSaccades = false;
     config.saccThres = 0.7;
     config.useDegreesVisualAngle = true;
-    config.distance2screen = 500;
-    config.screenWidthInMM = 309.40;
-    config.screenHeightInMM = 210;
+    config.distance2screen = 750;
+    config.screenWidthInMM = 531.36;
+    config.screenHeightInMM = 298.89;
     config.sendTrigger = true;
     config.sampleRate = 500;
     config.port = hex2dec('0378'); % if Exp run in Hamburg: ('E050');

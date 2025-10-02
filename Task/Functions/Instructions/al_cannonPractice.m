@@ -19,7 +19,23 @@ end
 
 % Save name
 concentration = unique(taskData.concentration);
-taskData.savename = sprintf('commonConfetti_%s_g%d_conc%d_%s%s', taskParam.trialflow.exp, taskParam.subject.group, concentration, taskParam.subject.ID, file_name_suffix);
+
+if isequal(taskParam.gParam.taskType, 'HelicopterNEW')
+    taskData.savename = sprintf('Helicopter_%s_g%d_conc%d_%s%s', ...
+        taskParam.trialflow.exp, taskParam.subject.group, ...
+        concentration, taskParam.subject.ID, file_name_suffix);
+
+elseif isequal(taskParam.gParam.taskType, 'CommonConfidence')
+    taskData.savename = sprintf('commonConfidence_%s_g%d_conc%d_%s%s', ...
+        taskParam.trialflow.exp, taskParam.subject.group, ...
+        concentration, taskParam.subject.ID, file_name_suffix);
+
+else
+    taskData.savename = sprintf('commonConfetti_%s_g%d_conc%d_%s%s', ...
+        taskParam.trialflow.exp, taskParam.subject.group, ...
+        concentration, taskParam.subject.ID, file_name_suffix);
+end
+
 
 % Wait until keys released
 KbReleaseWait();

@@ -100,6 +100,22 @@ if taskParam.gParam.baselineArousal && taskParam.subject.startsWithBlock == 1
 
 end
 
+%-------------
+% A Reminder message is preseneted before the main task begins
+%-------------
+
+header = 'Virusausbruch';
+if taskParam.gParam.customInstructions
+    txt = taskParam.instructionText.ReminderText;
+else
+    txt = ['Behalten Sie in Erinnerung: Die Zahl der Infizierten steigt immer weiter.\n' ...
+           'Das Überleben der kranken Menschen liegt nun in Ihren Händen.\n\n' ...
+           'Jetzt gilt es so viele Medikamente wie möglich zu sichern.\n\nViel Erfolg!'];
+end
+feedback = false;
+al_bigScreen(taskParam, header, txt, feedback);
+
+
 % ------------
 % 4. Main task
 % ------------
